@@ -41,11 +41,13 @@ public class HomeController {
 
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contact(Locale locale, Model model) {
+        logger.info("User at contact.");
         return "contact";
     }
 
     @RequestMapping(value = "/faq", method = RequestMethod.GET)
     public String faq(Locale locale, Model model) {
+        logger.info("User at contact.");
         return "faq";
     }
 
