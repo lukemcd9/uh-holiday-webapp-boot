@@ -9,10 +9,6 @@ Be sure to set up a M2_REPO environment variable.
 ##### Java
 You'll need a Java JDK to build and run the project (version 1.8).
 
-##### Apache Tomcat
-Install Apache Tomcat.
-This application was developed with version 8.0.32.
-
 The files for the project are kept in a code repository,
 available from here:
 
@@ -34,8 +30,7 @@ To build a deployable war file for a specified environment:
 
     $ mvn -Dmaven.test.skip=true -Denv=test clean package
 
-
-##### Run the application from the Command Line
+##### Run the Application from the Command Line
     $ mvn -Dmaven.test.skip=true clean spring-boot:run
 
 ##### Running Unit Tests
