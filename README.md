@@ -19,19 +19,16 @@ Install the necessary project dependencies:
 
     $ mvn install
 
+To run the Application from the Command Line:
+
+    $ mvn clean spring-boot:run
+
 To build a deployable war file for local development:
 
     $ mvn clean package
 
 You should have a deployable war file in the target directory.
 Deploy as usual in a servlet container, e.g. tomcat.
-
-To build a deployable war file for a specified environment:
-
-    $ mvn -Dmaven.test.skip=true -Denv=test clean package
-
-##### Run the Application from the Command Line
-    $ mvn -Dmaven.test.skip=true clean spring-boot:run
 
 ##### Running Unit Tests
 The project includes Unit Tests for various parts of the system.
@@ -45,15 +42,15 @@ line arguments.
 
 To run the Unit Tests with a standard build:
 
-    $ mvn -Denv=dev clean test
+    $ mvn clean test
 
 To run a test class:
 
-    $ mvn clean test -Dtest=RoleTest
+    $ mvn clean test -Dtest=StringsTest
 
 To run a single method in a test class:
 
-    $ mvn clean test -Dtest=RoleTest#longName
+    $ mvn clean test -Dtest=StringsTest#trunctate
 
 ##### Running System Tests
 The project files include a handful of System Tests.
@@ -65,5 +62,5 @@ appropriate command line argument.
 
 To run the System Tests:
 
-    $ mvn -Denv=dev -Dtest=*SystemTest clean test
+    $ mvn -Dtest=*SystemTest clean test
 
