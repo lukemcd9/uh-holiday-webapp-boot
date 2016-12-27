@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -526,6 +527,9 @@ public class DatesTest {
     public void dayOfMonth() {
         int checks = 0;
         Calendar cal = makeCalendar(Dates.toDate(Dates.firstDateOfYear(2013)));
+        assertEquals(Dates.firstDateOfYear(2013), Dates.toLocalDate(cal.getTime()));
+        assertEquals(Dates.newLocalDate(2013, Month.JANUARY, 1), Dates.toLocalDate(cal.getTime()));
+
         for (Month m : Month.values()) {
             cal.set(Calendar.MONTH, m.getValue() - 1);
             int maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -541,47 +545,42 @@ public class DatesTest {
 
         assertEquals(365, checks);
         assertEquals(Dates.newLocalDate(2014, Month.JANUARY, 1), Dates.toLocalDate(cal.getTime()));
-        ///assertEquals(Dates.newLocalDate(2014, Month.JANUARY, 1), new Date(cal.getTime().getTime()));
     }
 
     @Test
     public void formatDate() {
-        Calendar cal = Calendar.getInstance();
-        LocalDate date = Dates.toLocalDate(cal.getTime());
-        String dateStr0 = new SimpleDateFormat("EEEE, MMMM d, yyyy").format(Dates.toDate(date));
-        String dateStr1 = Dates.formatDate(date, "EEEE, MMMM d, yyyy");
-
-        assertEquals(dateStr1, dateStr0);
+        LocalDate date = Dates.newLocalDate(2012, Month.FEBRUARY, 29);
+        String dateStr1 = Dates.formatDate(date, "MM/yyyy");
+        assertEquals("02/2012", dateStr1);
 
         date = Dates.newLocalDate(2012, Month.FEBRUARY, 29);
-        String dateStr2 = Dates.formatDate(date, "MM/yyyy");
-        assertEquals("02/2012", dateStr2);
-
-        date = Dates.newLocalDate(2012, Month.FEBRUARY, 29);
-        String dateStr3 = Dates.formatDate(date, "M/yyyy");
-        assertEquals("2/2012", dateStr3);
+        String dateStr2 = Dates.formatDate(date, "M/yyyy");
+        assertEquals("2/2012", dateStr2);
 
         date = Dates.newLocalDate(2013, Month.NOVEMBER, 30);
-        String dateStr4 = Dates.formatDate(date, "MM/yyyy");
-        assertEquals("11/2013", dateStr4);
+        String dateStr3 = Dates.formatDate(date, "MM/yyyy");
+        assertEquals("11/2013", dateStr3);
 
         date = Dates.newLocalDate(2012, Month.FEBRUARY, 29);
+        String dateStr4 = Dates.formatDate(date, "MMM/yyyy");
+        assertEquals("Feb/2012", dateStr4);
+
+        date = Dates.newLocalDate(2013, Month.NOVEMBER, 30);
         String dateStr5 = Dates.formatDate(date, "MMM/yyyy");
-        assertEquals("Feb/2012", dateStr5);
-
-        date = Dates.newLocalDate(2013, Month.NOVEMBER, 30);
-        String dateStr6 = Dates.formatDate(date, "MMM/yyyy");
-        assertEquals("Nov/2013", dateStr6);
+        assertEquals("Nov/2013", dateStr5);
 
         date = Dates.newLocalDate(2013, Month.DECEMBER, 30);
-        String dateStr7 = Dates.formatDate(date, "M/yyyy");
-        assertEquals("12/2013", dateStr7);
+        String dateStr6 = Dates.formatDate(date, "M/yyyy");
+        assertEquals("12/2013", dateStr6);
     }
 
     @Test
     public void format() {
+        LocalDate date = null;
+        assertEquals("", Dates.formatDate(date));
+
         Calendar cal = Calendar.getInstance();
-        LocalDate date = Dates.toLocalDate(cal.getTime());
+        date = Dates.toLocalDate(cal.getTime());
         String dateStr0 = new SimpleDateFormat("MM/dd/yyyy").format(Dates.toDate(date));
         String dateStr1 = Dates.formatDate(date);
         assertEquals(dateStr1, dateStr0);

@@ -87,11 +87,14 @@ public final class Dates {
     }
 
     public static String formatDate(LocalDate date, String formatStr) {
+        if (date == null) {
+            return "";
+        }
+
         String result = date.toString();
 
         try {
-            DateTimeFormatter formatteR = DateTimeFormatter.ofPattern(formatStr);
-            result = date.format(formatteR);
+            result = date.format(DateTimeFormatter.ofPattern(formatStr));
         } catch (IllegalArgumentException e) {
             // Ignored.
         }
@@ -101,12 +104,7 @@ public final class Dates {
 
     // Not sure we really need this method.
     public static String formatDate(LocalDate date) {
-        ///return formatDate(date, "MM/dd/yyyy");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String text = date.format(formatter);
-        ///LocalDate parsedDate = LocalDate.parse(text, formatter);        
-        return text;
+        return formatDate(date, "MM/dd/yyyy");
     }
 
     public static int currentYear() {
