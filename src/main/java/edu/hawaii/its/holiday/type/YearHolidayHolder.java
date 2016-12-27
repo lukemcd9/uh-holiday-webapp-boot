@@ -70,4 +70,7 @@ public class YearHolidayHolder {
         this.year = year != null ? year.intValue() : 0;
     }
 
+    protected Integer currentYear() {
+        return Dates.currentYear();
+    }
 }

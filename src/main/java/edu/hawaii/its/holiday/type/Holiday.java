@@ -60,6 +60,18 @@ public class Holiday implements Serializable {
     @OrderBy(value = "id")
     private List<Type> holidayTypes = new ArrayList<Type>(0);
 
+    // Constructor.
+    public Holiday() {
+        // Empty.
+    }
+
+    // Constructor.
+    public Holiday(Date officialDate, Date observedDate) {
+        this();
+        this.officialDate = officialDate;
+        this.observedDate = observedDate;
+    }
+
     public Integer getId() {
         return id;
     }
