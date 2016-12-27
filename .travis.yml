@@ -7,7 +7,7 @@ branches:
   only:
   - master
   
-script: mvn -Denv=dev clean test coveralls:report
+script: mvn -Denv=dev clean test
   
 after_success:  
   - mvn clean test jacoco:report coveralls:report
