@@ -1,7 +1,7 @@
 A web application to display and edit holidays used by UH.
 
 [![Build Status](https://travis-ci.org/fduckart/uh-holiday-webapp-boot.png?branch=master)](https://travis-ci.org/fduckart/uh-holiday-webapp-boot)
-***
+[![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp-boot/badge.svg)](https://coveralls.io/github/fduckart/uh-holiday-webapp-boot)
 ##### Build Tool
 First, you need to download and install maven (version 3.2.1+).
 
