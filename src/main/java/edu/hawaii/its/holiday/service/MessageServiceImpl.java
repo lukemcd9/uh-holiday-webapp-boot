@@ -40,10 +40,8 @@ public class MessageServiceImpl implements MessageService {
         Message message = null;
         try {
             message = em.find(Message.class, id);
-            System.out.println(">>>>> message: " + message);
         } catch (Exception e) {
             logger.error("Error:", e);
-            System.out.println(">>>>> error::: " + e);
         }
         return message;
     }
