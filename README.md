@@ -1,4 +1,4 @@
-A web application to display and edit holidays used by UH.
+A web application to display holidays used by UH.
 
 [![Build Status](https://travis-ci.org/fduckart/uh-holiday-webapp-boot.png?branch=master)](https://travis-ci.org/fduckart/uh-holiday-webapp-boot)
 [![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp-boot/badge.svg?branch=master)](https://coveralls.io/github/fduckart/uh-holiday-webapp-boot?branch=master)
@@ -24,7 +24,7 @@ To run the Application from the Command Line:
 
     $ mvn clean spring-boot:run
 
-To build a deployable war file for local development:
+To build a deployable war file for local development, if preferred:
 
     $ mvn clean package
 
