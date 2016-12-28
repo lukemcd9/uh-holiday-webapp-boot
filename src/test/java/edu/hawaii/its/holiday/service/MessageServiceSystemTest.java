@@ -1,8 +1,14 @@
 package edu.hawaii.its.holiday.service;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +30,28 @@ public class MessageServiceSystemTest {
     private MessageService messageService;
 
     @Test
-    public void find() {
+    public void findMessage() {
         Message message = messageService.findMessage(Message.GATE_MESSAGE);
         assertEquals("Y", message.getEnabled());
         assertEquals(Integer.valueOf(Message.GATE_MESSAGE), message.getTypeId());
         assertTrue(message.getText().startsWith("University of Hawaii Information"));
+
+        // No matching ID, so null returned.
+        message = messageService.findMessage(-1);
+        assertNull(message);
+
+        // Cause an internal exception to happen.
+        EntityManager em = messageService.getEntityManager();
+        messageService.setEntityManager(null);
+        message = messageService.findMessage(Message.ACCESS_DENIED_MESSAGE);
+        assertNull(message);
+
+        // Make sure the denied access message actually exists.
+        messageService.evictCache();
+        messageService.setEntityManager(em);
+        message = messageService.findMessage(Message.ACCESS_DENIED_MESSAGE);
+        assertThat(message.getId(), equalTo(Message.ACCESS_DENIED_MESSAGE));
+        assertThat(message.getText(), containsString("system is restricted"));
     }
 
     @Test

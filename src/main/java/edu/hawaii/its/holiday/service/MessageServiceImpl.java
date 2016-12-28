@@ -5,6 +5,7 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,15 @@ public class MessageServiceImpl implements MessageService {
         this.em = em;
     }
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    @CacheEvict(value = "messages", allEntries = true)
+    public void evictCache() {
+        // Empty.
+    }
+
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "messages", key = "#id")
@@ -30,8 +40,10 @@ public class MessageServiceImpl implements MessageService {
         Message message = null;
         try {
             message = em.find(Message.class, id);
+            System.out.println(">>>>> message: " + message);
         } catch (Exception e) {
             logger.error("Error:", e);
+            System.out.println(">>>>> error::: " + e);
         }
         return message;
     }

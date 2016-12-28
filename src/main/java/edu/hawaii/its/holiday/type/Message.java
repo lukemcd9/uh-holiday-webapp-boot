@@ -13,6 +13,7 @@ public class Message implements Serializable {
 
     public static final long serialVersionUID = 2L;
     public static final int GATE_MESSAGE = 1;
+    public static final int ACCESS_DENIED_MESSAGE = 2;
 
     private Integer id;
     private Integer typeId;
