@@ -18,7 +18,6 @@ public class HomeController {
     @RequestMapping(value = { "", "/", "/home" }, method = { RequestMethod.GET })
     public String home(Map<String, Object> model, Locale locale) {
         logger.info("User at home. The client locale is {}.", locale);
-
         return "home";
     }
 
@@ -32,11 +31,6 @@ public class HomeController {
     public String faq(Locale locale, Model model) {
         logger.info("User at contact.");
         return "faq";
-    }
-
-    @RequestMapping(value = "/denied", method = RequestMethod.GET)
-    public String denied() {
-        return "denied";
     }
 
     @RequestMapping(value = "/404", method = RequestMethod.GET)
