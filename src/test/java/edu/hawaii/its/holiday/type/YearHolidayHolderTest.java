@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +70,8 @@ public class YearHolidayHolderTest {
             }
         };
         assertTrue(holder.isEmpty());
+        assertThat(holder.currentYear(), equalTo(2016));
+        assertThat(holder.getYear(), equalTo(0)); // Weird.
 
         List<Holiday> holidays = new ArrayList<Holiday>();
         for (int year = 2000; year <= 2017; year++) {
@@ -75,8 +79,14 @@ public class YearHolidayHolderTest {
             holidays.add(new Holiday(date, date));
         }
 
-        holder = new YearHolidayHolder(holidays);
+        holder = new YearHolidayHolder(holidays) {
+            protected Integer currentYear() {
+                return 2016;
+            }
+        };
         assertFalse(holder.isEmpty());
+        assertThat(holder.currentYear(), equalTo(2016));
+        assertThat(holder.getYear(), equalTo(2016));
 
         Set<Integer> years = holder.getYears();
         assertThat(years.size(), equalTo(18));
@@ -91,11 +101,66 @@ public class YearHolidayHolderTest {
             holidays.add(new Holiday(date, date));
         }
 
-        holder = new YearHolidayHolder(holidays);
+        holder = new YearHolidayHolder(holidays) {
+            protected Integer currentYear() {
+                return 2016;
+            }
+        };
         assertFalse(holder.isEmpty());
+        assertThat(holder.currentYear(), equalTo(2016));
+        assertThat(holder.getYear(), equalTo(2014));
 
         // The year will be the highest year if the 
         // current year is outside the range of years.
         assertThat(holder.getYear(), equalTo(2014));
+
+        holder.setYear(2013);
+        assertThat(holder.getYear(), equalTo(2013));
+
+        holidays = new ArrayList<Holiday>();
+        for (int year = 2014; year <= 2015; year++) {
+            for (Month month : Month.values()) {
+                LocalDate localDate = Dates.newLocalDate(year, month, 1);
+                Date date = Dates.toDate(localDate);
+                holidays.add(new Holiday(date, date));
+            }
+        }
+        holder = new YearHolidayHolder(holidays) {
+            protected Integer currentYear() {
+                return 2016;
+            }
+        };
+        assertThat(holder.getYear(), equalTo(2015));
+    }
+
+    @Test
+    public void getHolidays() {
+        List<Holiday> holidays = holder.getHolidays(2016);
+        assertThat(holidays.size(), equalTo(0));
+
+        for (int day = 1; day <= 31; day++) {
+            LocalDate localDate = Dates.newLocalDate(2016, Month.JANUARY, day);
+            Date date = Dates.toDate(localDate);
+            holidays.add(new Holiday(date, date));
+        }
+        holder = new YearHolidayHolder(holidays);
+        holidays = holder.getHolidays(2016);
+        assertThat(holidays.size(), equalTo(31));
+
+        holidays = new ArrayList<Holiday>();
+        for (Month month : Month.values()) {
+            LocalDate localDate = Dates.firstDateOfMonth(month, 2016);
+            Date date = Dates.toDate(localDate);
+            holidays.add(new Holiday(date, date));
+        }
+        holder = new YearHolidayHolder(holidays);
+        holidays = holder.getHolidays(2016);
+        assertThat(holidays.size(), equalTo(12));
+    }
+
+    @Test
+    public void currentYear() {
+        assertNotNull(holder.currentYear());
+        assertThat(holder.currentYear(), equalTo(Dates.currentYear()));
     }
 }

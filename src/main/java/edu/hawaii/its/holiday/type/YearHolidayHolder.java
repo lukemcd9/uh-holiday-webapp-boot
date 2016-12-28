@@ -17,7 +17,6 @@ public class YearHolidayHolder {
     }
 
     public YearHolidayHolder(List<Holiday> holidays) {
-        super();
         if (holidays != null && !holidays.isEmpty()) {
             for (Holiday h : holidays) {
                 add(Dates.yearOfDate(h.getObservedDate()), h);
