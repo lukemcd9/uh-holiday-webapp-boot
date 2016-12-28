@@ -1,6 +1,7 @@
 package edu.hawaii.its.holiday.service;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -17,6 +18,11 @@ public class EmployeeServiceSystemTest {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Test
+    public void construction() {
+        assertNotNull(employeeService.getEntityManager());
+    }
 
     @Test
     public void exists() {
