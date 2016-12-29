@@ -10,4 +10,4 @@ branches:
 script: mvn -Denv=dev clean test
   
 after_success:  
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn clean coveralls:report
