@@ -4,3 +4,4 @@
 /bin
 /target
 *-overrides.properties
+src/main/resources/static/javascript/tsconfig.json

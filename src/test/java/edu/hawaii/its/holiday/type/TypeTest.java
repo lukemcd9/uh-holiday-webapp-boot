@@ -1,5 +1,6 @@
 package edu.hawaii.its.holiday.type;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -35,5 +36,13 @@ public class TypeTest {
         assertThat(type.getId(), equalTo(666));
         assertThat(type.getDescription(), equalTo("The Beast"));
         assertThat(type.getVersion(), equalTo(9));
+    }
+
+    @Test
+    public void testToString() {
+        assertThat(type.toString(), containsString("id=null, description=null"));
+
+        type.setId(12345);
+        assertThat(type.toString(), containsString("Type [id=12345,"));
     }
 }

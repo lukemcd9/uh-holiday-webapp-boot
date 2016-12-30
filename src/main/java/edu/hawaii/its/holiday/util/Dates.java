@@ -95,7 +95,7 @@ public final class Dates {
 
         try {
             result = date.format(DateTimeFormatter.ofPattern(formatStr));
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             // Ignored.
         }
 

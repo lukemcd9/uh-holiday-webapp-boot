@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 public class Strings {
 
+    // Private constructor; prevent instantiation.
+    private Strings() {
+        // Emtpy.        
+    }
+
     public static String fill(final char ch, final int size) {
         char[] fill = new char[size];
         Arrays.fill(fill, ch);

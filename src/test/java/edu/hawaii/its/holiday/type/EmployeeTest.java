@@ -21,6 +21,10 @@ public class EmployeeTest {
     @Test
     public void construction() {
         assertNotNull(employee);
+        assertNull(employee.getUhNumber());
+
+        employee = new Employee(123456789L);
+        assertThat(employee.getUhNumber(), equalTo(123456789L));
     }
 
     @Test

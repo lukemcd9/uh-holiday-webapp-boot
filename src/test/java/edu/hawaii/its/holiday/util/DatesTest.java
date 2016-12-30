@@ -571,6 +571,14 @@ public class DatesTest {
         date = Dates.newLocalDate(2013, Month.DECEMBER, 30);
         String dateStr6 = Dates.formatDate(date, "M/yyyy");
         assertEquals("12/2013", dateStr6);
+
+        // Invalid pattern; defaults to yyyy-MM-dd.
+        String dateStr7 = Dates.formatDate(date, "what?");
+        assertEquals("2013-12-30", dateStr7);
+
+        // Not advised usage.
+        String dateStr8 = Dates.formatDate(date, null);
+        assertEquals("2013-12-30", dateStr8);
     }
 
     @Test
