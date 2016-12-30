@@ -47,7 +47,7 @@ public class UserRole implements Serializable {
 
     @Override
     public String toString() {
-        return "Role "
+        return "UserRole "
                 + "[id=" + id
                 + ", version=" + version
                 + ", authority=" + authority + "]";
