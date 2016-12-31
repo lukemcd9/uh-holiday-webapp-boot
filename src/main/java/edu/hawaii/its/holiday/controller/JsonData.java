@@ -49,11 +49,9 @@ public class JsonData<E> {
         if (data == null) {
             if (other.data != null) {
                 return false;
-            } else {
             }
         } else if (!data.equals(other.data)) {
             return false;
-        } else {
         }
         if (key == null) {
             if (other.key != null) {

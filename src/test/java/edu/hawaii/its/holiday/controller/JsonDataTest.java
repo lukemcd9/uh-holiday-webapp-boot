@@ -2,11 +2,13 @@ package edu.hawaii.its.holiday.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -74,15 +76,44 @@ public class JsonDataTest {
         jd2 = new JsonData<>(null, d1);
         assertEquals(jd1, jd2);
         assertTrue(jd1.equals(jd2));
+
+        d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        jd1 = new JsonData<>(d1);
+        assertFalse(jd1.equals(new String())); // Wrong type.
+
+        // Null data.
+        jd1 = new JsonData<>("key", d2);
+        jd2 = new JsonData<>("key", null);
+        assertEquals(jd1.getKey(), jd2.getKey());
+        assertNotNull(jd1.getData());
+        assertNull(jd2.getData());
+        assertThat(jd1, not(equalTo(jd2)));
+        assertThat(jd2, not(equalTo(jd1)));
+        assertFalse(jd2.equals(jd1));
+        assertFalse(jd1.equals(jd2));
+
+        LocalDate d3 = Dates.newLocalDate(2016, Month.DECEMBER, 26);
+        JsonData<LocalDate> jd3 = new JsonData<>(d3);
+        assertFalse(jd2.equals(jd3));
+        assertFalse(jd3.equals(jd2));
+
+        jd1 = new JsonData<>(null, d1);
+        jd2 = new JsonData<>(d1);
+        assertFalse(jd1.equals(jd2));
+        assertFalse(jd2.equals(jd1));
     }
 
     @Test
     public void testHashCode() {
+        JsonData<LocalDate> jd1 = new JsonData<>(null);
+        JsonData<LocalDate> jd2 = new JsonData<>(null);
+        assertEquals(jd1.hashCode(), jd2.hashCode());
+
         LocalDate d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        JsonData<LocalDate> jd1 = new JsonData<>(d1);
+        jd1 = new JsonData<>(d1);
 
         LocalDate d2 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        JsonData<LocalDate> jd2 = new JsonData<>(d2);
+        jd2 = new JsonData<>(d2);
 
         assertEquals(d1.hashCode(), d2.hashCode());
         assertEquals(jd1.hashCode(), jd2.hashCode());

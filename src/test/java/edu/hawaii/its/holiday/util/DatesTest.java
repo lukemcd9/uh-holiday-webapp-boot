@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -615,5 +617,13 @@ public class DatesTest {
         assertEquals(31, d.getDayOfMonth());
         assertEquals(2016, d.getYear());
         assertEquals(Month.OCTOBER, d.getMonth());
+    }
+
+    @Test
+    public void testConstructorIsPrivate() throws Exception {
+        Constructor<Dates> constructor = Dates.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 }

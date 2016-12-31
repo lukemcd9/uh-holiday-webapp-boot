@@ -5,6 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+
 import org.junit.Test;
 
 public class StringsTest {
@@ -54,5 +57,13 @@ public class StringsTest {
         } catch (Exception ex) {
             assertTrue(ex instanceof IndexOutOfBoundsException);
         }
+    }
+
+    @Test
+    public void testConstructorIsPrivate() throws Exception {
+        Constructor<Strings> constructor = Strings.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 }

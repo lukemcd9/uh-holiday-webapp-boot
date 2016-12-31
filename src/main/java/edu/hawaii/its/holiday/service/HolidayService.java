@@ -17,16 +17,8 @@ import edu.hawaii.its.holiday.util.Dates;
 @Repository("holidayService")
 public class HolidayService {
 
-    private EntityManager em;
-
     @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
-
-    public EntityManager getEntityManager() {
-        return em;
-    }
+    private EntityManager em;
 
     @Transactional(readOnly = true)
     @Cacheable(value = "holidaysById", key = "#id")
@@ -51,10 +43,6 @@ public class HolidayService {
     @Transactional(readOnly = true)
     @Cacheable(value = "holidaysByYear", key = "#year")
     public List<Holiday> findHolidays(Integer year) {
-        if (year == null) {
-            year = Dates.currentYear();
-        }
-
         String qlString = "select a from Holiday a "
                 + "where (a.observedDate between :start and :end) "
                 + "or (a.officialDate between :start and :end) "
@@ -67,17 +55,10 @@ public class HolidayService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "holidayTypes")
     public List<Type> findTypes() {
         String qlString = "select a from Type a "
                 + "order by a.id, a.version";
-        return em.createQuery(qlString, Type.class).getResultList();
-    }
-
-    @Transactional(readOnly = true)
-    @Cacheable(value = "holidayTypes")
-    public List<Type> findHolidayTypes() {
-        String qlString = "select a from HolidayType a "
-                + "order by a.typeId, a.holidayId";
         return em.createQuery(qlString, Type.class).getResultList();
     }
 
