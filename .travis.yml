@@ -3,6 +3,9 @@ install: true
 jdk:
   - oraclejdk8
 
+env:
+  - UH_HOLIDAY_WEBAPP_BOOT_REPO_TOKEN=
+
 branches:
   only:
   - master
