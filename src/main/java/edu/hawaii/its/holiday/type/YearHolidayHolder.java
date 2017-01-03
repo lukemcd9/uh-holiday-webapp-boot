@@ -23,7 +23,7 @@ public class YearHolidayHolder {
                 add(Dates.yearOfDate(h.getOfficialDate()), h);
             }
 
-            Integer currentYear = Dates.currentYear();
+            Integer currentYear = currentYear();
             if (yearMap.containsKey(currentYear)) {
                 this.year = currentYear;
             }
