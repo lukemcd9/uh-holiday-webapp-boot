@@ -53,7 +53,7 @@ public class HolidayRestControllerSystemTest {
     public void httpGetHolidays() throws Exception {
         mockMvc.perform(get("/api/holidays"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("data", hasSize(99)));
+                .andExpect(jsonPath("data", hasSize(140)));
     }
 
     @Test
