@@ -1,5 +1,7 @@
 package edu.hawaii.its.holiday.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,14 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Value("#{'${admin.list}'.split(',')}")
     private List<String> admins;
+
+    @Override
+    public void load(List<String> admins) {
+        if (admins == null) {
+            admins = new ArrayList<>();
+        }
+        this.admins = Collections.unmodifiableList(admins);
+    }
 
     @Override
     @Transactional(readOnly = true)

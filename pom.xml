@@ -5,7 +5,7 @@
     
     <artifactId>spring-boot-holidays</artifactId>
     <packaging>war</packaging>
-    <name>myiam</name>
+    <name>holidays</name>
     <description>Spring Boot ITS Holiday Application</description>
     <version>1.0</version>
 
@@ -122,6 +122,16 @@
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
             <version>1.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>html5shiv</artifactId>
+            <version>3.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>respond</artifactId>
+            <version>1.4.2</version>
         </dependency>
     </dependencies>
     <build>

@@ -64,3 +64,7 @@ appropriate command line argument.
 To run the System Tests:
 
     $ mvn -Dtest=*SystemTest clean test
+    
+##### Running the Application locally
+
+http://localhost:8080/holidays/

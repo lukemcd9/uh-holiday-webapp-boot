@@ -1,7 +1,6 @@
 package edu.hawaii.its.holiday.controller;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,8 @@ public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    @RequestMapping(value = { "", "/", "/home" }, method = { RequestMethod.GET })
-    public String home(Map<String, Object> model, Locale locale) {
+    @RequestMapping(value = { "", "/" }, method = { RequestMethod.GET })
+    public String home(Locale locale) {
         logger.info("User at home. The client locale is {}.", locale);
         return "home";
     }
@@ -29,7 +28,7 @@ public class HomeController {
 
     @RequestMapping(value = "/faq", method = RequestMethod.GET)
     public String faq(Locale locale, Model model) {
-        logger.info("User at contact.");
+        logger.info("User at faq.");
         return "faq";
     }
 

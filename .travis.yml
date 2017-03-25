@@ -3,14 +3,12 @@ install: true
 jdk:
   - oraclejdk8
 
-env:
-  - UH_HOLIDAY_WEBAPP_BOOT_REPO_TOKEN=
-
 branches:
   only:
   - master
   
-script: mvn -Denv=dev clean test
+script:
+  - mvn clean test
   
 after_success:  
   - mvn clean cobertura:cobertura coveralls:report

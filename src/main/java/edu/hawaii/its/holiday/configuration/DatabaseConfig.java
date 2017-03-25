@@ -21,7 +21,7 @@ import org.springframework.util.Assert;
 @EnableTransactionManagement
 @PropertySources({
         @PropertySource("classpath:application.properties"),
-        @PropertySource(value = "file:${user.home}/.${user.name}-conf/myiam-overrides.properties",
+        @PropertySource(value = "file:${user.home}/.${user.name}-conf/holidays-overrides.properties",
                         ignoreResourceNotFound = true),
 })
 public class DatabaseConfig {
