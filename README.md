@@ -18,15 +18,15 @@ https://github.com/fduckart/uh-holiday-webapp-boot
 ##### Building
 Install the necessary project dependencies:
 
-    $ mvn install
+    $ ./mvn install
 
 To run the Application from the Command Line:
 
-    $ mvn clean spring-boot:run
+    $ ./mvn clean spring-boot:run
 
 To build a deployable war file for local development, if preferred:
 
-    $ mvn clean package
+    $ ./mvn clean package
 
 You should have a deployable war file in the target directory.
 Deploy as usual in a servlet container, e.g. tomcat.
@@ -43,15 +43,15 @@ line arguments.
 
 To run the Unit Tests with a standard build:
 
-    $ mvn clean test
+    $ ./mvn clean test
 
 To run a test class:
 
-    $ mvn clean test -Dtest=StringsTest
+    $ ./mvn clean test -Dtest=StringsTest
 
 To run a single method in a test class:
 
-    $ mvn clean test -Dtest=StringsTest#trunctate
+    $ ./mvn clean test -Dtest=StringsTest#trunctate
 
 ##### Running System Tests
 The project files include a handful of System Tests.
@@ -63,8 +63,8 @@ appropriate command line argument.
 
 To run the System Tests:
 
-    $ mvn -Dtest=*SystemTest clean test
-    
+    $ ./mvn -Dtest=*SystemTest clean test
+
 ##### Running the Application locally
 
 http://localhost:8080/holidays/
