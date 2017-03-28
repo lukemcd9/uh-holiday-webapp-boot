@@ -14,7 +14,7 @@ import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
-public class EmployeeServiceSystemTest {
+public class EmployeeServiceTest {
 
     @Autowired
     private EmployeeService employeeService;
@@ -28,6 +28,8 @@ public class EmployeeServiceSystemTest {
     public void exists() {
         assertTrue(employeeService.exists("89999999"));
         assertTrue(employeeService.exists("10000004"));
+
+        assertFalse(employeeService.exists("19000000"));
 
         assertFalse(employeeService.exists(null));
         assertFalse(employeeService.exists(""));
