@@ -1,7 +1,7 @@
 A web application to display holidays used by UH.
 
 [![Build Status](https://travis-ci.org/fduckart/uh-holiday-webapp-boot.png?branch=master)](https://travis-ci.org/fduckart/uh-holiday-webapp-boot)
-[![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp-boot/badge.svg?branch=master)](https://coveralls.io/github/fduckart/uh-holiday-webapp-boot?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp-boot/badge.svg)](https://coveralls.io/github/fduckart/uh-holiday-webapp-boot)
 ##### Build Tool
 First, you need to download and install maven (version 3.2.1+).
 
@@ -18,15 +18,15 @@ https://github.com/fduckart/uh-holiday-webapp-boot
 ##### Building
 Install the necessary project dependencies:
 
-    $ ./mvn install
+    $ ./mvnw install
 
 To run the Application from the Command Line:
 
-    $ ./mvn clean spring-boot:run
+    $ ./mvnw clean spring-boot:run
 
 To build a deployable war file for local development, if preferred:
 
-    $ ./mvn clean package
+    $ ./mvnw clean package
 
 You should have a deployable war file in the target directory.
 Deploy as usual in a servlet container, e.g. tomcat.
@@ -43,15 +43,15 @@ line arguments.
 
 To run the Unit Tests with a standard build:
 
-    $ ./mvn clean test
+    $ ./mvnw clean test
 
 To run a test class:
 
-    $ ./mvn clean test -Dtest=StringsTest
+    $ ./mvnw clean test -Dtest=StringsTest
 
 To run a single method in a test class:
 
-    $ ./mvn clean test -Dtest=StringsTest#trunctate
+    $ ./mvnw clean test -Dtest=StringsTest#trunctate
 
 ##### Running System Tests
 The project files include a handful of System Tests.
@@ -63,7 +63,7 @@ appropriate command line argument.
 
 To run the System Tests:
 
-    $ ./mvn -Dtest=*SystemTest clean test
+    $ ./mvnw -Dtest=*SystemTest clean test
 
 ##### Running the Application locally
 
