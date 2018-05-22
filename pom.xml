@@ -6,7 +6,7 @@
     <groupId>edu.hawaii.its</groupId>
     <artifactId>holiday</artifactId>
     <packaging>war</packaging>
-    <name>holidays</name>
+    <name>holiday</name>
     <description>University of Hawaii ITS Holiday Application</description>
     <version>1.1</version>
 
