@@ -1,17 +1,17 @@
 @font-face {
     font-family: cinzel-regular;
-    src: url(/holidays/fonts/Cinzel-Regular.ttf);
+    src: url(../fonts/Cinzel-Regular.ttf);
 }
 
 @font-face {
     font-family: cormorant-upright-regular;
-    src: url(/holidays/fonts/CormorantUpright-Regular.ttf);
+    src: url(../fonts/CormorantUpright-Regular.ttf);
 }
 
 html {
     position: relative;
     min-height: 100%;
-    overflow-y:scroll;    
+    overflow-y:scroll;
 }
 
 body {
