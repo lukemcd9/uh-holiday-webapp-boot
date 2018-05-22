@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.hawaii.its</groupId>
-    <artifactId>holidays</artifactId>
+    <artifactId>holiday</artifactId>
     <packaging>war</packaging>
     <name>holidays</name>
     <description>University of Hawaii ITS Holiday Application</description>
