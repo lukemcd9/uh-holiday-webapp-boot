@@ -95,7 +95,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -167,7 +167,7 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <echo>Now that you have a clean project,</echo>
                                 <echo>here are some common goals for this project:</echo>
                                 <echo>$ mvn clean test</echo>
@@ -176,7 +176,7 @@
                                 <echo>$ mvn -Dmaven.test.skip=true clean package</echo>
                                 <echo>$ mvn clean test jacoco:report</echo>
                                 <echo>$ mvn clean spring-boot:run</echo>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
