@@ -1,21 +1,21 @@
 package edu.hawaii.its.holiday.type;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,10 +29,11 @@ import edu.hawaii.its.holiday.util.Dates;
 @JsonRootName(value = "data")
 public class Holiday implements Serializable {
 
-    public static final long serialVersionUID = 53L;
+    private static final long serialVersionUID = 53L;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Integer id;
 
@@ -44,21 +45,19 @@ public class Holiday implements Serializable {
     private String description;
 
     @Column(name = "observed_date")
-    @Temporal(TemporalType.DATE)
     @JsonSerialize(using = HolidayDateSerializer.class)
-    private Date observedDate;
+    private LocalDate observedDate;
 
     @Column(name = "official_date")
-    @Temporal(TemporalType.DATE)
     @JsonSerialize(using = HolidayDateSerializer.class)
-    private Date officialDate;
+    private LocalDate officialDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "holiday_type",
-               joinColumns = @JoinColumn(name = "holiday_id", unique = false),
-               inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
+            joinColumns = @JoinColumn(name = "holiday_id", unique = false),
+            inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
     @OrderBy(value = "id")
-    private List<Type> holidayTypes = new ArrayList<Type>(0);
+    private List<Type> holidayTypes = new ArrayList<>(0);
 
     // Constructor.
     public Holiday() {
@@ -66,7 +65,7 @@ public class Holiday implements Serializable {
     }
 
     // Constructor.
-    public Holiday(Date officialDate, Date observedDate) {
+    public Holiday(LocalDate officialDate, LocalDate observedDate) {
         this();
         this.officialDate = officialDate;
         this.observedDate = observedDate;
@@ -96,19 +95,19 @@ public class Holiday implements Serializable {
         this.description = description;
     }
 
-    public Date getObservedDate() {
+    public LocalDate getObservedDate() {
         return observedDate;
     }
 
-    public void setObservedDate(Date observedDate) {
+    public void setObservedDate(LocalDate observedDate) {
         this.observedDate = observedDate;
     }
 
-    public Date getOfficialDate() {
+    public LocalDate getOfficialDate() {
         return officialDate;
     }
 
-    public void setOfficialDate(Date officialDate) {
+    public void setOfficialDate(LocalDate officialDate) {
         this.officialDate = officialDate;
     }
 

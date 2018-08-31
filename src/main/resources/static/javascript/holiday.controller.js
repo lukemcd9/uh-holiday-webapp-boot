@@ -8,7 +8,6 @@
             var date = new Date();
             var year = date.getFullYear();
             $scope.yearCode = year.toString();
-            $scope.maxYear = year;
             $scope.years = [];
             $scope.years.push(year);
 
@@ -21,7 +20,9 @@
                         $scope.years.push(y);
                     }
                 }
-                $scope.years.sort(function(a, b){return b - a});
+                $scope.years.sort(function(a, b) {
+                    return b - a
+                });
             }, url);
 
         };

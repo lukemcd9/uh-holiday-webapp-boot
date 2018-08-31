@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -21,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,9 +30,9 @@ import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 public class HolidayServiceTest {
 
     @Autowired
@@ -42,39 +41,24 @@ public class HolidayServiceTest {
     @Test
     public void findHolidays() {
         List<Holiday> holidays = holidayService.findHolidays();
+        int size = holidays.size();
+        assertTrue(size > 0);
+        int index = size - 1;
 
-        Holiday h0 = holidays.get(0);
+        Holiday h0 = holidays.get(index);
         assertNotNull(h0);
         Holiday h1 = holidayService.findHoliday(h0.getId());
         assertEquals(h0.getId(), h1.getId());
         assertEquals(h0, h1);
 
         // Check that the caching is working.
-        Holiday h2 = holidayService.findHolidays().get(0);
-        Holiday h3 = holidayService.findHolidays().get(0);
+        Holiday h2 = holidayService.findHolidays().get(index);
+        Holiday h3 = holidayService.findHolidays().get(index);
         assertEquals(h2, h3);
         assertSame(h2, h3);
-    }
 
-    @Test
-    public void findHolidaysByYear() {
-        List<Holiday> holidays = holidayService.findHolidays(2016);
-        assertThat(holidays.size(), equalTo(14));
-
-        holidays = holidayService.findHolidays(2014);
-        assertThat(holidays.size(), equalTo(15));
-
-        holidays = holidayService.findHolidays(2011);
-        assertThat(holidays.size(), equalTo(14));
-
-        holidays = holidayService.findHolidays(2010);
-        assertThat(holidays.size(), equalTo(1));
-
-        // Check that the caching is working.
-        Holiday h0 = holidayService.findHolidays(2010).get(0);
-        Holiday h1 = holidayService.findHolidays(2010).get(0);
-        assertEquals(h0, h1);
-        assertSame(h0, h1); // Check if caching is working.
+        assertThat(h2.getId(), equalTo(15));
+        assertThat(h2.getDescription(), equalTo("New Year's Day"));
     }
 
     @Test
@@ -129,13 +113,12 @@ public class HolidayServiceTest {
         SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
         df.setTimeZone(TimeZone.getTimeZone("HST"));
 
-        String toParse = "December 20, 2014";
-        Date obsDate = df.parse(toParse);
+        String toParse = "December 20, 2014, Saturday";
+        LocalDate obsDate = Dates.toLocalDate(df.parse(toParse));
         assertNotNull(obsDate);
 
         LocalDate localDate = Dates.newLocalDate(2014, Month.DECEMBER, 20);
-        obsDate = Dates.toDate(localDate);
-        Date offDate = Dates.toDate(localDate.plusDays(200));
+        LocalDate offDate = localDate.plusDays(200);
 
         Holiday holiday = new Holiday();
         holiday.setObservedDate(obsDate);

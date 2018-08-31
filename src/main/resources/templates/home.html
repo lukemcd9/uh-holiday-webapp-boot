@@ -11,7 +11,7 @@
                 <div class="row">
                     <form class="form-inline">
                         <div class="col-xs-5 col-md-3 text-left">
-                            <select class="form-control" id="yearCode" name="yearCode" ng-model="yearCode" ng-change="yearChange()">
+                            <select class="form-control" id="yearCode" name="yearCode" ng-model="yearCode">
                                 <option ng-repeat="y in years">{{y}}</option>
                                 <option value="">(all years) </option>
                             </select>
@@ -47,6 +47,5 @@
     <!-- / Content container. -->
 
     <div th:substituteby="footer :: copy"></div>
-
 </body>
 </html>

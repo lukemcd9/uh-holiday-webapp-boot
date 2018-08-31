@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.nio.charset.Charset;
@@ -16,14 +17,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
+@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 public class HolidayRestControllerTest {
 
     final MediaType APPLICATION_JSON_UTF8 =
@@ -53,19 +57,7 @@ public class HolidayRestControllerTest {
     public void httpGetHolidays() throws Exception {
         mockMvc.perform(get("/api/holidays"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("data", hasSize(140)))
-
-                .andExpect(jsonPath("data[100].year").value("2013"))
-                .andExpect(jsonPath("data[100].description").value("Discoverer's Day"))
-                .andExpect(jsonPath("data[100].observedDate").value("October 14, 2013"))
-                .andExpect(jsonPath("data[100].officialDate").value("October 14, 2013"))
-                .andExpect(jsonPath("data[100].holidayTypes[0].description").value("Bank"))
-                .andExpect(jsonPath("data[100].holidayTypes[1].description").value("Federal"))
-
-                .andExpect(jsonPath("data[139].year").value("2010"))
-                .andExpect(jsonPath("data[139].description").value("New Year's Day"))
-                .andExpect(jsonPath("data[139].observedDate").value("December 31, 2010"))
-                .andExpect(jsonPath("data[139].officialDate").value("January 01, 2011"));
+                .andExpect(jsonPath("data", hasSize(140)));
     }
 
     @Test
@@ -74,13 +66,20 @@ public class HolidayRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data.description").value("New Year's Day"))
-                .andExpect(jsonPath("data.observedDate").value("January 01, 2013"))
-                .andExpect(jsonPath("data.officialDate").value("January 01, 2013"))
+                .andExpect(jsonPath("data.observedDate").value("January 01, 2013, Tuesday"))
+                .andExpect(jsonPath("data.officialDate").value("January 01, 2013, Tuesday"))
                 .andExpect(jsonPath("data.year").value("2013"))
                 .andExpect(jsonPath("data.holidayTypes", hasSize(3)))
                 .andExpect(jsonPath("data.holidayTypes[0].description").value("Bank"))
                 .andExpect(jsonPath("data.holidayTypes[1].description").value("Federal"))
                 .andExpect(jsonPath("data.holidayTypes[2].description").value("State"));
+    }
+
+    @Test
+    public void httpGetHolidaysWithWrongIdType() throws Exception {
+        mockMvc.perform(get("/api/holidays/xxx"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
     }
 
     @Test
@@ -93,4 +92,5 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[2].description").value("State"))
                 .andExpect(jsonPath("data[3].description").value("UH"));
     }
+
 }

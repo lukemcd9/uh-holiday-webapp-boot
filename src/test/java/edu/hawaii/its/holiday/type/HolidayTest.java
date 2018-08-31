@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class HolidayTest {
         assertNull(holiday.getObservedDate());
         assertNull(holiday.getYear());
         LocalDate xmas = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        holiday.setObservedDate(Dates.toDate(xmas));
+        holiday.setObservedDate(xmas);
         assertThat(holiday.getYear().intValue(), equalTo(2016));
 
         assertNull(holiday.getOfficialDate());
@@ -68,15 +67,13 @@ public class HolidayTest {
         assertThat(h1.hashCode(), equalTo(h2.hashCode()));
 
         LocalDate ld1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        Date d1 = Dates.toDate(ld1);
-        h1 = new Holiday(d1, d1);
+        h1 = new Holiday(ld1, ld1);
         h1.setId(1);
         h1.setVersion(1);
         h1.setDescription("Xmas 2016");
 
         LocalDate ld2 = Dates.newLocalDate(2016, Month.DECEMBER, 26);
-        Date d2 = Dates.toDate(ld2);
-        h2 = new Holiday(d1, d2);
+        h2 = new Holiday(ld1, ld2);
         h2.setId(1);
         h2.setVersion(1);
         h2.setDescription("Xmas 2016");
@@ -97,13 +94,11 @@ public class HolidayTest {
         assertThat(h1, equalTo(h2));
 
         LocalDate ld1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        Date d1 = Dates.toDate(ld1);
-        h1 = new Holiday(d1, d1);
+        h1 = new Holiday(ld1, ld1);
         assertThat(h1, not(equalTo(h2)));
 
         LocalDate ld2 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
-        Date d2 = Dates.toDate(ld2);
-        h2 = new Holiday(d1, d2);
+        h2 = new Holiday(ld1, ld2);
         assertThat(h1, equalTo(h2));
 
         h1.setId(1);
@@ -140,22 +135,20 @@ public class HolidayTest {
         assertThat(h1, not(equalTo(h2)));
         h2.setObservedDate(null);
         assertThat(h1, equalTo(h2));
-        h1.setObservedDate(d1);
-        h2.setObservedDate(d2);
+        h1.setObservedDate(ld1);
+        h2.setObservedDate(ld2);
         assertThat(h1, equalTo(h2));
 
         h1.setOfficialDate(null);
         assertThat(h1, not(equalTo(h2)));
         h2.setOfficialDate(null);
         assertThat(h1, equalTo(h2));
-        h1.setOfficialDate(d1);
-        h2.setOfficialDate(d2);
+        h1.setOfficialDate(ld1);
+        h2.setOfficialDate(ld2);
         assertThat(h1, equalTo(h2));
 
         LocalDate ld3 = Dates.newLocalDate(2016, Month.DECEMBER, 26);
-        Date d3 = Dates.toDate(ld3);
-
-        h2.setOfficialDate(d3);
+        h2.setOfficialDate(ld3);
         assertThat(h1, not(equalTo(h2)));
     }
 

@@ -1,32 +1,20 @@
 package edu.hawaii.its.holiday.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.hawaii.its.holiday.repository.MessageRepository;
 import edu.hawaii.its.holiday.type.Message;
 
-@Service("messageService")
+@Service
 public class MessageServiceImpl implements MessageService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
-    private EntityManager em;
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
-
-    public EntityManager getEntityManager() {
-        return em;
-    }
+    @Autowired
+    private MessageRepository messageRepository;
 
     @CacheEvict(value = "messages", allEntries = true)
     public void evictCache() {
@@ -36,30 +24,22 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "messages", key = "#id")
-    public Message findMessage(int id) {
-        Message message = null;
-        try {
-            message = em.find(Message.class, id);
-        } catch (Exception e) {
-            logger.error("Error:", e);
-        }
-        return message;
+    public Message findMessage(Integer id) {
+        return messageRepository.findById(id);
     }
 
     @Override
     @Transactional
     @CachePut(value = "messages", key = "#result.id")
     public Message update(Message message) {
-        em.merge(message);
-        return message;
+        return messageRepository.save(message);
     }
 
     @Override
     @Transactional
-    @CachePut(value = "messages", key = "#result.id")
+    @CachePut(value = "messages", key = "#message.id")
     public Message add(Message message) {
-        em.persist(message);
-        return message;
+        return messageRepository.save(message);
     }
 
 }

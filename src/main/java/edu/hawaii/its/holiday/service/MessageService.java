@@ -1,20 +1,15 @@
 package edu.hawaii.its.holiday.service;
 
-import javax.persistence.EntityManager;
-
 import edu.hawaii.its.holiday.type.Message;
 
 public interface MessageService {
-    public EntityManager getEntityManager();
 
-    public void setEntityManager(EntityManager em);
+    void evictCache();
 
-    public void evictCache();
+    Message findMessage(Integer id);
 
-    public Message findMessage(int id);
+    Message add(Message message);
 
-    public Message add(Message message);
-
-    public Message update(Message message);
+    Message update(Message message);
 
 }
