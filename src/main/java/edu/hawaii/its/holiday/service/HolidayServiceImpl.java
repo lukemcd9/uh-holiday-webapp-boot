@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
-import edu.hawaii.its.holiday.util.Dates;
 
 @Repository("holidayService")
 public class HolidayServiceImpl implements HolidayService {
@@ -34,20 +33,6 @@ public class HolidayServiceImpl implements HolidayService {
         String qlString = "select a from Holiday a "
                 + "order by a.observedDate desc";
         return em.createQuery(qlString, Holiday.class).getResultList();
-    }
-
-    @Transactional(readOnly = true)
-    @Cacheable(value = "holidaysByYear", key = "#year")
-    public List<Holiday> findHolidays(Integer year) {
-        String qlString = "select a from Holiday a "
-                + "where (a.observedDate between :start and :end) "
-                + "or (a.officialDate between :start and :end) "
-                + "order by a.observedDate desc";
-
-        return em.createQuery(qlString, Holiday.class)
-                .setParameter("start", Dates.toDate(Dates.firstDateOfYear(year)))
-                .setParameter("end", Dates.toDate(Dates.lastDateOfYear(year)))
-                .getResultList();
     }
 
     @Override

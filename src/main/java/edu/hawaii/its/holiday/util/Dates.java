@@ -180,13 +180,6 @@ public final class Dates {
         return Date.from(localDate.atStartOfDay(zoneId()).toInstant());
     }
 
-    public static Date toDate(LocalDateTime localDateTime) {
-        if (localDateTime == null) {
-            return null;
-        }
-        return Date.from(localDateTime.atZone(zoneId()).toInstant());
-    }
-
     public static LocalDate toLocalDate(String s, String format) {
         LocalDate localDate = null;
         try {

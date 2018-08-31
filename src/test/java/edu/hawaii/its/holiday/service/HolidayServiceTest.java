@@ -2,6 +2,7 @@ package edu.hawaii.its.holiday.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -59,6 +60,11 @@ public class HolidayServiceTest {
 
         assertThat(h2.getId(), equalTo(15));
         assertThat(h2.getDescription(), equalTo("New Year's Day"));
+
+        // Make sure they all have Types
+        for (Holiday h : holidays) {
+            assertThat(h.toString(), h.getHolidayTypes().size(), not(equalTo(0)));
+        }
     }
 
     @Test

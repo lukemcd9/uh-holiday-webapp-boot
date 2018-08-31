@@ -23,8 +23,7 @@ public class HolidayRestController {
     @Autowired
     private HolidayService holidayService;
 
-    @GetMapping(value = "/api/holidays",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/holidays")
     public ResponseEntity<JsonData<List<Holiday>>> holidays() {
         logger.info("Entered REST holidays...");
         List<Holiday> holidays = holidayService.findHolidays();
@@ -34,8 +33,7 @@ public class HolidayRestController {
                 .body(data);
     }
 
-    @GetMapping(value = "/api/holidays/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/holidays/{id}")
     public ResponseEntity<JsonData<Holiday>> holiday(@PathVariable Integer id) {
         logger.info("Entered REST holiday(" + id + ") ...");
         Holiday holiday = holidayService.findHoliday(id);

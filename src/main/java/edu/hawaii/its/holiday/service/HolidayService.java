@@ -12,8 +12,6 @@ public interface HolidayService {
 
     public List<Holiday> findHolidays();
 
-    public List<Holiday> findHolidays(Integer year);
-
     public List<UserRole> findUserRoles();
 
     public Type findType(Integer id);

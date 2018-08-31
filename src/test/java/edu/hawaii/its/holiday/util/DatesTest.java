@@ -65,6 +65,13 @@ public class DatesTest {
     }
 
     @Test
+    public void newDate() {
+        LocalDate localDate = null;
+        Date date = Dates.toDate(localDate);
+        assertThat(date, equalTo(null));
+    }
+
+    @Test
     public void testFindPreviousSunday() {
         LocalDate date1 = Dates.newLocalDate(2010, Month.AUGUST, 9); // A Monday.
         Calendar cal = Calendar.getInstance();
@@ -462,7 +469,6 @@ public class DatesTest {
 
     @Test
     public void testMisc() {
-
         for (int year = 1962; year < 2050; year++) {
             final LocalDate endOfYear = Dates.newLocalDate(year, Month.DECEMBER, 31);
 
@@ -658,15 +664,7 @@ public class DatesTest {
     }
 
     @Test
-    public void localDateToDate() {
-        LocalDateTime localDateTime = null;
-        Date d0 = Dates.toDate(localDateTime);
-        assertThat(d0, equalTo(null));
-    }
-
-    @Test
     public void localDateTimeToDate() {
-
         LocalDate date = Dates.newLocalDate(2013, Month.DECEMBER, 30);
         LocalTime time = LocalTime.of(12, 34, 56);
         LocalDateTime dateTime = LocalDateTime.of(date, time);
@@ -676,7 +674,6 @@ public class DatesTest {
 
         dateStr = Dates.formatDate(dateTime, null);
         assertEquals("2013-12-30T12:34:56", dateStr);
-
     }
 
     @Test
