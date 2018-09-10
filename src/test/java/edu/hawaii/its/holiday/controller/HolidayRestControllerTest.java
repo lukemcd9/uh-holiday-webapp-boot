@@ -69,10 +69,10 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data.observedDate").value("January 01, 2013, Tuesday"))
                 .andExpect(jsonPath("data.officialDate").value("January 01, 2013, Tuesday"))
                 .andExpect(jsonPath("data.year").value("2013"))
-                .andExpect(jsonPath("data.holidayTypes", hasSize(3)))
-                .andExpect(jsonPath("data.holidayTypes[0].description").value("Bank"))
-                .andExpect(jsonPath("data.holidayTypes[1].description").value("Federal"))
-                .andExpect(jsonPath("data.holidayTypes[2].description").value("State"));
+                .andExpect(jsonPath("data.types", hasSize(3)))
+                .andExpect(jsonPath("data.types[0].description").value("Bank"))
+                .andExpect(jsonPath("data.types[1].description").value("Federal"))
+                .andExpect(jsonPath("data.types[2].description").value("State"));
     }
 
     @Test

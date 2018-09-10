@@ -63,7 +63,7 @@ public class HolidayServiceTest {
 
         // Make sure they all have Types
         for (Holiday h : holidays) {
-            assertThat(h.toString(), h.getHolidayTypes().size(), not(equalTo(0)));
+            assertThat(h.toString(), h.getTypes().size(), not(equalTo(0)));
         }
     }
 
@@ -147,23 +147,28 @@ public class HolidayServiceTest {
         Holiday h4 = holidayService.findHoliday(4);
         assertEquals("Prince Kuhio Day", h4.getDescription());
 
-        assertEquals(3, h1.getHolidayTypes().size());
-        assertEquals(3, h2.getHolidayTypes().size());
-        assertEquals(2, h4.getHolidayTypes().size());
+        assertEquals(3, h1.getTypes().size());
+        assertEquals(3, h2.getTypes().size());
+        assertEquals(2, h4.getTypes().size());
 
-        List<Type> types = h1.getHolidayTypes();
+        List<Type> types = h1.getTypes();
         assertThat(types.get(0).getId(), equalTo(1));
         assertThat(types.get(1).getId(), equalTo(2));
         assertThat(types.get(2).getId(), equalTo(3));
 
-        types = h2.getHolidayTypes();
+        types = h2.getTypes();
         assertThat(types.get(0).getId(), equalTo(1));
         assertThat(types.get(1).getId(), equalTo(2));
         assertThat(types.get(2).getId(), equalTo(3));
 
-        types = h4.getHolidayTypes();
+        types = h4.getTypes();
         assertThat(types.get(0).getId(), equalTo(3));
         assertThat(types.get(1).getId(), equalTo(4));
+
+        List<String> holidayTypes = h4.getHolidayTypes();
+        assertThat(holidayTypes.size(), equalTo(2));
+        assertThat(holidayTypes.get(0), equalTo("State"));
+        assertThat(holidayTypes.get(1), equalTo("UH"));
     }
 
     @Test

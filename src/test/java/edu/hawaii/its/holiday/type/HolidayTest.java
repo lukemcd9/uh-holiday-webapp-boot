@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class HolidayTest {
         assertNull(holiday.getId());
         assertNull(holiday.getDescription());
         assertNull(holiday.getVersion());
-        assertNotNull(holiday.getHolidayTypes());
+        assertNotNull(holiday.getTypes());
 
         holiday.setId(666);
         holiday.setDescription("The Beast");
@@ -47,9 +48,12 @@ public class HolidayTest {
         assertThat(holiday.getDescription(), equalTo("The Beast"));
         assertThat(holiday.getVersion(), equalTo(9));
 
-        assertThat(holiday.getHolidayTypes().size(), equalTo(0));
-        holiday.setHolidayTypes(null);
-        assertNull(holiday.getHolidayTypes());
+        assertThat(holiday.getTypes().size(), equalTo(0));
+        holiday.setTypes(null);
+        assertNotNull(holiday.getTypes());
+        assertThat(holiday.getTypes().size(), equalTo(0));
+        holiday.setTypes(new ArrayList<Type>());
+        assertThat(holiday.getTypes().size(), equalTo(0));
 
         assertNull(holiday.getObservedDate());
         assertNull(holiday.getYear());

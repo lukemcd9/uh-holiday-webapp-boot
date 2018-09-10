@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +58,7 @@ public class Holiday implements Serializable {
             joinColumns = @JoinColumn(name = "holiday_id", unique = false),
             inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
     @OrderBy(value = "id")
-    private List<Type> holidayTypes = new ArrayList<>(0);
+    private List<Type> types = new ArrayList<>(0);
 
     // Constructor.
     public Holiday() {
@@ -111,12 +112,17 @@ public class Holiday implements Serializable {
         this.officialDate = officialDate;
     }
 
-    public List<Type> getHolidayTypes() {
-        return holidayTypes;
+    public List<Type> getTypes() {
+        return types;
     }
 
-    public void setHolidayTypes(List<Type> holidayTypes) {
-        this.holidayTypes = holidayTypes;
+    public void setTypes(List<Type> types) {
+        this.types = types != null ? types : new ArrayList<>();
+    }
+
+    @Transient
+    public List<String> getHolidayTypes() {
+        return types.stream().map(Type::getDescription).collect(Collectors.toList());
     }
 
     @Transient
@@ -177,7 +183,7 @@ public class Holiday implements Serializable {
                 + ", description=" + description
                 + ", observedDate=" + observedDate
                 + ", officialDate=" + officialDate
-                + ", holidayTypes=" + holidayTypes
+                + ", types=" + types
                 + "]";
     }
 
