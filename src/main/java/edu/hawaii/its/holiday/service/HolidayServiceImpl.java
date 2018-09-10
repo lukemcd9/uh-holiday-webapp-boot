@@ -1,5 +1,7 @@
 package edu.hawaii.its.holiday.service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import edu.hawaii.its.holiday.repository.UserRoleRepository;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
+import edu.hawaii.its.holiday.util.Dates;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -57,6 +60,13 @@ public class HolidayServiceImpl implements HolidayService {
     @Cacheable(value = "holidayTypes")
     public List<Type> findTypes() {
         return typeRepository.findAll();
+    }
+
+    @Override
+    public List<Holiday> findHolidaysByYear(Integer year) {
+        LocalDate start = Dates.firstDateOfYear(year);
+        LocalDate end = Dates.lastDateOfMonth(Month.DECEMBER, year);
+        return holidayRepository.findAllByOfficialDateBetween(start, end);
     }
 
 }

@@ -165,4 +165,20 @@ public class HolidayServiceTest {
         assertThat(types.get(0).getId(), equalTo(3));
         assertThat(types.get(1).getId(), equalTo(4));
     }
+
+    @Test
+    public void findHolidaysByYear() {
+        assertThat(holidayService.findHolidaysByYear(2010).size(), equalTo(0));
+        assertThat(holidayService.findHolidaysByYear(2011).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2012).size(), equalTo(15));
+        assertThat(holidayService.findHolidaysByYear(2013).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2014).size(), equalTo(15));
+        assertThat(holidayService.findHolidaysByYear(2015).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2016).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2017).size(), equalTo(13));
+        assertThat(holidayService.findHolidaysByYear(2018).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2019).size(), equalTo(13));
+        assertThat(holidayService.findHolidaysByYear(2020).size(), equalTo(14));
+        assertThat(holidayService.findHolidaysByYear(2021).size(), equalTo(0));
+    }
 }

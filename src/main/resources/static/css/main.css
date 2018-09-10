@@ -85,6 +85,8 @@ td.uh-pre {
     background-color: transparent;
 }
 .navbar-brand.uh-nav-app-name {
+    font-family: 'Courier New', Courier;
+    font-size: 14px;    
     height: 50px;
     width: auto;
     padding-top: 20px;
@@ -117,6 +119,7 @@ div .panel > .panel-heading {
     body {
         padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
         padding-bottom: 50px;
+        background-color: white;
     }
     .navbar {
         min-height: 90px;

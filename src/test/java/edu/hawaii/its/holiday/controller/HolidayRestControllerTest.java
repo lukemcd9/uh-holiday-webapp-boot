@@ -76,6 +76,62 @@ public class HolidayRestControllerTest {
     }
 
     @Test
+    public void httpGetHolidaysByYear() throws Exception {
+        mockMvc.perform(get("/api/holidays/year/2011/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(14)))
+                .andExpect(jsonPath("data[0].description").value("New Year's Day"))
+                .andExpect(jsonPath("data[1].description").value("Martin Luther King Jr. Day"))
+                .andExpect(jsonPath("data[2].description").value("Presidents' Day"))
+                .andExpect(jsonPath("data[3].description").value("Prince Kuhio Day"))
+                .andExpect(jsonPath("data[4].description").value("Good Friday"))
+                .andExpect(jsonPath("data[5].description").value("Memorial Day"))
+                .andExpect(jsonPath("data[6].description").value("King Kamehameha Day"))
+                .andExpect(jsonPath("data[7].description").value("Independence Day"))
+                .andExpect(jsonPath("data[8].description").value("Statehood Day"))
+                .andExpect(jsonPath("data[9].description").value("Labor Day"))
+                .andExpect(jsonPath("data[10].description").value("Discoverer's Day"))
+                .andExpect(jsonPath("data[11].description").value("Veterans Day"))
+                .andExpect(jsonPath("data[12].description").value("Thanksgiving"))
+                .andExpect(jsonPath("data[13].description").value("Christmas"));
+
+        // No records.
+        mockMvc.perform(get("/api/holidays/year/2010/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)));
+
+    }
+
+    @Test
+    public void holidaysByYearParam() throws Exception {
+        // rest/inYear?year=2011&type=uh&isObserved=false
+        mockMvc.perform(get("/rest/inYear")
+                .param("year", "2012")
+                .param("type", "uh")
+                .param("isObserved", "false"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(15)))
+                .andExpect(jsonPath("data[0].description").value("New Year's Day"))
+                .andExpect(jsonPath("data[1].description").value("Martin Luther King Jr. Day"))
+                .andExpect(jsonPath("data[2].description").value("Presidents' Day"))
+                .andExpect(jsonPath("data[3].description").value("Prince Kuhio Day"))
+                .andExpect(jsonPath("data[4].description").value("Good Friday"))
+                .andExpect(jsonPath("data[5].description").value("Memorial Day"))
+                .andExpect(jsonPath("data[6].description").value("King Kamehameha Day"))
+                .andExpect(jsonPath("data[7].description").value("Independence Day"))
+                .andExpect(jsonPath("data[8].description").value("Statehood Day"))
+                .andExpect(jsonPath("data[9].description").value("Labor Day"))
+                .andExpect(jsonPath("data[10].description").value("Discoverer's Day"))
+                .andExpect(jsonPath("data[11].description").value("Election Day"))
+                .andExpect(jsonPath("data[12].description").value("Veterans Day"))
+                .andExpect(jsonPath("data[13].description").value("Thanksgiving"))
+                .andExpect(jsonPath("data[14].description").value("Christmas"));
+    }
+
+    @Test
     public void httpGetHolidaysWithWrongIdType() throws Exception {
         mockMvc.perform(get("/api/holidays/xxx"))
                 .andExpect(status().is3xxRedirection())

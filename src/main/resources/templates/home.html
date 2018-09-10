@@ -27,14 +27,14 @@
               <div class="col-xs-12">
                   <table class="table table-bordered table-hover table-condensed">
                       <thead>
-                          <tr>
+                          <tr ng-show="filtered.length > 0">
                               <th>Holiday</th>
                               <th>Observed</th>
                               <th>Official</th>
                           </tr>
                       </thead>
                       <tbody>
-                          <tr data-ng-repeat="h in holidays | filter:yearCode | filter:searchFor">
+                          <tr data-ng-repeat="h in holidays | filter:yearCode | filter:searchFor as filtered">
                               <td>{{h.description}}</td>
                               <td>{{h.observedDate}}</td>
                               <td>{{h.officialDate}}</td>
