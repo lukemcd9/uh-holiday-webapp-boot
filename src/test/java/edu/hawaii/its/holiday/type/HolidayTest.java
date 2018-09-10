@@ -62,6 +62,12 @@ public class HolidayTest {
         assertThat(holiday.getYear().intValue(), equalTo(2016));
 
         assertNull(holiday.getOfficialDate());
+
+        LocalDate xmasPlusOne = xmas.plusDays(1);
+        assertThat(xmasPlusOne, not(equalTo(xmas)));
+        holiday = new Holiday(xmas, xmasPlusOne);
+        assertThat(holiday.getOfficialDateStr(), equalTo("2016-12-25"));
+        assertThat(holiday.getObservedDateStr(), equalTo("2016-12-26"));
     }
 
     @Test

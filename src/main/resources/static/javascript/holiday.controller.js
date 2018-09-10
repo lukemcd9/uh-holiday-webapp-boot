@@ -25,8 +25,27 @@
                 });
             }, url);
 
-        };
+        }
+
+        $scope.searchFilter = function() {
+            return function(e) {
+                var text = $scope.searchFor;
+                if (angular.isUndefined(text)) {
+                    return true;
+                }
+                text = text.trim().toLowerCase();
+                if (text == "") {
+                    return true;
+                } else if (e.observedDateFull.toLowerCase().indexOf(text) != -1) {
+                    return true;
+                } else if (e.officialDateFull.toString().indexOf(text) != -1) {
+                    return true;
+                }
+                return false;
+            };
+        }
     }
+
     holidayApp.controller("HolidayJsController", HolidayJsController);
 
 })();

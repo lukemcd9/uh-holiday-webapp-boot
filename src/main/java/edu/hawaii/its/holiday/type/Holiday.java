@@ -19,6 +19,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -96,6 +97,7 @@ public class Holiday implements Serializable {
         this.description = description;
     }
 
+    @JsonGetter("observedDateFull")
     public LocalDate getObservedDate() {
         return observedDate;
     }
@@ -104,12 +106,25 @@ public class Holiday implements Serializable {
         this.observedDate = observedDate;
     }
 
+    @JsonGetter("officialDateFull")
     public LocalDate getOfficialDate() {
         return officialDate;
     }
 
     public void setOfficialDate(LocalDate officialDate) {
         this.officialDate = officialDate;
+    }
+
+    @JsonGetter("observedDate")
+    @Transient
+    public String getObservedDateStr() {
+        return Dates.formatDate(observedDate, "yyyy-MM-dd");
+    }
+
+    @JsonGetter("officialDate")
+    @Transient
+    public String getOfficialDateStr() {
+        return Dates.formatDate(officialDate, "yyyy-MM-dd");
     }
 
     public List<Type> getTypes() {

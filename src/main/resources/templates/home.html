@@ -34,10 +34,10 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr data-ng-repeat="h in holidays | filter:yearCode | filter:searchFor as filtered">
+                          <tr data-ng-repeat="h in holidays | filter:yearCode | filter:searchFilter() as filtered" ng-cloak="true">
                               <td>{{h.description}}</td>
-                              <td>{{h.observedDate}}</td>
-                              <td>{{h.officialDate}}</td>
+                              <td>{{h.observedDateFull}}</td>
+                              <td>{{h.officialDateFull}}</td>
                           </tr>
                       </tbody>
                   </table>
