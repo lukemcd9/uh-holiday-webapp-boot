@@ -36,6 +36,8 @@
                 text = text.trim().toLowerCase();
                 if (text == "") {
                     return true;
+                } else if (e.description.toLowerCase().indexOf(text) != -1) {
+                    return true;
                 } else if (e.observedDateFull.toLowerCase().indexOf(text) != -1) {
                     return true;
                 } else if (e.officialDateFull.toString().indexOf(text) != -1) {
