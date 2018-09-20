@@ -33,7 +33,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Transactional(readOnly = true)
     @Cacheable(value = "holidaysById", key = "#id")
     public Holiday findHoliday(Integer id) {
-        return holidayRepository.findById(id);
+        return holidayRepository.findById(id).get();
     }
 
     @Override
@@ -53,9 +53,10 @@ public class HolidayServiceImpl implements HolidayService {
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypesById", key = "#id")
     public Type findType(Integer id) {
-        return typeRepository.findById(id);
+        return typeRepository.findById(id).get();
     }
 
+    @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypes")
     public List<Type> findTypes() {
