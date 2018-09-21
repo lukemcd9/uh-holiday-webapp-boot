@@ -2,6 +2,7 @@ package edu.hawaii.its.holiday.controller;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -58,6 +59,8 @@ public class HolidayRestControllerTest {
         mockMvc.perform(get("/api/holidays"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("data", hasSize(140)));
+
+        assertTrue(true);
     }
 
     @Test
@@ -73,6 +76,8 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data.types[0].description").value("Bank"))
                 .andExpect(jsonPath("data.types[1].description").value("Federal"))
                 .andExpect(jsonPath("data.types[2].description").value("State"));
+
+        assertTrue(true);
     }
 
     @Test
@@ -102,6 +107,7 @@ public class HolidayRestControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(0)));
 
+        assertTrue(true);
     }
 
     @Test
@@ -129,6 +135,8 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[12].description").value("Veterans Day"))
                 .andExpect(jsonPath("data[13].description").value("Thanksgiving"))
                 .andExpect(jsonPath("data[14].description").value("Christmas"));
+
+        assertTrue(true);
     }
 
     @Test
@@ -136,6 +144,8 @@ public class HolidayRestControllerTest {
         mockMvc.perform(get("/api/holidays/xxx"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
+
+        assertTrue(true);
     }
 
     @Test
@@ -147,6 +157,8 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[1].description").value("Federal"))
                 .andExpect(jsonPath("data[2].description").value("State"))
                 .andExpect(jsonPath("data[3].description").value("UH"));
+
+        assertTrue(true);
     }
 
 }
