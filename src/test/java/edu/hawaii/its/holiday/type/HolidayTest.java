@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -98,7 +99,7 @@ public class HolidayTest {
         assertEquals(h1, h1); // To self.
         assertTrue(h1.equals(h1)); // To self.
         assertFalse(h1.equals(null));
-        assertFalse(h1.equals(new String())); // Wrong type.
+        assertFalse(h1.equals(new Date())); // Wrong type.
 
         Holiday h2 = new Holiday();
         assertThat(h1, equalTo(h2));

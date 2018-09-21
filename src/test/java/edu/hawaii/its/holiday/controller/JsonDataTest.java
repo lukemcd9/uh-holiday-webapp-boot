@@ -79,7 +79,7 @@ public class JsonDataTest {
 
         d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
         jd1 = new JsonData<>(d1);
-        assertFalse(jd1.equals(new String())); // Wrong type.
+        assertFalse(jd1.equals("")); // Wrong type.
 
         // Null data.
         jd1 = new JsonData<>("key", d2);
