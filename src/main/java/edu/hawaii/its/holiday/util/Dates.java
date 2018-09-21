@@ -128,7 +128,7 @@ public final class Dates {
     }
 
     // Not sure we really need this method.
-    public static String formatDate(java.util.Date date) {
+    public static String formatDate(Date date) {
         return formatDate(toLocalDate(date), "MM/dd/yyyy");
     }
 
