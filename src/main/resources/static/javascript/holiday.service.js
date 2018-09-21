@@ -9,7 +9,7 @@
                          console.log("Error in dataProvider; status: ", status);
                      });
             }
-        }
+        };
     });
 
 })();

@@ -21,10 +21,9 @@
                     }
                 }
                 $scope.years.sort(function(a, b) {
-                    return b - a
+                    return b - a;
                 });
             }, url);
-
         }
 
         $scope.searchFilter = function() {
@@ -45,7 +44,7 @@
                 }
                 return false;
             };
-        }
+        };
     }
 
     holidayApp.controller("HolidayJsController", HolidayJsController);
