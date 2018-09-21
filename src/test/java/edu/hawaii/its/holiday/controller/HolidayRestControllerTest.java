@@ -30,7 +30,7 @@ import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 public class HolidayRestControllerTest {
 
-    final MediaType APPLICATION_JSON_UTF8 =
+    private final MediaType APPLICATION_JSON_UTF8 =
             new MediaType(MediaType.APPLICATION_JSON.getType(),
                     MediaType.APPLICATION_JSON.getSubtype(),
                     Charset.forName("utf8"));
