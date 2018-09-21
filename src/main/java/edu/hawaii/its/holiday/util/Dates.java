@@ -153,13 +153,8 @@ public final class Dates {
             return null;
         }
 
-        if (date instanceof java.sql.Date) {
-            date = new Date(date.getTime());
-        }
-
-        Instant instant = date.toInstant();
-        ZoneId zoneId = zoneId();
-        ZonedDateTime zoneDateTime = instant.atZone(zoneId);
+        Instant instant = new Date(date.getTime()).toInstant();
+        ZonedDateTime zoneDateTime = instant.atZone(zoneId());
         return zoneDateTime.toLocalDate();
     }
 
