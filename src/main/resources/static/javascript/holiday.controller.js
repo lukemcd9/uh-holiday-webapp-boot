@@ -12,13 +12,12 @@
             $scope.years.push(year);
 
             dataProvider.loadData(function(d) {
-                var data = d.data;
-                $scope.holidays = data;
-                for (var i = 0; i < data.length; i++) {
-                    var y = parseInt(data[i].year);
+                $scope.holidays = d.data;
+                for (h in $scope.holidays) {
+                    var y = parseInt(h.year);
                     if ($scope.years.indexOf(y) < 0) {
                         $scope.years.push(y);
-                    }
+                    }                    
                 }
                 $scope.years.sort(function(a, b) {
                     return b - a;
