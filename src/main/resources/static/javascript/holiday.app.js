@@ -36,7 +36,7 @@ function HolidayJsController($scope, dataProvider) {
                 return b - a;
             });
         }, url);
-    }
+    };
 
     $scope.searchFilter = function() {
         return function(e) {

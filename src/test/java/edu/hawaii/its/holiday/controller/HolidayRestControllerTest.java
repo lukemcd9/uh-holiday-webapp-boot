@@ -2,7 +2,6 @@ package edu.hawaii.its.holiday.controller;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -22,6 +21,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
@@ -56,16 +56,16 @@ public class HolidayRestControllerTest {
 
     @Test
     public void httpGetHolidays() throws Exception {
-        mockMvc.perform(get("/api/holidays"))
+        MvcResult result = mockMvc.perform(get("/api/holidays"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("data", hasSize(140)));
-
-        assertTrue(true);
+                .andExpect(jsonPath("data", hasSize(140)))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
     public void httpGetHolidaysById() throws Exception {
-        mockMvc.perform(get("/api/holidays/1"))
+        MvcResult result = mockMvc.perform(get("/api/holidays/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data.description").value("New Year's Day"))
@@ -75,14 +75,14 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data.types", hasSize(3)))
                 .andExpect(jsonPath("data.types[0].description").value("Bank"))
                 .andExpect(jsonPath("data.types[1].description").value("Federal"))
-                .andExpect(jsonPath("data.types[2].description").value("State"));
-
-        assertTrue(true);
+                .andExpect(jsonPath("data.types[2].description").value("State"))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
     public void httpGetHolidaysByYear() throws Exception {
-        mockMvc.perform(get("/api/holidays/year/2011/"))
+        MvcResult result = mockMvc.perform(get("/api/holidays/year/2011/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(14)))
@@ -99,21 +99,23 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[10].description").value("Discoverer's Day"))
                 .andExpect(jsonPath("data[11].description").value("Veterans Day"))
                 .andExpect(jsonPath("data[12].description").value("Thanksgiving"))
-                .andExpect(jsonPath("data[13].description").value("Christmas"));
+                .andExpect(jsonPath("data[13].description").value("Christmas"))
+                .andReturn();
+        assertNotNull(result);
 
         // No records.
-        mockMvc.perform(get("/api/holidays/year/2010/"))
+        result = mockMvc.perform(get("/api/holidays/year/2010/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("data", hasSize(0)));
-
-        assertTrue(true);
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
     public void holidaysByYearParam() throws Exception {
         // rest/inYear?year=2011&type=uh&isObserved=false
-        mockMvc.perform(get("/rest/inYear")
+        MvcResult result = mockMvc.perform(get("/rest/inYear")
                 .param("year", "2012")
                 .param("type", "uh")
                 .param("isObserved", "false"))
@@ -134,31 +136,31 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[11].description").value("Election Day"))
                 .andExpect(jsonPath("data[12].description").value("Veterans Day"))
                 .andExpect(jsonPath("data[13].description").value("Thanksgiving"))
-                .andExpect(jsonPath("data[14].description").value("Christmas"));
-
-        assertTrue(true);
+                .andExpect(jsonPath("data[14].description").value("Christmas"))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
     public void httpGetHolidaysWithWrongIdType() throws Exception {
-        mockMvc.perform(get("/api/holidays/xxx"))
+        MvcResult result = mockMvc.perform(get("/api/holidays/xxx"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
-
-        assertTrue(true);
+                .andExpect(view().name("redirect:/"))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
     public void httpGetTypes() throws Exception {
-        mockMvc.perform(get("/api/types"))
+        MvcResult result = mockMvc.perform(get("/api/types"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("data", hasSize(4)))
                 .andExpect(jsonPath("data[0].description").value("Bank"))
                 .andExpect(jsonPath("data[1].description").value("Federal"))
                 .andExpect(jsonPath("data[2].description").value("State"))
-                .andExpect(jsonPath("data[3].description").value("UH"));
-
-        assertTrue(true);
+                .andExpect(jsonPath("data[3].description").value("UH"))
+                .andReturn();
+        assertNotNull(result);
     }
 
 }
