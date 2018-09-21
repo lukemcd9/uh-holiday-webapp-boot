@@ -13,18 +13,18 @@
 
             dataProvider.loadData(function(d) {
                 $scope.holidays = d.data;
-                for (var h in $scope.holidays) {
-                    var y = parseInt(h.year);
+                for (var i = 0; i < d.data.length; i++) {
+                    var y = parseInt(d.data[i].year, 10);
                     if ($scope.years.indexOf(y) < 0) {
                         $scope.years.push(y);
-                    }                    
+                    }
                 }
                 $scope.years.sort(function(a, b) {
-                    return b - a;
+                    return b - a
                 });
             }, url);
         }
-
+        
         $scope.searchFilter = function() {
             return function(e) {
                 var text = $scope.searchFor;

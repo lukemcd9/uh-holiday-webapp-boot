@@ -1,9 +1,12 @@
 package edu.hawaii.its.holiday.util;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -54,8 +57,9 @@ public class StringsTest {
         // Note this result:
         try {
             assertEquals(s, Strings.truncate(s, -1));
+            fail("Should not reach here.");
         } catch (Exception ex) {
-            assertTrue(ex instanceof IndexOutOfBoundsException);
+            assertThat(ex, instanceOf(IndexOutOfBoundsException.class));
         }
     }
 

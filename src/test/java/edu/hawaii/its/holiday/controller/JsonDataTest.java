@@ -2,6 +2,7 @@ package edu.hawaii.its.holiday.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertEquals;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -40,7 +42,7 @@ public class JsonDataTest {
         LocalDate xmas = Dates.newLocalDate(2016, Month.DECEMBER, 25);
         JsonData<LocalDate> data = new JsonData<>(xmas);
         assertThat(data.getKey(), equalTo("data"));
-        assertTrue(data.getData() instanceof LocalDate);
+        assertThat(data.getData(), instanceOf(LocalDate.class));
         assertThat(data.getData(), equalTo(xmas));
     }
 
@@ -79,7 +81,7 @@ public class JsonDataTest {
 
         d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
         jd1 = new JsonData<>(d1);
-        assertFalse(jd1.equals("")); // Wrong type.
+        assertFalse(jd1.equals(new Date())); // Wrong type.
 
         // Null data.
         jd1 = new JsonData<>("key", d2);
