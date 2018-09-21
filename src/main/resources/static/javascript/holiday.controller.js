@@ -13,7 +13,7 @@
 
             dataProvider.loadData(function(d) {
                 $scope.holidays = d.data;
-                for (h in $scope.holidays) {
+                for (var h in $scope.holidays) {
                     var y = parseInt(h.year);
                     if ($scope.years.indexOf(y) < 0) {
                         $scope.years.push(y);
@@ -32,13 +32,13 @@
                     return true;
                 }
                 text = text.trim().toLowerCase();
-                if (text == "") {
+                if (text === "") {
                     return true;
-                } else if (e.description.toLowerCase().indexOf(text) != -1) {
+                } else if (e.description.toLowerCase().indexOf(text) !== -1) {
                     return true;
-                } else if (e.observedDateFull.toLowerCase().indexOf(text) != -1) {
+                } else if (e.observedDateFull.toLowerCase().indexOf(text) !== -1) {
                     return true;
-                } else if (e.officialDateFull.toString().indexOf(text) != -1) {
+                } else if (e.officialDateFull.toString().indexOf(text) !== -1) {
                     return true;
                 }
                 return false;
