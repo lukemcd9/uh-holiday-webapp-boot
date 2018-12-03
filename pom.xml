@@ -176,12 +176,12 @@
                             <target>
                                 <echo>Now that you have a clean project,</echo>
                                 <echo>here are some common goals for this project:</echo>
-                                <echo>$ mvn clean test</echo>
-                                <echo>$ mvn clean test -Dtest=*Test </echo>
-                                <echo>$ mvn clean package</echo>
-                                <echo>$ mvn -Dmaven.test.skip=true clean package</echo>
-                                <echo>$ mvn clean test jacoco:report</echo>
-                                <echo>$ mvn clean spring-boot:run</echo>
+                                <echo>$ ./mvnw clean test</echo>
+                                <echo>$ ./mvnw clean test -Dtest=*Test </echo>
+                                <echo>$ ./mvnw clean package</echo>
+                                <echo>$ ./mvnw -Dmaven.test.skip=true clean package</echo>
+                                <echo>$ ./mvnw clean test jacoco:report</echo>
+                                <echo>$ ./mvnw clean spring-boot:run</echo>
                             </target>
                         </configuration>
                     </execution>
