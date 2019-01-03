@@ -9,8 +9,8 @@ insert into role(id, version, authority) values(2, 1, 'ROLE_USER');
 
 insert into type(id, version, description) values(1, 1, 'Bank');
 insert into type(id, version, description) values(2, 1, 'Federal');
-insert into type(id, version, description) values(3, 1, 'State');
-insert into type(id, version, description) values(4, 1, 'UH');
+insert into type(id, version, description) values(3, 1, 'UH');
+insert into type(id, version, description) values(4, 1, 'State');
 
 insert into holiday(id, version, description, observed_date, official_date) values(1,   0,'New Year''s Day',             '2013-01-01','2013-01-01');
 insert into holiday(id, version, description, observed_date, official_date) values(2,   0,'Martin Luther King Jr. Day',  '2013-01-21','2013-01-21');

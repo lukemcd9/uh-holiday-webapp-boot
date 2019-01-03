@@ -94,12 +94,12 @@ public class HolidayServiceTest {
         ht = types.get(2);
         assertThat(ht.getId(), equalTo(3));
         assertThat(ht.getVersion(), equalTo(1));
-        assertThat(ht.getDescription(), equalTo("State"));
+        assertThat(ht.getDescription(), equalTo("UH"));
 
         ht = types.get(3);
         assertThat(ht.getId(), equalTo(4));
         assertThat(ht.getVersion(), equalTo(1));
-        assertThat(ht.getDescription(), equalTo("UH"));
+        assertThat(ht.getDescription(), equalTo("State"));
     }
 
     @Test
@@ -167,8 +167,8 @@ public class HolidayServiceTest {
 
         List<String> holidayTypes = h4.getHolidayTypes();
         assertThat(holidayTypes.size(), equalTo(2));
-        assertThat(holidayTypes.get(0), equalTo("State"));
-        assertThat(holidayTypes.get(1), equalTo("UH"));
+        assertThat(holidayTypes.get(0), equalTo("UH"));
+        assertThat(holidayTypes.get(1), equalTo("State"));
     }
 
     @Test
