@@ -28,13 +28,15 @@
                   <table class="table table-bordered table-hover table-condensed">
                       <thead>
                           <tr ng-show="filtered.length > 0">
-                              <th>Holiday</th>
-                              <th>Observed</th>
-                              <th>Official</th>
+                              <th class="noselect" ng-click="sortBy('description')">Holiday</th>
+                              <th ng-click="sortBy('observedDateFull.toEpochDay')">
+                                Observed<i class="sort-el no-sort"><i class="fa fa-sort-up add-arrow"></i></i>                                
+                              </th>
+                              <th ng-click="sortBy('officialDateFull.toEpochDay')">Official</th>
                           </tr>
                       </thead>
                       <tbody>
-                          <tr data-ng-repeat="h in holidays | filter:yearCode | filter:searchFilter() as filtered" ng-cloak="true">
+                          <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-cloak="true">
                               <td>{{h.description}}</td>
                               <td>{{h.observedDateFull}}</td>
                               <td>{{h.officialDateFull}}</td>

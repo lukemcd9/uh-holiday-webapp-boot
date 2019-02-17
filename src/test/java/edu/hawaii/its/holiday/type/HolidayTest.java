@@ -69,6 +69,7 @@ public class HolidayTest {
         holiday = new Holiday(xmas, xmasPlusOne);
         assertThat(holiday.getOfficialDateStr(), equalTo("2016-12-25"));
         assertThat(holiday.getObservedDateStr(), equalTo("2016-12-26"));
+        assertThat(holiday.getObservedDate().toEpochDay(), equalTo(17161L));
     }
 
     @Test
