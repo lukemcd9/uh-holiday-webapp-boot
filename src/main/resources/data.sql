@@ -144,7 +144,7 @@ insert into holiday(id, version, description, observed_date, official_date) valu
 insert into holiday(id, version, description, observed_date, official_date) values(131, 0, 'Presidents'' Day',           '2020-02-17', '2020-02-17');
 insert into holiday(id, version, description, observed_date, official_date) values(132, 0, 'Prince Kuhio Day',           '2020-03-26', '2020-03-26');
 insert into holiday(id, version, description, observed_date, official_date) values(133, 0, 'Good Friday',                '2020-04-10', '2020-04-10');
-insert into holiday(id, version, description, observed_date, official_date) values(134, 0, 'Memorial Day',               '2020-05-31', '2020-05-31');
+insert into holiday(id, version, description, observed_date, official_date) values(134, 0, 'Memorial Day',               '2020-05-25', '2020-05-25');
 insert into holiday(id, version, description, observed_date, official_date) values(135, 0, 'King Kamehameha Day',        '2020-06-11', '2020-06-11');
 insert into holiday(id, version, description, observed_date, official_date) values(136, 0, 'Independence Day',           '2020-07-03', '2020-07-04');
 insert into holiday(id, version, description, observed_date, official_date) values(137, 0, 'Statehood Day',              '2020-08-21', '2020-08-21');
