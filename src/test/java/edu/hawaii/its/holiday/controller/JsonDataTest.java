@@ -56,6 +56,7 @@ public class JsonDataTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type")
     public void testEquals() {
         LocalDate d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
         JsonData<LocalDate> jd1 = new JsonData<>(d1);

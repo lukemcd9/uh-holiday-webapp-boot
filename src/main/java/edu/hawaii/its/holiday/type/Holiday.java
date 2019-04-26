@@ -148,6 +148,14 @@ public class Holiday implements Serializable {
         return null;
     }
 
+    @Transient
+    public Integer getOfficialYear() {
+        if (officialDate != null) {
+            return Dates.yearOfDate(officialDate);
+        }
+        return null;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

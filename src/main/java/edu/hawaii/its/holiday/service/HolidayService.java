@@ -2,22 +2,29 @@ package edu.hawaii.its.holiday.service;
 
 import java.util.List;
 
+import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 
 public interface HolidayService {
 
-    public Holiday findHoliday(Integer id);
+    List<Designation> findDesignations();
 
-    public List<Holiday> findHolidays();
+    Designation findDesignation(Integer id);
 
-    public List<Holiday> findHolidaysByYear(Integer year);
+    Holiday findHoliday(Integer id);
 
-    public List<UserRole> findUserRoles();
+    List<Holiday> findHolidays();
 
-    public Type findType(Integer id);
+    List<Holiday> findHolidaysByYear(Integer year);
 
-    public List<Type> findTypes();
+    List<UserRole> findUserRoles();
+
+    Type findType(Integer id);
+
+    List<Type> findTypes();
+
+    List<String> findAllDescriptions();
 
 }

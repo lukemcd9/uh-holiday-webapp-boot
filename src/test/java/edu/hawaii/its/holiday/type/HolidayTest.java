@@ -58,6 +58,8 @@ public class HolidayTest {
 
         assertNull(holiday.getObservedDate());
         assertNull(holiday.getYear());
+        assertNull(holiday.getOfficialYear());
+
         LocalDate xmas = Dates.newLocalDate(2016, Month.DECEMBER, 25);
         holiday.setObservedDate(xmas);
         assertThat(holiday.getYear().intValue(), equalTo(2016));
@@ -70,6 +72,8 @@ public class HolidayTest {
         assertThat(holiday.getOfficialDateStr(), equalTo("2016-12-25"));
         assertThat(holiday.getObservedDateStr(), equalTo("2016-12-26"));
         assertThat(holiday.getObservedDate().toEpochDay(), equalTo(17161L));
+
+        assertThat(holiday.getOfficialYear().intValue(), equalTo(2016));
     }
 
     @Test
@@ -95,6 +99,7 @@ public class HolidayTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type")
     public void testEquals() {
         Holiday h1 = new Holiday();
         assertEquals(h1, h1); // To self.

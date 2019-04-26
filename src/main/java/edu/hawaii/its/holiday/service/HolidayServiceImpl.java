@@ -9,9 +9,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.hawaii.its.holiday.repository.DesignationRepository;
 import edu.hawaii.its.holiday.repository.HolidayRepository;
 import edu.hawaii.its.holiday.repository.TypeRepository;
 import edu.hawaii.its.holiday.repository.UserRoleRepository;
+import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
@@ -22,6 +24,9 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Autowired
     private HolidayRepository holidayRepository;
+
+    @Autowired
+    private DesignationRepository designationRepository;
 
     @Autowired
     private TypeRepository typeRepository;
@@ -70,4 +75,18 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayRepository.findAllByOfficialDateBetween(start, end);
     }
 
+    @Override
+    public List<String> findAllDescriptions() {
+        return holidayRepository.findAllDistinctDescription();
+    }
+
+    @Override
+    public List<Designation> findDesignations() {
+        return designationRepository.findAll();
+    }
+
+    @Override
+    public Designation findDesignation(Integer id) {
+        return designationRepository.findById(id).get();
+    }
 }
