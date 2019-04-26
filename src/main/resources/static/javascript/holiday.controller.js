@@ -3,7 +3,7 @@
 function HolidayJsController($scope, dataProvider) {
     var url = "api/holidays";
     $scope.years = [];
-    $scope.orderByField = 'observedDateFull.toEpochDay';
+    $scope.orderByField = "observedDateFull.toEpochDay";
     $scope.reverseSort = false;
 
     $scope.init = function() {
