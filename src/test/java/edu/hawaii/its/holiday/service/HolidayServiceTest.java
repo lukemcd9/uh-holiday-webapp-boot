@@ -369,6 +369,7 @@ public class HolidayServiceTest {
 
                 default:
                     fail("Should not get here. h: " + h);
+                    break;
             }
         }
 

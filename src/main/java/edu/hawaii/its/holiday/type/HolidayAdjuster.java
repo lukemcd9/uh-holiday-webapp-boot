@@ -22,6 +22,7 @@ public class HolidayAdjuster implements TemporalAdjuster {
                 break;
             default:
                 daysToAdd = 0;
+                break;
         }
 
         return temporal.plus(daysToAdd, ChronoUnit.DAYS);
