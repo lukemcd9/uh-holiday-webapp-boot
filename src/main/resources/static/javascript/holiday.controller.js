@@ -1,10 +1,12 @@
 "use strict";
+/*global holidayApp*/
 
 function HolidayJsController($scope, dataProvider) {
     var url = "api/holidays";
     $scope.years = [];
     $scope.orderByField = "observedDateFull.toEpochDay";
     $scope.reverseSort = false;
+    $scope.holidays = [];
 
     $scope.init = function() {
         var date = new Date();
@@ -12,7 +14,10 @@ function HolidayJsController($scope, dataProvider) {
         $scope.yearCode = year.toString();
         $scope.years = [];
         $scope.years.push(year);
+        $scope.loadData();
+    }
 
+    $scope.loadData = function() {
         dataProvider.loadData(function(d) {
             $scope.holidays = d.data;
             $scope.holidays.forEach(function(h) {
@@ -26,7 +31,7 @@ function HolidayJsController($scope, dataProvider) {
             });
         }, url);
     }
-
+    
     $scope.searchFilter = function() {
         return function(e) {
             var text = $scope.searchFor;
