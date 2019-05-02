@@ -4,8 +4,11 @@ import static edu.hawaii.its.holiday.util.Algorithms.observedElectionDay;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.time.Month;
 
 import org.junit.Test;
@@ -27,4 +30,13 @@ public class AlgorithmsTest {
             assertThat(ex, instanceOf(IllegalArgumentException.class));
         }
     }
+
+    @Test
+    public void testConstructorIsPrivate() throws Exception {
+        Constructor<Algorithms> constructor = Algorithms.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
+
 }
