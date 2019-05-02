@@ -25,7 +25,7 @@ public class HolidayRestController {
 
     @GetMapping(value = "/api/holidays")
     public ResponseEntity<JsonData<List<Holiday>>> holidays() {
-        logger.info("Entered REST holidays...");
+        logger.debug("Entered REST holidays...");
         List<Holiday> holidays = holidayService.findHolidays();
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
@@ -35,7 +35,7 @@ public class HolidayRestController {
 
     @GetMapping(value = "/api/holidays/{id}")
     public ResponseEntity<JsonData<Holiday>> holiday(@PathVariable Integer id) {
-        logger.info("Entered REST holiday(" + id + ") ...");
+        logger.debug("Entered REST holiday(" + id + ") ...");
         Holiday holiday = holidayService.findHoliday(id);
         JsonData<Holiday> data = new JsonData<>(holiday);
         return ResponseEntity
@@ -45,7 +45,7 @@ public class HolidayRestController {
 
     @GetMapping(value = "/api/types")
     public ResponseEntity<JsonData<List<Type>>> types() {
-        logger.info("Entered REST types...");
+        logger.debug("Entered REST types...");
         List<Type> types = holidayService.findTypes();
         JsonData<List<Type>> data = new JsonData<>(types);
         return ResponseEntity
@@ -55,7 +55,7 @@ public class HolidayRestController {
 
     @GetMapping(value = "/api/holidays/year/{year}/")
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByYear(@PathVariable Integer year) {
-        logger.info("Entered REST holidays/year... year: " + year);
+        logger.debug("Entered REST holidays/year... year: " + year);
         List<Holiday> holidays = holidayService.findHolidaysByYear(year);
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
