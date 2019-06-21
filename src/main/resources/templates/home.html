@@ -37,7 +37,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-click="showHoliday(h)" ng-cloak="true">
+                          <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-click="showHoliday(h)" ng-cloak="true" style="cursor: pointer;">
                               <td>{{h.description}}</td>
                               <td>{{h.observedDateFull}}</td>
                               <td>{{h.officialDateFull}}</td>
