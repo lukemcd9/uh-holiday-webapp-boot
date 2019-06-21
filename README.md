@@ -26,7 +26,7 @@ Deploy as usual in a servlet container, e.g. tomcat.
 
 To run the Application, point your browser at:
 
-http://localhost:8080/holidays/
+http://localhost:8080/holiday/
 
 
 ##### Running Unit Tests
