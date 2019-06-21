@@ -33,21 +33,23 @@
                                 Observed<i class="sort-el no-sort"><i class="fa fa-sort-up add-arrow"></i></i>                                
                               </th>
                               <th ng-click="sortBy('officialDateFull.toEpochDay')">Official</th>
+                              <th>Type</th>
                           </tr>
                       </thead>
                       <tbody>
-                          <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-cloak="true">
+                          <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-click="showHoliday(h)" ng-cloak="true">
                               <td>{{h.description}}</td>
                               <td>{{h.observedDateFull}}</td>
                               <td>{{h.officialDateFull}}</td>
+                              <td><span data-ng-repeat="d in h.types">{{d.description}}{{$last ? '' : ', '}}</span></td>
                           </tr>
                       </tbody>
                   </table>
               </div>
          </div>
+        <div th:replace="holiday :: copy"></div>
     </div>
     <!-- / Content container. -->
-
     <div th:replace="footer :: copy"></div>
 </body>
 </html>

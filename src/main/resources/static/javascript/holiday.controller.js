@@ -7,6 +7,7 @@ function HolidayJsController($scope, dataProvider) {
     $scope.orderByField = "observedDateFull.toEpochDay";
     $scope.reverseSort = false;
     $scope.holidays = [];
+    $scope.test = 'Test';
 
     $scope.init = function() {
         var date = new Date();
@@ -21,6 +22,7 @@ function HolidayJsController($scope, dataProvider) {
         dataProvider.loadData(function(d) {
             $scope.holidays = d.data;
             $scope.holidays.forEach(function(h) {
+                $scope.holiday = h;
                 var y = parseInt(h.year, 10);
                 if ($scope.years.indexOf(y) < 0) {
                     $scope.years.push(y);
@@ -56,7 +58,14 @@ function HolidayJsController($scope, dataProvider) {
         $scope.orderByField = column;
         $scope.reverseSort = !$scope.reverseSort;
     }
-    
+
+    $scope.showHoliday = function(holiday) {
+        $scope.holiday = holiday;
+        console.log($scope.holiday);
+        console.log($scope.holiday.description);
+        $('#holiday').modal();
+    }
+
 }
 
 holidayApp.controller("HolidayJsController", HolidayJsController);
