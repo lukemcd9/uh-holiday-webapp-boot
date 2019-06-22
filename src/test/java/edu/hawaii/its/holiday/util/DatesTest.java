@@ -60,6 +60,13 @@ public class DatesTest {
     }
 
     @Test
+    public void compareDates() {
+        LocalDate date1 = Dates.newLocalDate(2019, Month.JUNE, 21);
+        LocalDate date2 = Dates.newLocalDate(2009, Month.JUNE, 23);
+        assertEquals(Dates.compareDates(date1, date2), 10L);
+    }
+
+    @Test
     public void newLocalDate() {
         assertNotNull(Dates.newLocalDate());
     }

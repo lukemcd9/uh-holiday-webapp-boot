@@ -41,7 +41,7 @@
                               <td>{{h.description}}</td>
                               <td>{{h.observedDateFull}}</td>
                               <td>{{h.officialDateFull}}</td>
-                              <td><span data-ng-repeat="d in h.types">{{d.description}}{{$last ? '' : ', '}}</span></td>
+                              <td><span data-ng-repeat="t in h.types">{{t.description}}{{$last ? '' : ', '}}</span></td>
                           </tr>
                       </tbody>
                   </table>
