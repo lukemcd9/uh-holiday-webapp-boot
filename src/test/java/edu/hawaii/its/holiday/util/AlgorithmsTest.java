@@ -3,14 +3,17 @@ package edu.hawaii.its.holiday.util;
 import static edu.hawaii.its.holiday.util.Algorithms.observedElectionDay;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import edu.hawaii.its.holiday.type.Holiday;
 import org.junit.Test;
 
 public class AlgorithmsTest {
@@ -37,6 +40,18 @@ public class AlgorithmsTest {
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
         constructor.newInstance();
+    }
+
+    @Test
+    public void testStreamFiltering() {
+        List<String> testing = new ArrayList<>();
+        testing.add("Test");
+        testing.add("Apple");
+        testing.add("Banana");
+        testing.add("Orange");
+        testing.add("Apricot");
+        testing = testing.stream().filter(list -> list.startsWith("A")).collect(Collectors.toList());
+        assertEquals(2, testing.size());
     }
 
 }

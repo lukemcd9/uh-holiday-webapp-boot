@@ -1,6 +1,7 @@
 package edu.hawaii.its.holiday.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,8 @@ public class HolidayRestController {
             @RequestParam("year") Integer year,
             @RequestParam(name = "type", defaultValue = "uh") String type,
             @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
-        List<Holiday> holidays = holidayService.findHolidaysByYear(year);
+        List<Holiday> holidays = holidayService.findHolidaysByYear(year).stream().filter(holiday ->
+                holiday.getTypes().stream().anyMatch(types -> types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()

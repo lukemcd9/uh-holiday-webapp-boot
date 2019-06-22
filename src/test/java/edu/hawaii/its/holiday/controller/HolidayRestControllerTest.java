@@ -113,6 +113,19 @@ public class HolidayRestControllerTest {
     }
 
     @Test
+    public void holidaysByYearParam2() throws Exception {
+        // rest/inYear?year=2019&type=federal
+        MvcResult result = mockMvc.perform(get("/rest/inYear")
+                .param("year", "2019")
+                .param("type", "federal"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(9)))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
     public void holidaysByYearParam() throws Exception {
         // rest/inYear?year=2011&type=uh&isObserved=false
         MvcResult result = mockMvc.perform(get("/rest/inYear")
