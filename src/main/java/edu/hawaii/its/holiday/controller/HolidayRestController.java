@@ -69,9 +69,8 @@ public class HolidayRestController {
             @RequestParam("year") Integer year,
             @RequestParam(name = "type", defaultValue = "uh") String type,
             @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
-        List<Holiday> holidays = holidayService.findHolidaysByYear(year).stream().filter(holiday ->
-                holiday.getTypes().stream().anyMatch(types ->
-                        types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
+        List<Holiday> holidays = holidayService.findHolidaysByType(type);
+        holidays = holidays.stream().filter(holiday -> holiday.getOfficialYear().equals(year)).collect(Collectors.toList());
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()

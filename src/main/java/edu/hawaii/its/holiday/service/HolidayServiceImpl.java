@@ -3,6 +3,7 @@ package edu.hawaii.its.holiday.service;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -73,6 +74,15 @@ public class HolidayServiceImpl implements HolidayService {
         LocalDate start = Dates.firstDateOfYear(year);
         LocalDate end = Dates.lastDateOfMonth(Month.DECEMBER, year);
         return holidayRepository.findAllByOfficialDateBetween(start, end);
+    }
+
+    @Override
+    public List<Holiday> findHolidaysByType(String type) {
+        List<Holiday> holidays = findHolidays().stream().filter(holiday ->
+                holiday.getTypes().stream().anyMatch(types ->
+                        types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
+
+        return holidays;
     }
 
     @Override

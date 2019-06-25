@@ -21,6 +21,8 @@ public interface HolidayService {
 
     List<UserRole> findUserRoles();
 
+    List<Holiday> findHolidaysByType(String type);
+
     Type findType(Integer id);
 
     List<Type> findTypes();
