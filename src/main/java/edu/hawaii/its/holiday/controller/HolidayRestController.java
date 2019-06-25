@@ -1,7 +1,10 @@
 package edu.hawaii.its.holiday.controller;
 
+import java.time.Month;
+import java.util.Date;
 import java.util.List;
 
+import edu.hawaii.its.holiday.util.Dates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,7 @@ public class HolidayRestController {
     public ResponseEntity<JsonData<List<Holiday>>> holidays() {
         logger.debug("Entered REST holidays...");
         List<Holiday> holidays = holidayService.findHolidays();
+        holidayService.findClosestHoliday();
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()
@@ -37,6 +41,7 @@ public class HolidayRestController {
     public ResponseEntity<JsonData<Holiday>> holiday(@PathVariable Integer id) {
         logger.debug("Entered REST holiday(" + id + ") ...");
         Holiday holiday = holidayService.findHoliday(id);
+        holidayService.findClosestHoliday();
         JsonData<Holiday> data = new JsonData<>(holiday);
         return ResponseEntity
                 .ok()
@@ -74,5 +79,60 @@ public class HolidayRestController {
                 .ok()
                 .body(data);
     }
+
+    @GetMapping(value = "rest/exists", params = {})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByExistsParam(
+            @RequestParam("date") Date date,
+            @RequestParam(name = "type", defaultValue = "uh") String type,
+            @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
+        List<Holiday> holidays = holidayService.findHolidays();
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
+    @GetMapping(value = "rest/closest", params = {})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByClosestParam(
+            @RequestParam("date") Date date,
+            @RequestParam(name = "type", defaultValue = "uh") String type,
+            @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved,
+            @RequestParam(name = "searchForward", defaultValue = "true") Boolean searchForward) {
+        List<Holiday> holidays = holidayService.findHolidays();
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
+    @GetMapping(value = "rest/inMonth", params = { "month" })
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByMonthParam(
+            @RequestParam("month") String month,
+            @RequestParam(name = "year", defaultValue = "2019") Integer year,
+            @RequestParam(name = "type", defaultValue = "uh") String type,
+            @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
+        logger.info("Entered month value: " + month);
+        logger.info("Entered year value: " + year);
+        List<Holiday> holidays = holidayService.findHolidaysByMonth(month, year);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
+    @GetMapping(value = "rest/inRange", params = {})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByRangeParam(
+            @RequestParam("beginDate") Date beginDate,
+            @RequestParam("endDate") Date endDate,
+            @RequestParam(name = "type", defaultValue = "uh") String type,
+            @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved,
+            @RequestParam(name = "includeStartAndEnd", defaultValue = "false") Boolean includeStartAndEnd) {
+        List<Holiday> holidays = holidayService.findHolidays();
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
 
 }

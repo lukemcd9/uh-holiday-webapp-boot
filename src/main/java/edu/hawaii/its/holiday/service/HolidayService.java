@@ -1,5 +1,6 @@
 package edu.hawaii.its.holiday.service;
 
+import java.time.Month;
 import java.util.List;
 
 import edu.hawaii.its.holiday.type.Designation;
@@ -18,6 +19,14 @@ public interface HolidayService {
     List<Holiday> findHolidays();
 
     List<Holiday> findHolidaysByYear(Integer year);
+
+    List<Holiday> findHolidaysByMonth(String month, Integer year);
+
+    Holiday findClosestHoliday();
+
+    Boolean isClosestHoliday(Holiday holiday);
+
+    Month convertMonth(String month);
 
     List<UserRole> findUserRoles();
 

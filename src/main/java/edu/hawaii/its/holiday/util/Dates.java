@@ -8,6 +8,7 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
@@ -19,6 +20,10 @@ public final class Dates {
     // Private constructor; prevent instantiation.
     private Dates() {
         // Emtpy.
+    }
+
+    public static long compareDates(LocalDate firstDate, LocalDate secondDate) {
+        return ChronoUnit.DAYS.between(firstDate, secondDate);
     }
 
     public static LocalDate newLocalDate() {
