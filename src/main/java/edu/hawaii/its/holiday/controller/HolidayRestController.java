@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Optional;
 
 import edu.hawaii.its.holiday.util.Dates;
@@ -119,7 +120,8 @@ public class HolidayRestController {
             @RequestParam("year") Integer year,
             @RequestParam(name = "type", defaultValue = "uh") String type,
             @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
-        List<Holiday> holidays = holidayService.findHolidaysByYear(year);
+        List<Holiday> holidays = holidayService.findHolidaysByType(type);
+        holidays = holidays.stream().filter(holiday -> holiday.getOfficialYear().equals(year)).collect(Collectors.toList());
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()

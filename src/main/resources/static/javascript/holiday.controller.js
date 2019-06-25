@@ -7,6 +7,7 @@ function HolidayJsController($scope, dataProvider) {
     $scope.orderByField = "observedDateFull.toEpochDay";
     $scope.reverseSort = false;
     $scope.holidays = [];
+    $scope.test = 'Test';
     $scope.holidayArrow = " ";
     $scope.observedArrow = "<i class='fa fa-chevron-down' />"; //or <i class='fa fa-arrow-down' /> for whichever is default
     $scope.officialArrow = " ";
@@ -24,6 +25,7 @@ function HolidayJsController($scope, dataProvider) {
         dataProvider.loadData(function(d) {
             $scope.holidays = d.data;
             $scope.holidays.forEach(function(h) {
+                $scope.holiday = h;
                 var y = parseInt(h.year, 10);
                 if ($scope.years.indexOf(y) < 0) {
                     $scope.years.push(y);
@@ -60,6 +62,10 @@ function HolidayJsController($scope, dataProvider) {
         $scope.reverseSort = !$scope.reverseSort;
     }
 
+    $scope.showHoliday = function(holiday) {
+        $scope.holiday = holiday;
+        $('#holiday').modal();
+    }
     $scope.showHolidayArrow = function() {
         if ($scope.reverseSort) {
             $scope.holidayArrow = "<i class='fa fa-chevron-up'/>";

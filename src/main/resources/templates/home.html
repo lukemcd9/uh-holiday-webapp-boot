@@ -38,6 +38,7 @@
                     <th style="cursor: pointer;" ng-click="sortBy('officialDateFull.toEpochDay'); showOfficialArrow()" >
                         Official <span ng-bind-html="officialArrow|html"/>
                     </th>
+                    <th>Type</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,14 +46,20 @@
                     <td>{{h.description}}</td>
                     <td>{{h.observedDateFull}}</td>
                     <td>{{h.officialDateFull}}</td>
+                    <td>
+                        <ul class="type-list">
+                          <li data-ng-repeat="t in h.types">{{t.description}}</li>
+                        </ul>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+        <div th:replace="holiday :: copy"></div>
     </div>
+    <!-- / Content container. -->
+    <div th:replace="footer :: copy"></div>
 </div>
 <!-- / Content container. -->
-
-<div th:replace="footer :: copy"></div>
 </body>
 </html>

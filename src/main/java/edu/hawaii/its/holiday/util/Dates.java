@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 public final class Dates {
@@ -19,7 +20,11 @@ public final class Dates {
 
     // Private constructor; prevent instantiation.
     private Dates() {
-        // Emtpy.
+        // Empty.
+    }
+
+    public static long compareDates(LocalDate firstDate, LocalDate secondDate) {
+        return ChronoUnit.DAYS.between(firstDate, secondDate);
     }
 
     public static long compareDates(LocalDate firstDate, LocalDate secondDate) {
