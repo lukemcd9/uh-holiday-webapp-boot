@@ -41,7 +41,11 @@
                               <td>{{h.description}}</td>
                               <td>{{h.observedDateFull}}</td>
                               <td>{{h.officialDateFull}}</td>
-                              <td><span data-ng-repeat="t in h.types">{{t.description}}{{$last ? '' : ', '}}</span></td>
+                              <td>
+                                  <ul class="type-list">
+                                    <li data-ng-repeat="t in h.types">{{t.description}}</li>
+                                  </ul>
+                              </td>
                           </tr>
                       </tbody>
                   </table>
