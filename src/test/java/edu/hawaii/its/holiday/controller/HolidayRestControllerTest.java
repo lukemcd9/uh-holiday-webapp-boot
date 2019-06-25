@@ -453,6 +453,24 @@ public class HolidayRestControllerTest {
     }
 
     @Test
+    public void holidaysByMonthParam() throws Exception {
+        MvcResult result = mockMvc.perform(get("/rest/inMonth")
+                .param("month", "02"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(1)))
+                .andExpect(jsonPath("data[0].description").value("Presidents' Day"))
+                .andExpect(jsonPath("data[0].year").value("2019"))
+                .andExpect(jsonPath("data[0].observedDate").value("2019-02-18"))
+                .andExpect(jsonPath("data[0].officialDate").value("2019-02-18"))
+                .andExpect(jsonPath("data[0].holidayTypes[0]").value("Bank"))
+                .andExpect(jsonPath("data[0].holidayTypes[1]").value("Federal"))
+                .andExpect(jsonPath("data[0].holidayTypes[2]").value("UH"))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
     public void httpGetHolidaysWithWrongIdType() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/holidays/xxx"))
                 .andExpect(status().is3xxRedirection())

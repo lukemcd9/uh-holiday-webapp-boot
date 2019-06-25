@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import edu.hawaii.its.holiday.service.HolidayService;
 import edu.hawaii.its.holiday.util.Dates;
 
 @Entity
@@ -61,8 +63,11 @@ public class Holiday implements Serializable {
     @OrderBy(value = "id")
     private List<Type> types = new ArrayList<>(0);
 
+    private Boolean closest;
+
     // Constructor.
     public Holiday() {
+        this.closest = false;
         // Empty.
     }
 
@@ -71,6 +76,14 @@ public class Holiday implements Serializable {
         this();
         this.officialDate = officialDate;
         this.observedDate = observedDate;
+    }
+
+    public Boolean getClosest() {
+        return closest;
+    }
+
+    public void setClosest(Boolean closest) {
+        this.closest = closest;
     }
 
     public Integer getId() {

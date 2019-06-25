@@ -19,12 +19,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -60,6 +55,14 @@ public class HolidayServiceTest {
 
     @Autowired
     private HolidayService holidayService;
+
+    @Test
+    public void findClosestHoliday() {
+        Holiday closestHoliday = holidayService.findClosestHoliday();
+        Holiday h1 = holidayService.findHoliday(123);
+        assertEquals(closestHoliday, h1);
+        assertTrue(closestHoliday.getClosest());
+    }
 
     @Test
     public void findHolidays() {
