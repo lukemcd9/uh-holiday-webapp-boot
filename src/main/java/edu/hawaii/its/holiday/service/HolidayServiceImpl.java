@@ -74,8 +74,8 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findHolidaysByMonth(String month, Integer year) {
-        Month realMonth = convertMonth(month);
+    public List<Holiday> findHolidaysByMonth(Integer month, Integer year) {
+        Month realMonth = Month.of(month);
         LocalDate start = Dates.firstDateOfMonth(realMonth, year);
         LocalDate end = Dates.lastDateOfMonth(realMonth, year);
         return holidayRepository.findAllByOfficialDateBetween(start, end);
@@ -115,52 +115,6 @@ public class HolidayServiceImpl implements HolidayService {
         }
         LocalDate holiday = holidays.get(closestIndex).getOfficialDate();
         return holidayRepository.findAllByOfficialDateBetween(holiday, holiday);
-    }
-
-    @Override
-    public Month convertMonth(String month) {
-        Month retMonth;
-        switch(month) {
-            case "01":
-                retMonth = Month.JANUARY;
-                break;
-            case "02":
-                retMonth = Month.FEBRUARY;
-                break;
-            case "03":
-                retMonth = Month.MARCH;
-                break;
-            case "04":
-                retMonth = Month.APRIL;
-                break;
-            case "05":
-                retMonth = Month.MAY;
-                break;
-            case "06":
-                retMonth = Month.JUNE;
-                break;
-            case "07":
-                retMonth = Month.JULY;
-                break;
-            case "08":
-                retMonth = Month.AUGUST;
-                break;
-            case "09":
-                retMonth = Month.SEPTEMBER;
-                break;
-            case "10":
-                retMonth = Month.OCTOBER;
-                break;
-            case "11":
-                retMonth = Month.NOVEMBER;
-                break;
-            case "12":
-                retMonth = Month.DECEMBER;
-                break;
-            default:
-                retMonth = null;
-        }
-        return retMonth;
     }
 
     @Override

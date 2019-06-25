@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import edu.hawaii.its.holiday.util.Dates;
+import jdk.nashorn.internal.runtime.options.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,22 +69,23 @@ public class HolidayRestController {
     }
 
 
-    @GetMapping(value = "/api/holidays/year/{year}/month/{month}")
+    @GetMapping(value = "/api/holidays/month/{month}", params = {"year"})
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByMonth(
-            @PathVariable Integer year,
-            @PathVariable String month) {
-        List<Holiday> holidays = holidayService.findHolidaysByMonth(month, year);
-        JsonData<List<Holiday>> data = new JsonData<>(holidays);
-        return ResponseEntity
+            @PathVariable Integer month,
+            @RequestParam Optional<Integer> year) {
+             Integer newYear = year.isPresent() ? year.get() : Dates.currentYear();
+             List<Holiday> holidays = holidayService.findHolidaysByMonth(month, newYear);
+             JsonData<List<Holiday>> data = new JsonData<>(holidays);
+             return ResponseEntity
                 .ok()
                 .body(data);
     }
 
-    @GetMapping(value = "api/holidays/range", params = { "begin-date", "end-date", "include-start-and-end"})
+    @GetMapping(value = "api/holidays/range", params = { "begin-date", "end-date", "inclusive"})
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByRange (
             @RequestParam("begin-date") String beginDate,
             @RequestParam("end-date") String endDate,
-            @RequestParam(value = "include-start-and-end", defaultValue = "true", required = false) Boolean include) {
+            @RequestParam(value = "inclusive", defaultValue = "true", required = false) Boolean include) {
             List<Holiday> holidays = holidayService.findHolidaysByRange(beginDate, endDate, include);
             JsonData<List<Holiday>> data = new JsonData<>(holidays);
             return ResponseEntity
