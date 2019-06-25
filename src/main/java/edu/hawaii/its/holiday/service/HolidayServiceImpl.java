@@ -2,11 +2,8 @@ package edu.hawaii.its.holiday.service;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,8 @@ import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
+
+import static java.lang.Math.abs;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -83,8 +82,44 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
+    public List<Holiday> findHolidaysByRange(String beginDate, String endDate, Boolean include) {
+        LocalDate start = Dates.toLocalDate(beginDate, "yyyy-MM-dd");
+        LocalDate end =  Dates.toLocalDate(endDate, "yyyy-MM-dd");
+        if (!include) {
+            start = Dates.fromOffset(start, 1);
+            end = Dates.fromOffset(end, -1);
+        }
+        return holidayRepository.findAllByOfficialDateBetween(start, end);
+    }
+
+    @Override
+    public List<Holiday> findClosestHolidayByDate(String date, Boolean forward) {
+        List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
+        LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
+        int closestIndex = 0;
+        long daysBetween;
+        long min = 9999;
+        for (int i = 0; i < holidays.size(); i++) {
+            daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
+            if (!forward) {
+                daysBetween = abs(daysBetween);
+            }
+            if (daysBetween > 0) {
+                if (daysBetween < min) {
+                    min = daysBetween;
+                    holidays.get(closestIndex).setClosest(false);
+                    holidays.get(i).setClosest(true);
+                    closestIndex = i;
+                }
+            }
+        }
+        LocalDate holiday = holidays.get(closestIndex).getOfficialDate();
+        return holidayRepository.findAllByOfficialDateBetween(holiday, holiday);
+    }
+
+    @Override
     public Month convertMonth(String month) {
-        Month retMonth = null;
+        Month retMonth;
         switch(month) {
             case "01":
                 retMonth = Month.JANUARY;
@@ -122,6 +157,8 @@ public class HolidayServiceImpl implements HolidayService {
             case "12":
                 retMonth = Month.DECEMBER;
                 break;
+            default:
+                retMonth = null;
         }
         return retMonth;
     }
@@ -129,12 +166,11 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public Holiday findClosestHoliday() {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
-        int size = holidays.size();
         LocalDate curDate = Dates.newLocalDate();
         int closestIndex = 0;
         long daysBetween;
         long min = 9999;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < holidays.size(); i++) {
             daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
             if (daysBetween > 0) {
                 if (daysBetween < min) {
@@ -146,12 +182,6 @@ public class HolidayServiceImpl implements HolidayService {
             }
         }
         return holidays.get(closestIndex);
-    }
-
-    @Override
-    public Boolean isClosestHoliday(Holiday h0) {
-        Holiday h1 = findClosestHoliday();
-        return h0 == h1;
     }
 
     @Override

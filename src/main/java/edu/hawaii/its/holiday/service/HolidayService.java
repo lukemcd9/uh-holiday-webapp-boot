@@ -1,8 +1,10 @@
 package edu.hawaii.its.holiday.service;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
@@ -22,9 +24,11 @@ public interface HolidayService {
 
     List<Holiday> findHolidaysByMonth(String month, Integer year);
 
+    List<Holiday> findHolidaysByRange(String beginDate, String endDate, Boolean include);
+
     Holiday findClosestHoliday();
 
-    Boolean isClosestHoliday(Holiday holiday);
+    List<Holiday> findClosestHolidayByDate(String date, Boolean forward);
 
     Month convertMonth(String month);
 
