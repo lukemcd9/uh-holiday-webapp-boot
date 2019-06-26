@@ -57,14 +57,6 @@ public class HolidayServiceTest {
     private HolidayService holidayService;
 
     @Test
-    public void findClosestHoliday() {
-        Holiday closestHoliday = holidayService.findClosestHoliday();
-        Holiday h1 = holidayService.findHoliday(123);
-        assertEquals(closestHoliday, h1);
-        assertTrue(closestHoliday.getClosest());
-    }
-
-    @Test
     public void findHolidays() {
         List<Holiday> holidays = holidayService.findHolidays();
         int size = holidays.size();
@@ -253,32 +245,42 @@ public class HolidayServiceTest {
 
     @Test
     public void findClosestHolidaysByDate() {
-        List<Holiday> holiday = holidayService.findClosestHolidayByDate("2019-01-01", true);
+        List<Holiday> holiday = holidayService.findClosestHolidayByDate("2019-01-01", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-01-02", true);
+        holiday = holidayService.findClosestHolidayByDate("2019-01-02", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("Martin Luther King Jr. Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-01-02", false);
+        holiday = holidayService.findClosestHolidayByDate("2019-01-02", false, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-05-27", true);
+        holiday = holidayService.findClosestHolidayByDate("2019-05-27", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("Memorial Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-05-28", true);
+        holiday = holidayService.findClosestHolidayByDate("2019-05-28", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("King Kamehameha I Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-05-28", false);
+        holiday = holidayService.findClosestHolidayByDate("2019-05-28", false, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("Memorial Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-12-25", true);
+        holiday = holidayService.findClosestHolidayByDate("2019-12-25", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("Christmas"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-12-26", true);
+        holiday = holidayService.findClosestHolidayByDate("2019-12-26", true, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
 
-        holiday = holidayService.findClosestHolidayByDate("2019-12-26", false);
+        holiday = holidayService.findClosestHolidayByDate("2019-12-26", false, "uh");
         assertThat(holiday.get(0).getDescription(), equalTo("Christmas"));
+
+        /* Tested on June 26, 2019 (Dates.newLocalDate()) */
+        holiday = holidayService.findClosestHolidayByDate(Dates.newLocalDate().toString(), true, "uh");
+        assertThat(holiday.get(0).getDescription(), equalTo("Independence Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-06-26", true, "state");
+        assertThat(holiday.get(0).getDescription(), equalTo("Statehood Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-06-26", false, "bank");
+        assertThat(holiday.get(0).getDescription(), equalTo("Memorial Day"));
     }
 
     @Test

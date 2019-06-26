@@ -20,8 +20,6 @@ import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
 
-import static java.lang.Math.abs;
-
 @Service
 public class HolidayServiceImpl implements HolidayService {
 
@@ -101,49 +99,32 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findClosestHolidayByDate(String date, Boolean forward) {
+    public List<Holiday> findClosestHolidayByDate(String date, Boolean forward, String type) {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
-        int closestIndex = 0;
+        int closestIndex;
         long daysBetween;
-        long min = 9999;
-        for (int i = 0; i < holidays.size(); i++) {
+        int i = 0;
+        boolean found = false;
+        do {
             daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
-            if (!forward) {
-                daysBetween = abs(daysBetween);
-            }
-            if (daysBetween >= 0) {
-                if (daysBetween < min) {
-                    min = daysBetween;
-                    holidays.get(closestIndex).setClosest(false);
-                    holidays.get(i).setClosest(true);
-                    closestIndex = i;
+            i++;
+        } while (daysBetween > -1);
+        closestIndex = forward ? i - 2 : i - 1;
+        while(!found) {
+            for (int j = 0; j < holidays.get(closestIndex).getHolidayTypes().size(); j++) {
+                if (holidays.get(closestIndex).getHolidayTypes().get(j).toLowerCase().equals(type)) {
+                    found = true;
                 }
             }
+            if(!found) {
+                closestIndex = forward ? closestIndex-1 : closestIndex+1;
+            }
         }
+        holidays.get(closestIndex + 1).setClosest(false);
+        holidays.get(closestIndex).setClosest(true);
         LocalDate holiday = holidays.get(closestIndex).getOfficialDate();
         return holidayRepository.findAllByOfficialDateBetween(holiday, holiday);
-    }
-
-    @Override
-    public Holiday findClosestHoliday() {
-        List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
-        LocalDate curDate = Dates.newLocalDate();
-        int closestIndex = 0;
-        long daysBetween;
-        long min = 9999;
-        for (int i = 0; i < holidays.size(); i++) {
-            daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
-            if (daysBetween >= 0) {
-                if (daysBetween < min) {
-                    min = daysBetween;
-                    holidays.get(closestIndex).setClosest(false);
-                    holidays.get(i).setClosest(true);
-                    closestIndex = i;
-                }
-            }
-        }
-        return holidays.get(closestIndex);
     }
 
     @Override

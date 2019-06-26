@@ -27,7 +27,7 @@ public class HolidayRestController {
     public ResponseEntity<JsonData<List<Holiday>>> holidays() {
         logger.debug("Entered REST holidays...");
         List<Holiday> holidays = holidayService.findHolidays();
-        holidayService.findClosestHoliday();
+        holidayService.findClosestHolidayByDate(Dates.newLocalDate().toString(), true, "uh");
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()
@@ -38,7 +38,6 @@ public class HolidayRestController {
     public ResponseEntity<JsonData<Holiday>> holiday(@PathVariable Integer id) {
         logger.debug("Entered REST holiday(" + id + ") ...");
         Holiday holiday = holidayService.findHoliday(id);
-        holidayService.findClosestHoliday();
         JsonData<Holiday> data = new JsonData<>(holiday);
         return ResponseEntity
                 .ok()
@@ -64,7 +63,6 @@ public class HolidayRestController {
                 .ok()
                 .body(data);
     }
-
 
     @GetMapping(value = "/api/holidays/month/{month}", params = {"year", "type"})
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByMonth(
@@ -111,7 +109,7 @@ public class HolidayRestController {
             @RequestParam("date") String date,
             @RequestParam(value = "search-forward", defaultValue = "true", required = false) Boolean forward,
             @RequestParam(value = "type", defaultValue = "uh") String type) {
-        List<Holiday> holidays = holidayService.findClosestHolidayByDate(date, forward);
+        List<Holiday> holidays = holidayService.findClosestHolidayByDate(date, forward, type);
         holidays = holidayService.findHolidaysByType(holidays, type);
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
