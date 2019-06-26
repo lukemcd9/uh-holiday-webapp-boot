@@ -22,6 +22,28 @@ import edu.hawaii.its.holiday.util.Dates;
 @Service
 public class HolidayServiceImpl implements HolidayService {
 
+    //algorithm to compare the long variable from dates.java with another long to find the minimum value and return that value
+    public Holiday findClosestHoliday() {
+        List<Holiday> holidays = findHolidays();
+        int size = holidays.size();
+        LocalDate curDate = Dates.newLocalDate();
+        int closestIndex = 0;
+        long daysBetween;
+        long min = 9999;
+        for (int i = 0; i < size; i++) {
+            daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
+            if (daysBetween > 0) {
+                if (daysBetween < min) {
+                    min = daysBetween;
+                    holidays.get(closestIndex).setClosest(false);
+                    holidays.get(i).setClosest(true);
+                    closestIndex = i;
+                }
+            }
+        }
+        return holidays.get(closestIndex);
+    }
+
     @Autowired
     private HolidayRepository holidayRepository;
 
@@ -45,6 +67,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Transactional(readOnly = true)
     @Cacheable(value = "holidays")
     public List<Holiday> findHolidays() {
+
         return holidayRepository.findAllByOrderByObservedDateDesc();
     }
 

@@ -61,6 +61,16 @@ public class Holiday implements Serializable {
     @OrderBy(value = "id")
     private List<Type> types = new ArrayList<>(0);
 
+    public boolean isClosest() {
+        return closest;
+    }
+
+    public void setClosest(boolean closest) {
+        this.closest = closest;
+    }
+
+    private boolean closest;
+
     // Constructor.
     public Holiday() {
         // Empty.
@@ -166,6 +176,7 @@ public class Holiday implements Serializable {
         result = prime * result + ((officialDate == null) ? 0 : officialDate.hashCode());
         return result;
     }
+
 
     @Override
     public boolean equals(Object obj) {

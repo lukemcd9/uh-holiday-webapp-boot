@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.time.temporal.ChronoUnit;
 
 public final class Dates {
 
@@ -18,15 +19,16 @@ public final class Dates {
 
     // Private constructor; prevent instantiation.
     private Dates() {
-        // Emtpy.
+        // Empty.
+    }
+    public static long compareDates(LocalDate date1, LocalDate date2){
+        long noOfDaysBetween = ChronoUnit.DAYS.between(date1, date2);
+        return noOfDaysBetween;
+    }
+    public static LocalDate newLocalDate() { return LocalDate.now();
     }
 
-    public static LocalDate newLocalDate() {
-        return LocalDate.now();
-    }
-
-    public static LocalDate newLocalDate(int year, Month month, int day) {
-        return LocalDate.of(year, month, day);
+    public static LocalDate newLocalDate(int year, Month month, int day) { return LocalDate.of(year, month, day);
     }
 
     public static Month month(LocalDate date) {
@@ -184,5 +186,6 @@ public final class Dates {
         }
         return localDate;
     }
+
 
 }
