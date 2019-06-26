@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-click="showHoliday(h)" ng-cloak="true" style="{{h.closest ? 'background-color: #f5f8ff;' : ''}}" >
+                <tr data-ng-repeat="h in holidays | orderBy:orderByField:reverseSort | filter:yearCode | filter:searchFilter() as filtered" ng-click="showHoliday(h)" ng-cloak="true" class="{{h.closest ? 'highlight clickable' : 'clickable'}}" >
                     <td>{{h.description}}</td>
                     <td>{{h.observedDateFull}}</td>
                     <td>{{h.officialDateFull}}</td>
