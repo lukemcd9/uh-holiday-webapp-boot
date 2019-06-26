@@ -75,12 +75,10 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findHolidaysByType(String type) {
-        List<Holiday> holidays = findHolidays().stream().filter(holiday ->
+    public List<Holiday> findHolidaysByType(List<Holiday> holidays, String type) {
+        return holidays.stream().filter(holiday ->
                 holiday.getTypes().stream().anyMatch(types ->
                         types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
-
-        return holidays;
     }
     
     @Override

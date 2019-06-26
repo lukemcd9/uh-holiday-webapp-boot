@@ -32,7 +32,7 @@ public interface HolidayService {
 
     List<UserRole> findUserRoles();
 
-    List<Holiday> findHolidaysByType(String type);
+    List<Holiday> findHolidaysByType(List<Holiday> holidays, String type);
 
     Type findType(Integer id);
 

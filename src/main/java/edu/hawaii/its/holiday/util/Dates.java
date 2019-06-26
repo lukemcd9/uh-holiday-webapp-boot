@@ -27,10 +27,6 @@ public final class Dates {
         return ChronoUnit.DAYS.between(firstDate, secondDate);
     }
 
-    public static long compareDates(LocalDate firstDate, LocalDate secondDate) {
-        return ChronoUnit.DAYS.between(firstDate, secondDate);
-    }
-
     public static LocalDate newLocalDate() {
         return LocalDate.now();
     }
