@@ -113,6 +113,64 @@ public class HolidayRestControllerTest {
     }
 
     @Test
+    public void httpGetHolidaysByMonth() throws Exception {
+        MvcResult result = mockMvc.perform(get("/api/holidays/month/03?year=2019&type=uh"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(1)))
+                .andExpect(jsonPath("data[0].description").value("Prince Kuhio Day"))
+                .andExpect(jsonPath("data[0].observedDateFull").value("March 26, 2019, Tuesday"))
+                .andExpect(jsonPath("data[0].officialDateFull").value("March 26, 2019, Tuesday"))
+                .andExpect(jsonPath("data[0].types[0].description").value("UH"))
+                .andExpect(jsonPath("data[0].types[1].description").value("State"))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/month/04?year=2012&type=state"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
+    public void httpGetHolidaysByRange() throws Exception {
+        MvcResult result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-01-01&end-date=2019-01-31&inclusive=true&type=uh"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(2)))
+                .andExpect(jsonPath("data[0].description").value("New Year's Day"))
+                .andExpect(jsonPath("data[0].observedDateFull").value("January 01, 2019, Tuesday"))
+                .andExpect(jsonPath("data[0].officialDateFull").value("January 01, 2019, Tuesday"))
+                .andExpect(jsonPath("data[0].types[0].description").value("Bank"))
+                .andExpect(jsonPath("data[0].types[1].description").value("Federal"))
+                .andExpect(jsonPath("data[0].types[2].description").value("UH"))
+                .andExpect(jsonPath("data[1].description").value("Martin Luther King Jr. Day"))
+                .andExpect(jsonPath("data[1].observedDateFull").value("January 21, 2019, Monday"))
+                .andExpect(jsonPath("data[1].officialDateFull").value("January 21, 2019, Monday"))
+                .andExpect(jsonPath("data[1].types[0].description").value("Bank"))
+                .andExpect(jsonPath("data[1].types[1].description").value("Federal"))
+                .andExpect(jsonPath("data[1].types[2].description").value("UH"))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-12-25&end-date=2019-12-31&inclusive=false&type=uh"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-08-16&end-date=2019-08-31&inclusive=true&type=federal"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
     public void holidaysByYearParam2() throws Exception {
         // rest/inYear?year=2019&type=federal
         MvcResult result = mockMvc.perform(get("/rest/inYear")

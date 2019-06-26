@@ -1,14 +1,10 @@
 package edu.hawaii.its.holiday.controller;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
 import edu.hawaii.its.holiday.util.Dates;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,58 +66,66 @@ public class HolidayRestController {
     }
 
 
-    @GetMapping(value = "/api/holidays/month/{month}", params = {"year"})
+    @GetMapping(value = "/api/holidays/month/{month}", params = {"year", "type"})
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByMonth(
             @PathVariable Integer month,
-            @RequestParam Optional<Integer> year) {
-             Integer newYear = year.isPresent() ? year.get() : Dates.currentYear();
-             List<Holiday> holidays = holidayService.findHolidaysByMonth(month, newYear);
-             JsonData<List<Holiday>> data = new JsonData<>(holidays);
-             return ResponseEntity
+            @RequestParam Optional<Integer> year,
+            @RequestParam(value = "type", defaultValue = "uh") String type) {
+        Integer newYear = year.isPresent() ? year.get() : Dates.currentYear();
+        List<Holiday> holidays = holidayService.findHolidaysByMonth(month, newYear);
+        holidays = holidayService.findHolidaysByType(holidays, type);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
                 .ok()
                 .body(data);
     }
 
-    @GetMapping(value = "api/holidays/range", params = { "begin-date", "end-date", "inclusive"})
-    public ResponseEntity<JsonData<List<Holiday>>> holidaysByRange (
+    @GetMapping(value = "api/holidays/range", params = {"begin-date", "end-date", "inclusive", "type"})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByRange(
             @RequestParam("begin-date") String beginDate,
             @RequestParam("end-date") String endDate,
-            @RequestParam(value = "inclusive", defaultValue = "true", required = false) Boolean include) {
-            List<Holiday> holidays = holidayService.findHolidaysByRange(beginDate, endDate, include);
-            JsonData<List<Holiday>> data = new JsonData<>(holidays);
-            return ResponseEntity
-                    .ok()
-                    .body(data);
+            @RequestParam(value = "inclusive", defaultValue = "true", required = false) Boolean include,
+            @RequestParam(value = "type", defaultValue = "uh") String type) {
+        List<Holiday> holidays = holidayService.findHolidaysByRange(beginDate, endDate, include);
+        holidays = holidayService.findHolidaysByType(holidays, type);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
     }
 
-    @GetMapping(value = "api/holidays/exists", params = {"date"})
-    public ResponseEntity<JsonData<List<Holiday>>> holidaysByExists (
-            @RequestParam("date") String date) {
-            List<Holiday> holidays = holidayService.findHolidaysByRange(date, date, true);
-            JsonData<List<Holiday>> data = new JsonData<>(holidays);
-            return ResponseEntity
-                    .ok()
-                    .body(data);
-    }
-
-    @GetMapping(value = "api/holidays/closest", params = {"date", "search-forward"})
-    public ResponseEntity<JsonData<List<Holiday>>> holidaysByClosest (
+    @GetMapping(value = "api/holidays/exists", params = {"date", "type"})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByExists(
             @RequestParam("date") String date,
-            @RequestParam(value = "search-forward", defaultValue = "true", required = false) Boolean forward) {
-            List<Holiday> holidays = holidayService.findClosestHolidayByDate(date, forward);
-            JsonData<List<Holiday>> data = new JsonData<>(holidays);
-            return ResponseEntity
-                    .ok()
-                    .body(data);
+            @RequestParam(value = "type", defaultValue = "uh") String type) {
+        List<Holiday> holidays = holidayService.findHolidaysByRange(date, date, true);
+        holidays = holidayService.findHolidaysByType(holidays, type);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
     }
 
-    @GetMapping(value = "rest/inYear", params = { "year" })
+    @GetMapping(value = "api/holidays/closest", params = {"date", "search-forward", "type"})
+    public ResponseEntity<JsonData<List<Holiday>>> holidaysByClosest(
+            @RequestParam("date") String date,
+            @RequestParam(value = "search-forward", defaultValue = "true", required = false) Boolean forward,
+            @RequestParam(value = "type", defaultValue = "uh") String type) {
+        List<Holiday> holidays = holidayService.findClosestHolidayByDate(date, forward);
+        holidays = holidayService.findHolidaysByType(holidays, type);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
+    @GetMapping(value = "rest/inYear", params = {"year"})
     public ResponseEntity<JsonData<List<Holiday>>> holidaysByYearParam(
             @RequestParam("year") Integer year,
             @RequestParam(name = "type", defaultValue = "uh") String type,
             @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
-        List<Holiday> holidays = holidayService.findHolidaysByType(type);
-        holidays = holidays.stream().filter(holiday -> holiday.getOfficialYear().equals(year)).collect(Collectors.toList());
+        List<Holiday> holidays = holidayService.findHolidaysByYear(year);
+        holidays = holidayService.findHolidaysByType(holidays, type);
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()

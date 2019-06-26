@@ -220,6 +220,68 @@ public class HolidayServiceTest {
     }
 
     @Test
+    public void findHolidaysByMonth() {
+        assertThat(holidayService.findHolidaysByMonth(01,2019).size(), equalTo(2));
+        assertThat(holidayService.findHolidaysByMonth(02, 2019).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(03, 2019).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(04,2019).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(05,2019).size(),equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(06,2019).size(),equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(07,2019).size(),equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(8,2019).size(),equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(9,2019).size(),equalTo(1));
+        assertThat(holidayService.findHolidaysByMonth(10,2019).size(),equalTo(0));
+        assertThat(holidayService.findHolidaysByMonth(11,2019).size(),equalTo(2));
+        assertThat(holidayService.findHolidaysByMonth(12,2019).size(),equalTo(1));
+    }
+
+    @Test
+    public void findHolidaysByRange() {
+        assertThat(holidayService.findHolidaysByRange("2019-01-01","2019-01-31", true).size(), equalTo(2));
+        assertThat(holidayService.findHolidaysByRange("2019-02-01","2019-02-28", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-03-01","2019-03-31", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-04-01","2019-04-30", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-05-01","2019-05-31", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-06-01","2019-06-30", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-07-01","2019-07-31", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-08-01","2019-08-31", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-09-01","2019-09-30", true).size(), equalTo(1));
+        assertThat(holidayService.findHolidaysByRange("2019-10-01","2019-10-31", true).size(), equalTo(0));
+        assertThat(holidayService.findHolidaysByRange("2019-11-01","2019-11-30", true).size(), equalTo(2));
+        assertThat(holidayService.findHolidaysByRange("2019-12-01","2019-12-31", true).size(), equalTo(1));
+    }
+
+    @Test
+    public void findClosestHolidaysByDate() {
+        List<Holiday> holiday = holidayService.findClosestHolidayByDate("2019-01-01", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-01-02", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("Martin Luther King Jr. Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-01-02", false);
+        assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-05-27", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("Memorial Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-05-28", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("King Kamehameha I Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-05-28", false);
+        assertThat(holiday.get(0).getDescription(), equalTo("Memorial Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-12-25", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("Christmas"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-12-26", true);
+        assertThat(holiday.get(0).getDescription(), equalTo("New Year's Day"));
+
+        holiday = holidayService.findClosestHolidayByDate("2019-12-26", false);
+        assertThat(holiday.get(0).getDescription(), equalTo("Christmas"));
+    }
+
+    @Test
     public void findDesignation() {
         Designation d1a = holidayService.findDesignation(1);
         assertThat(d1a.getName(), equalTo("New Year's Day"));

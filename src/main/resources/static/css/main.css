@@ -161,3 +161,7 @@ div .panel > .panel-heading {
     content: ", ";
 }
 
+.clickable {
+    cursor: pointer;
+}
+

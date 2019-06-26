@@ -112,7 +112,7 @@ public class HolidayServiceImpl implements HolidayService {
             if (!forward) {
                 daysBetween = abs(daysBetween);
             }
-            if (daysBetween > 0) {
+            if (daysBetween >= 0) {
                 if (daysBetween < min) {
                     min = daysBetween;
                     holidays.get(closestIndex).setClosest(false);
@@ -134,7 +134,7 @@ public class HolidayServiceImpl implements HolidayService {
         long min = 9999;
         for (int i = 0; i < holidays.size(); i++) {
             daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
-            if (daysBetween > 0) {
+            if (daysBetween >= 0) {
                 if (daysBetween < min) {
                     min = daysBetween;
                     holidays.get(closestIndex).setClosest(false);
