@@ -126,6 +126,37 @@ public class HolidayRestControllerTest {
     }
 
     @Test
+    public void holidaysByYearAndType() throws Exception {
+        MvcResult result = mockMvc.perform(get("/rest/inYear")
+                .param("year", "2012")
+                .param("type", "uh")
+                .param("isObserved", "false"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(14)))
+                .andExpect(jsonPath("data[0].description").value("Christmas"))
+                .andReturn();
+        mockMvc.perform(get("/rest/inYear")
+                .param("year", "2019")
+                .param("type", "uh")
+                .param("isObserved", "false"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(13)))
+                .andExpect(jsonPath("data[0].description").value("Christmas"))
+                .andReturn();
+        mockMvc.perform(get("/rest/inYear")
+                .param("year", "2021")
+                .param("type", "bank")
+                .param("isObserved", "false"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
     public void holidaysByYearParam() throws Exception {
         // rest/inYear?year=2011&type=uh&isObserved=false
         MvcResult result = mockMvc.perform(get("/rest/inYear")
@@ -134,7 +165,7 @@ public class HolidayRestControllerTest {
                 .param("isObserved", "false"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("data", hasSize(15)))
+                .andExpect(jsonPath("data", hasSize(14)))
                 .andExpect(jsonPath("data[0].description").value("New Year's Day"))
                 .andExpect(jsonPath("data[1].description").value("Martin Luther King Jr. Day"))
                 .andExpect(jsonPath("data[2].description").value("Presidents' Day"))
