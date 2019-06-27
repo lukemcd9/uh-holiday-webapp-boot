@@ -24,8 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import edu.hawaii.its.holiday.service.HolidayService;
 import edu.hawaii.its.holiday.util.Dates;
 
 @Entity

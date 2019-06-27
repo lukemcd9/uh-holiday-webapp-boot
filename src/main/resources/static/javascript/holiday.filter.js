@@ -1,5 +1,5 @@
-holidayApp.filter('html', function($sce) {
+holidayApp.filter("html", function($sce) {
     return function (val) {
         return $sce.trustAsHtml(val);
-    }
+    };
 });
