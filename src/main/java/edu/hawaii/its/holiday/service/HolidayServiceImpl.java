@@ -132,7 +132,7 @@ public class HolidayServiceImpl implements HolidayService {
         closestIndex = forward ? i - 2 : i - 1;
         while(!found) {
             for (int j = 0; j < holidays.get(closestIndex).getHolidayTypes().size(); j++) {
-                if (holidays.get(closestIndex).getHolidayTypes().get(j).equalsIgnoreCase(type)) {
+                if (holidays.get(closestIndex).getHolidayTypes().get(j).toLowerCase().equals(type)) {
                     found = true;
                 }
             }
