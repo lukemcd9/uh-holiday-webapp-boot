@@ -22,8 +22,7 @@ public final class Dates {
         // Empty.
     }
     public static long compareDates(LocalDate date1, LocalDate date2){
-        long noOfDaysBetween = ChronoUnit.DAYS.between(date1, date2);
-        return noOfDaysBetween;
+        return ChronoUnit.DAYS.between(date1, date2);
     }
     public static LocalDate newLocalDate() { return LocalDate.now();
     }
