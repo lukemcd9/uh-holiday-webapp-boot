@@ -61,6 +61,7 @@ public class Holiday implements Serializable {
     @OrderBy(value = "id")
     private List<Type> types = new ArrayList<>(0);
 
+    @Transient
     private Boolean closest;
 
     // Constructor.
@@ -74,10 +75,6 @@ public class Holiday implements Serializable {
         this();
         this.officialDate = officialDate;
         this.observedDate = observedDate;
-    }
-
-    public Boolean getClosest() {
-        return closest;
     }
 
     public void setClosest(Boolean closest) {
