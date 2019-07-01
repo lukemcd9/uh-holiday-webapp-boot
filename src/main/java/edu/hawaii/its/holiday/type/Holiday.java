@@ -77,6 +77,8 @@ public class Holiday implements Serializable {
         this.observedDate = observedDate;
     }
 
+    public Boolean isClosest() { return closest;}
+
     public void setClosest(Boolean closest) {
         this.closest = closest;
     }
