@@ -9,11 +9,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import edu.hawaii.its.holiday.type.Holiday;
 import org.junit.Test;
 
 public class AlgorithmsTest {

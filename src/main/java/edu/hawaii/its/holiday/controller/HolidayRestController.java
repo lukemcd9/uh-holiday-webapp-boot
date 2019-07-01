@@ -1,7 +1,6 @@
 package edu.hawaii.its.holiday.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
 
 import edu.hawaii.its.holiday.util.Dates;

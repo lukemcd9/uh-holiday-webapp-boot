@@ -63,8 +63,7 @@ function HolidayJsController($scope, dataProvider) {
 
     $scope.showHoliday = function(holiday) {
         $scope.holiday = holiday;
-        console.log('Holiday: ' + holiday.description);
-        $('#holiday').modal();
+        $("#holiday").modal();
     }
     $scope.showHolidayArrow = function() {
         if ($scope.reverseSort) {
