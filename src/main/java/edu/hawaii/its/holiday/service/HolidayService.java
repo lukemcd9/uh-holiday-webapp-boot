@@ -21,11 +21,11 @@ public interface HolidayService {
 
     List<Holiday> findHolidaysByMonth(Integer month, Integer year);
 
-    List<Holiday> findHolidaysByRange(String beginDate, String endDate, Boolean include);
+    List<Holiday> findHolidaysByRange(String beginDate, String endDate, boolean include);
 
-    List<Holiday> findClosestHolidayByDate(String date, Boolean forward);
+    List<Holiday> findClosestHolidayByDate(String date, boolean forward);
 
-    List<Holiday> findClosestHolidayByDate(String date, Boolean forward, String type);
+    List<Holiday> findClosestHolidayByDate(String date, boolean forward, String type);
 
     List<UserRole> findUserRoles();
 

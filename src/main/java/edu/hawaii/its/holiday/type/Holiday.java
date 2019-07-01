@@ -62,7 +62,7 @@ public class Holiday implements Serializable {
     private List<Type> types = new ArrayList<>(0);
 
     @Transient
-    private Boolean closest;
+    private boolean closest;
 
     // Constructor.
     public Holiday() {
@@ -77,9 +77,9 @@ public class Holiday implements Serializable {
         this.observedDate = observedDate;
     }
 
-    public Boolean isClosest() { return closest;}
+    public boolean isClosest() { return closest;}
 
-    public void setClosest(Boolean closest) {
+    public void setClosest(boolean closest) {
         this.closest = closest;
     }
 
