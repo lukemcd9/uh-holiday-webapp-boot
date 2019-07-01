@@ -7,9 +7,6 @@ function HolidayJsController($scope, dataProvider) {
     $scope.orderByField = "observedDateFull.toEpochDay";
     $scope.reverseSort = false;
     $scope.holidays = [];
-    $scope.holidayArrow = " ";
-    $scope.observedArrow = "<i class='fa fa-chevron-down' />"; //or <i class='fa fa-arrow-down' /> for whichever is default
-    $scope.officialArrow = " ";
 
     $scope.init = function() {
         var date = new Date();
@@ -18,6 +15,7 @@ function HolidayJsController($scope, dataProvider) {
         $scope.years = [];
         $scope.years.push(year);
         $scope.loadData();
+        $scope.showArrow();
     }
 
     $scope.loadData = function() {
@@ -65,45 +63,12 @@ function HolidayJsController($scope, dataProvider) {
         $scope.holiday = holiday;
         $("#holiday").modal();
     }
-    $scope.showHolidayArrow = function() {
-        if ($scope.reverseSort) {
-            $scope.holidayArrow = "<i class='fa fa-chevron-up'/>";
-            //$scope.holidayArrow= "<i class='fa fa-arrow-up' />";
-        }
-        else {
-            $scope.holidayArrow = "<i class='fa fa-chevron-down'/>";
-            //$scope.holidayArrow= "<i class='fa fa-arrow-down' />";
-        }
-        $scope.observedArrow = " ";
-        $scope.officialArrow = " ";
-    }
 
-    $scope.showObservedArrow = function() {
-        if ($scope.reverseSort) {
-            $scope.observedArrow = "<i class='fa fa-chevron-up'/>";
-            //$scope.observedArrow= "<i class='fa fa-arrow-up' />";
-        }
-        else {
-            $scope.observedArrow = "<i class='fa fa-chevron-down'/>";
-            //$scope.observedArrow= "<i class='fa fa-arrow-down' />";
-        }
-        $scope.holidayArrow = " ";
-        $scope.officialArrow = " ";
+    $scope.showArrow = function() {
+        $scope.direction = $scope.reverseSort ? 'up' : 'down';
+        $scope.arrow = "fa-chevron-" + $scope.direction;
+        //$scope.arrow= "fa-arrow-" + $scope.direction;
     }
-
-    $scope.showOfficialArrow = function() {
-        if ($scope.reverseSort) {
-            $scope.officialArrow = "<i class='fa fa-chevron-up'/>";
-            //$scope.officialArrow= "<i class='fa fa-arrow-up' />";
-        }
-        else {
-            $scope.officialArrow = "<i class='fa fa-chevron-down'/>";
-            //$scope.officialArrow= "<i class='fa fa-arrow-down' />";
-        }
-        $scope.observedArrow = " ";
-        $scope.holidayArrow = " ";
-    }
-
 }
 
 holidayApp.controller("HolidayJsController", HolidayJsController);

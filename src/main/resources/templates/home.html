@@ -29,14 +29,14 @@
             <table class="table table-bordered table-hover table-condensed">
                 <thead>
                 <tr ng-show="filtered.length > 0">
-                    <th style="cursor: pointer;" class="noselect" ng-click="sortBy('description'); showHolidayArrow()" >
-                        Holiday <span ng-bind-html="holidayArrow|html"/>
+                    <th class="clickable noselect" ng-click="sortBy('description'); showArrow()" >
+                        Holiday <span ng-if="orderByField =='description'"><i class="fa fa-chevron-{{direction}}"></i></span>
                     </th>
-                    <th style="cursor: pointer;" ng-click="sortBy('observedDateFull.toEpochDay'); showObservedArrow()" >
-                        Observed <span ng-bind-html="observedArrow|html"/>
+                    <th class="clickable" ng-click="sortBy('observedDateFull.toEpochDay'); showArrow()" >
+                        Observed <span ng-if="orderByField =='observedDateFull.toEpochDay'"><i class="fa fa-chevron-{{direction}}"></i></span>
                     </th>
-                    <th style="cursor: pointer;" ng-click="sortBy('officialDateFull.toEpochDay'); showOfficialArrow()" >
-                        Official <span ng-bind-html="officialArrow|html"/>
+                    <th class="clickable" ng-click="sortBy('officialDateFull.toEpochDay'); showArrow()" >
+                        Official <span ng-if="orderByField =='officialDateFull.toEpochDay'"><i class="fa fa-chevron-{{direction}}"></i></span>
                     </th>
                     <th>Type</th>
                 </tr>
@@ -55,9 +55,8 @@
                 </tbody>
             </table>
         </div>
-        <div th:replace="holiday :: copy"></div>
     </div>
-    <!-- / Content container. -->
+    <div th:replace="holiday :: copy"></div>
 </div>
 <!-- / Content container. -->
 <div th:replace="footer :: copy"></div>
