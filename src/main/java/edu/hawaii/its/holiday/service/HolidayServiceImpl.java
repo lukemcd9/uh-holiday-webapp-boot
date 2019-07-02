@@ -88,7 +88,7 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findHolidaysByRange(String beginDate, String endDate, Boolean include) {
+    public List<Holiday> findHolidaysByRange(String beginDate, String endDate, boolean include) {
         LocalDate start = Dates.toLocalDate(beginDate, "yyyy-MM-dd");
         LocalDate end =  Dates.toLocalDate(endDate, "yyyy-MM-dd");
         if (!include) {
@@ -99,7 +99,7 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findClosestHolidayByDate(String date, Boolean forward) {
+    public List<Holiday> findClosestHolidayByDate(String date, boolean forward) {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
         int closestIndex;
@@ -118,7 +118,7 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holiday> findClosestHolidayByDate(String date, Boolean forward, String type) {
+    public List<Holiday> findClosestHolidayByDate(String date, boolean forward, String type) {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
         int closestIndex;
