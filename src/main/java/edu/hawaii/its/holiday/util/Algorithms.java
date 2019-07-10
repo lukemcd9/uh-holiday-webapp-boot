@@ -1,10 +1,10 @@
 package edu.hawaii.its.holiday.util;
 
+import edu.hawaii.its.holiday.type.HolidayAdjuster;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-
-import edu.hawaii.its.holiday.type.HolidayAdjuster;
 
 public final class Algorithms {
 
@@ -34,6 +34,31 @@ public final class Algorithms {
     }
 
     // TODO here: Add Good Friday Holiday.
+    public static LocalDate observedGoodFriday(int year) {
+        LocalDate localDate = officialEasterDay(year).minusDays(2);
+        return observedDay(localDate);
+    }
+
+    public static LocalDate officialEasterDay(int year) {
+        //https://stackoverflow.com/questions/26022233/calculate-the-date-of-easter-sunday
+        int a = year % 19,
+                b = year / 100,
+                c = year % 100,
+                d = b / 4,
+                e = b % 4,
+                g = (8 * b + 13) / 25,
+                h = (19 * a + b - d - g + 15) % 30,
+                j = c / 4,
+                k = c % 4,
+                m = (a + 11 * h) / 319,
+                r = (2 * e + 2 * j - k - h + m + 32) % 7,
+                month = (h - m + r + 90) / 25,
+                day = (h - m + r + month + 19) % 32;
+
+        LocalDate localDate = Dates.newLocalDate(year, Month.of(month), day);
+        return localDate;
+    }
+
 
     public static LocalDate observedMemorialDay(int year) {
         LocalDate localDate = Dates.lastDateOfMonth(Month.MAY, year);

@@ -1,20 +1,34 @@
 package edu.hawaii.its.holiday.util;
 
-import static edu.hawaii.its.holiday.util.Algorithms.observedElectionDay;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.time.DayOfWeek;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import static edu.hawaii.its.holiday.util.Algorithms.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.*;
 
 public class AlgorithmsTest {
+
+    @Test
+    public void testCalculateGoodFriday() {
+        int year = 2019;
+        assertThat(officialEasterDay(year).getDayOfWeek(),
+                equalTo(DayOfWeek.SUNDAY));
+        assertThat(officialEasterDay(year).getDayOfMonth(),
+                equalTo(21));
+        assertThat(observedGoodFriday(year).getDayOfWeek(),
+                equalTo(DayOfWeek.FRIDAY));
+        assertThat(observedGoodFriday(year).getDayOfMonth(),
+                equalTo(19));
+    }
 
     @Test
     public void testCalculateElectionDay() {
