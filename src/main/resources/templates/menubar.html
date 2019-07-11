@@ -47,7 +47,8 @@
                         <a th:href="@{/admin}">Admin</a>
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}">Logout</a>
+                        <a th:href="@{/logout}">Logout (<span
+                                th:text="${#authentication.getPrincipal().getUid()}"></span>)</a>
                     </li>
                 </ul>
             </div>

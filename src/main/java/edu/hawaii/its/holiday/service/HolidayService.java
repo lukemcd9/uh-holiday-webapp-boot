@@ -1,11 +1,11 @@
 package edu.hawaii.its.holiday.service;
 
-import java.util.List;
-
 import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
+
+import java.util.List;
 
 public interface HolidayService {
 
@@ -36,5 +36,7 @@ public interface HolidayService {
     List<Type> findTypes();
 
     List<String> findAllDescriptions();
+
+    List<Holiday> generateHolidaysByYear(Integer year);
 
 }

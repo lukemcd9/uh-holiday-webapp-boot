@@ -1,15 +1,5 @@
 package edu.hawaii.its.holiday.service;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.hawaii.its.holiday.repository.DesignationRepository;
 import edu.hawaii.its.holiday.repository.HolidayRepository;
 import edu.hawaii.its.holiday.repository.TypeRepository;
@@ -18,7 +8,19 @@ import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
+import edu.hawaii.its.holiday.util.Algorithms;
 import edu.hawaii.its.holiday.util.Dates;
+import edu.hawaii.its.holiday.util.HolidayBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -141,6 +143,23 @@ public class HolidayServiceImpl implements HolidayService {
         holidays.get(closestIndex + 1).setClosest(false);
         holidays.get(closestIndex).setClosest(true);
         return holidays.get(closestIndex);
+    }
+
+    @Override
+    public List<Holiday> generateHolidaysByYear(Integer year) {
+        List<Holiday> holidays = new ArrayList<>(findHolidaysByYear(LocalDate.now().getYear()));
+        List<Holiday> newHolidays = new ArrayList<>();
+        if (year % 2 == 0) {
+            newHolidays.add(new HolidayBuilder(Algorithms.observedElectionDay(year), Algorithms.observedElectionDay(year))
+                    .description("General Election Day")
+                    .make());
+        }
+        holidays.forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
+                .description(holiday.getDescription()).types(new ArrayList<>(holiday.getTypes())).make()));
+
+        newHolidays.forEach(holiday -> holidayRepository.save(holiday));
+        holidayRepository.flush();
+        return newHolidays;
     }
 
     @Override

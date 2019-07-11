@@ -1,8 +1,8 @@
 package edu.hawaii.its.holiday.controller;
 
-import java.util.List;
-import java.util.Optional;
-
+import edu.hawaii.its.holiday.service.HolidayService;
+import edu.hawaii.its.holiday.type.Holiday;
+import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.util.Dates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import edu.hawaii.its.holiday.service.HolidayService;
-import edu.hawaii.its.holiday.type.Holiday;
-import edu.hawaii.its.holiday.type.Type;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class HolidayRestController {
@@ -125,6 +124,15 @@ public class HolidayRestController {
             @RequestParam(name = "isObserved", defaultValue = "false") Boolean isObserved) {
         List<Holiday> holidays = holidayService.findHolidaysByYear(year);
         holidays = holidayService.findHolidaysByType(holidays, type);
+        JsonData<List<Holiday>> data = new JsonData<>(holidays);
+        return ResponseEntity
+                .ok()
+                .body(data);
+    }
+
+    @PostMapping(value = "/api/holidays/generate")
+    public ResponseEntity<JsonData<List<Holiday>>> generateHolidays(@RequestParam("year") Integer year) {
+        List<Holiday> holidays = holidayService.generateHolidaysByYear(year);
         JsonData<List<Holiday>> data = new JsonData<>(holidays);
         return ResponseEntity
                 .ok()

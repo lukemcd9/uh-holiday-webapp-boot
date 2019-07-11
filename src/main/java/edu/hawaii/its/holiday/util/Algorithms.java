@@ -148,4 +148,56 @@ public final class Algorithms {
         return localDate;
     }
 
+    public static LocalDate observedDayByDescription(String description, int year) {
+        LocalDate localDate;
+        switch (description) {
+            case "New Year's Day":
+                localDate = observedNewYearsDay(year);
+                break;
+            case "Martin Luther King Jr. Day":
+                localDate = observedMartinLutherKingJrDay(year);
+                break;
+            case "Presidents' Day":
+                localDate = observedPresidentsDay(year);
+                break;
+            case "Prince Kuhio Day":
+                localDate = observedPrinceKuhioDay(year);
+                break;
+            case "Good Friday":
+                localDate = observedGoodFriday(year);
+                break;
+            case "Memorial Day":
+                localDate = observedMemorialDay(year);
+                break;
+            case "King Kamehameha I Day":
+                localDate = observedKingKamehamehaDay(year);
+                break;
+            case "Independence Day":
+                localDate = observedIndependenceDay(year);
+                break;
+            case "Statehood Day":
+                localDate = observedStatehoodDay(year);
+                break;
+            case "Labor Day":
+                localDate = observedLaborDay(year);
+                break;
+            case "Veterans' Day":
+                localDate = observedVeteransDay(year);
+                break;
+            case "Thanksgiving":
+                localDate = observedThanksgivingDay(year);
+                break;
+            case "Christmas":
+                localDate = observedChristmasDay(year);
+                break;
+            case "General Election Day":
+                localDate = observedElectionDay(year);
+                break;
+            default:
+                localDate = null;
+                break;
+        }
+        return localDate;
+    }
+
 }
