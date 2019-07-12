@@ -73,4 +73,3 @@ function HolidayJsController($scope, dataProvider) {
 
 holidayApp.controller("HolidayJsController", HolidayJsController);
 
-
