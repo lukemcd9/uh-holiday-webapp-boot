@@ -65,12 +65,9 @@ function HolidayJsController($scope, dataProvider) {
     }
 
     $scope.showArrow = function() {
-        $scope.direction = $scope.reverseSort ? 'up' : 'down';
-        $scope.arrow = "fa-chevron-" + $scope.direction;
-        //$scope.arrow= "fa-arrow-" + $scope.direction;
+        $scope.direction = $scope.reverseSort ? "up" : "down";
     }
 }
 
 holidayApp.controller("HolidayJsController", HolidayJsController);
-
 
