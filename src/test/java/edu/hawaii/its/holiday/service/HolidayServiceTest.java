@@ -1,25 +1,16 @@
 package edu.hawaii.its.holiday.service;
 
-import static edu.hawaii.its.holiday.util.Algorithms.observedChristmasDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedDiscoverersDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedElectionDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedIndependenceDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedKingKamehamehaDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedLaborDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedMartinLutherKingJrDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedMemorialDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedNewYearsDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedPresidentsDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedPrinceKuhioDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedStatehoodDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedThanksgivingDay;
-import static edu.hawaii.its.holiday.util.Algorithms.observedVeteransDay;
-import static edu.hawaii.its.holiday.util.Algorithms.occurence;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
+import edu.hawaii.its.holiday.type.*;
+import edu.hawaii.its.holiday.util.Dates;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -30,23 +21,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
-import edu.hawaii.its.holiday.type.Designation;
-import edu.hawaii.its.holiday.type.Holiday;
-import edu.hawaii.its.holiday.type.HolidayAdjuster;
-import edu.hawaii.its.holiday.type.Type;
-import edu.hawaii.its.holiday.type.UserRole;
-import edu.hawaii.its.holiday.util.Dates;
+import static edu.hawaii.its.holiday.util.Algorithms.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
@@ -541,5 +519,16 @@ public class HolidayServiceTest {
         assertThat(ld, equalTo(Dates.newLocalDate(year, Month.APRIL, 1)));
         ld = occurence(year, Month.APRIL, DayOfWeek.MONDAY, -1);
         assertThat(ld, equalTo(Dates.newLocalDate(year, Month.APRIL, 1)));
+    }
+
+    @Test
+    public void testGenerateHolidays() {
+        int year = 2019;
+        List<Holiday> generatedHolidays = holidayService.generateHolidaysByYear(year);
+
+        assertEquals(generatedHolidays.get(0).getOfficialYear().intValue(), 2019);
+
+        Integer otherYear = 2023;
+        assertNotEquals(generatedHolidays.get(0).getOfficialYear(), otherYear);
     }
 }

@@ -6,7 +6,10 @@
 <body>
 <nav th:replace="menubar :: copy"></nav>
 <div class="container">
-    <h1>Test Admin Page</h1>
+    <h3>Admin</h3>
+    <div class="row">
+        <a th:href="@{/api/holidays/evict}" class="btn btn-primary">Evict Holidays Cache</a>
+    </div>
 </div>
 </body>
 </html>

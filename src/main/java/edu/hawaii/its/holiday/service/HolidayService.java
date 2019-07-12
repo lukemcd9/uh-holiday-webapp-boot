@@ -39,4 +39,5 @@ public interface HolidayService {
 
     List<Holiday> generateHolidaysByYear(Integer year);
 
+    void evictHolidaysCache();
 }

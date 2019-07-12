@@ -56,12 +56,12 @@
                 </tbody>
             </table>
             <form sec:authorize="hasRole('ROLE_ADMIN')" class="form-inline" action="#"
-                  th:action="@{/api/holidays/generate}" method="POST">
+                  th:action="@{/api/holidays/generate}" method="post">
                 <div class="form-group">
                     <label class="sr-only" for="yearInput">Year</label>
                     <input name="year" class="form-control" type="number" id="yearInput" placeholder="Year">
                 </div>
-                <button ng-click="loadData()" type="submit" class="btn btn-success">Generate Holidays</button>
+                <button type="submit" class="btn btn-success">Generate Holidays</button>
             </form>
         </div>
     </div>

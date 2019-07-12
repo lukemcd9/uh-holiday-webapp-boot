@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,12 @@ public class HolidayRestController {
 
     @Autowired
     private HolidayService holidayService;
+
+    @GetMapping(value = "/api/holidays/evict")
+    public void evictHolidays(HttpServletResponse response) throws IOException {
+        holidayService.evictHolidaysCache();
+        response.sendRedirect("/holiday/admin");
+    }
 
     @GetMapping(value = "/api/holidays")
     public ResponseEntity<JsonData<List<Holiday>>> holidays() {
@@ -131,11 +139,8 @@ public class HolidayRestController {
     }
 
     @PostMapping(value = "/api/holidays/generate")
-    public ResponseEntity<JsonData<List<Holiday>>> generateHolidays(@RequestParam("year") Integer year) {
+    public void generateHolidays(@RequestParam("year") Integer year, HttpServletResponse response) throws IOException {
         List<Holiday> holidays = holidayService.generateHolidaysByYear(year);
-        JsonData<List<Holiday>> data = new JsonData<>(holidays);
-        return ResponseEntity
-                .ok()
-                .body(data);
+        response.sendRedirect("/holiday");
     }
 }

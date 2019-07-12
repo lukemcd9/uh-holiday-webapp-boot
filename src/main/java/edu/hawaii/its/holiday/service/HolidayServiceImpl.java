@@ -12,6 +12,7 @@ import edu.hawaii.its.holiday.util.Algorithms;
 import edu.hawaii.its.holiday.util.Dates;
 import edu.hawaii.its.holiday.util.HolidayBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +66,10 @@ public class HolidayServiceImpl implements HolidayService {
     @Cacheable(value = "holidayTypes")
     public List<Type> findTypes() {
         return typeRepository.findAll();
+    }
+
+    @CacheEvict(value = "holidays", allEntries = true)
+    public void evictHolidaysCache() {
     }
 
     @Override
@@ -147,17 +152,22 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public List<Holiday> generateHolidaysByYear(Integer year) {
-        List<Holiday> holidays = new ArrayList<>(findHolidaysByYear(LocalDate.now().getYear()));
+        List<Holiday> currentHolidays = new ArrayList<>(findHolidaysByYear(LocalDate.now().getYear()));
         List<Holiday> newHolidays = new ArrayList<>();
+
+        if (findHolidays().stream().anyMatch(holiday -> holiday.getOfficialYear().intValue() == year.intValue())) {
+            return currentHolidays;
+        }
+
         if (year % 2 == 0) {
             newHolidays.add(new HolidayBuilder(Algorithms.observedElectionDay(year), Algorithms.observedElectionDay(year))
                     .description("General Election Day")
                     .make());
         }
-        holidays.forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
-                .description(holiday.getDescription()).types(new ArrayList<>(holiday.getTypes())).make()));
 
-        newHolidays.forEach(holiday -> holidayRepository.save(holiday));
+        currentHolidays.forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
+                .description(holiday.getDescription()).types(new ArrayList<>(holiday.getTypes())).make()));
+        holidayRepository.saveAll(newHolidays);
         holidayRepository.flush();
         return newHolidays;
     }
