@@ -160,8 +160,10 @@ public class HolidayServiceImpl implements HolidayService {
         }
 
         if (year % 2 == 0) {
+            Holiday electionDay = findHolidays().parallelStream().filter(holiday -> holiday.getDescription().equalsIgnoreCase("General Election Day")).findFirst().get();
             newHolidays.add(new HolidayBuilder(Algorithms.observedElectionDay(year), Algorithms.observedElectionDay(year))
-                    .description("General Election Day")
+                    .description(electionDay.getDescription())
+                    .types(new ArrayList<>(electionDay.getTypes()))
                     .make());
         }
 
