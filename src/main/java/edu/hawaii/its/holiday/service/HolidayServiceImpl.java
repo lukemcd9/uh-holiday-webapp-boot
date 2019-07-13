@@ -165,7 +165,13 @@ public class HolidayServiceImpl implements HolidayService {
                     .make());
         }
 
-        currentHolidays.forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
+        Holiday goodFriday = currentHolidays.parallelStream().filter(holiday -> holiday.getDescription().equalsIgnoreCase("Good Friday")).findFirst().get();
+        newHolidays.add(new HolidayBuilder(Algorithms.observedGoodFriday(year), Algorithms.observedGoodFriday(year))
+                .description(goodFriday.getDescription())
+                .types(new ArrayList<>(goodFriday.getTypes()))
+                .make());
+
+        currentHolidays.stream().filter(holiday -> !holiday.getDescription().equalsIgnoreCase("Good Friday")).forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
                 .description(holiday.getDescription()).types(new ArrayList<>(holiday.getTypes())).make()));
         holidayRepository.saveAll(newHolidays);
         holidayRepository.flush();
