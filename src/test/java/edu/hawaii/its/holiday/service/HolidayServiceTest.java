@@ -358,90 +358,91 @@ public class HolidayServiceTest {
             int year = h.getOfficialDate().getYear();
             switch (h.getDescription()) {
                 case "New Year's Day":
-                    date = observedNewYearsDay(h.getOfficialYear());
+                    date = newYearsDay(h.getOfficialYear(), true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[0] += 1;
                     break;
 
                 case "Martin Luther King Jr. Day":
-                    date = observedMartinLutherKingJrDay(year);
+                    date = martinLutherKingJrDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[1] += 1;
                     break;
 
                 case "Presidents' Day":
-                    date = observedPresidentsDay(year);
+                    date = presidentsDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[2] += 1;
                     break;
 
                 case "Prince Kuhio Day":
-                    date = observedPrinceKuhioDay(year);
+                    date = princeKuhioDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[3] += 1;
                     break;
 
                 case "Good Friday":
-                    // TBD
+                    date = goodFriday(year, true);
+                    assertThat(date, equalTo(h.getObservedDate()));
                     counts[4] += 1;
                     break;
 
                 case "Memorial Day":
-                    date = observedMemorialDay(year);
+                    date = memorialDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[5] += 1;
                     break;
 
                 case "King Kamehameha I Day":
-                    date = observedKingKamehamehaDay(year);
+                    date = kingKamehamehaDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[6] += 1;
                     break;
 
                 case "Independence Day":
-                    date = observedIndependenceDay(year);
+                    date = independenceDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[7] += 1;
                     break;
 
                 case "Statehood Day":
-                    date = observedStatehoodDay(year);
+                    date = statehoodDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[8] += 1;
                     break;
 
                 case "Labor Day":
-                    date = observedLaborDay(year);
+                    date = laborDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[9] += 1;
                     break;
 
                 case "Discoverers' Day":
-                    date = observedDiscoverersDay(year);
+                    date = discoverersDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[10] += 1;
                     break;
 
                 case "General Election Day":
-                    date = observedElectionDay(year);
+                    date = electionDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[11] += 1;
                     break;
 
                 case "Veterans' Day":
-                    date = observedVeteransDay(year);
+                    date = veteransDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[12] += 1;
                     break;
 
                 case "Thanksgiving":
-                    date = observedThanksgivingDay(year);
+                    date = thanksgivingDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[13] += 1;
                     break;
 
                 case "Christmas":
-                    date = observedChristmasDay(year);
+                    date = christmasDay(year, true);
                     assertThat(date, equalTo(h.getObservedDate()));
                     counts[14] += 1;
                     break;

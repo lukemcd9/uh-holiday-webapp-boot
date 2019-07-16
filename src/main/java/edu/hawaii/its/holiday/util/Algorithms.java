@@ -13,33 +13,33 @@ public final class Algorithms {
         // Empty.
     }
 
-    public static LocalDate observedNewYearsDay(int year) {
+    public static LocalDate newYearsDay(int year, boolean observed) {
         LocalDate localDate = Dates.firstDateOfYear(year);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedMartinLutherKingJrDay(int year) {
+    public static LocalDate martinLutherKingJrDay(int year, boolean observed) {
         LocalDate localDate = mondayOccurence(year, Month.JANUARY, 3);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedPresidentsDay(int year) {
+    public static LocalDate presidentsDay(int year, boolean observed) {
         LocalDate localDate = mondayOccurence(year, Month.FEBRUARY, 3);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedPrinceKuhioDay(int year) {
+    public static LocalDate princeKuhioDay(int year, boolean observed) {
         LocalDate localDate = Dates.newLocalDate(year, Month.MARCH, 26);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
     // TODO here: Add Good Friday Holiday.
-    public static LocalDate observedGoodFriday(int year) {
-        LocalDate localDate = officialEasterDay(year).minusDays(2);
-        return observedDay(localDate);
+    public static LocalDate goodFriday(int year, boolean observed) {
+        LocalDate localDate = easterDay(year).minusDays(2);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate officialEasterDay(int year) {
+    public static LocalDate easterDay(int year) {
         //https://stackoverflow.com/questions/26022233/calculate-the-date-of-easter-sunday
         int a = year % 19,
                 b = year / 100,
@@ -60,40 +60,40 @@ public final class Algorithms {
     }
 
 
-    public static LocalDate observedMemorialDay(int year) {
+    public static LocalDate memorialDay(int year, boolean observed) {
         LocalDate localDate = Dates.lastDateOfMonth(Month.MAY, year);
         while (localDate.getDayOfWeek() != DayOfWeek.MONDAY) {
             localDate = localDate.minusDays(1);
         }
-        return localDate;
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedKingKamehamehaDay(int year) {
+    public static LocalDate kingKamehamehaDay(int year, boolean observed) {
         LocalDate localDate = Dates.newLocalDate(year, Month.JUNE, 11);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedIndependenceDay(int year) {
+    public static LocalDate independenceDay(int year, boolean observed) {
         LocalDate localDate = Dates.newLocalDate(year, Month.JULY, 4);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedStatehoodDay(int year) {
+    public static LocalDate statehoodDay(int year, boolean observed) {
         LocalDate localDate = occurence(year, Month.AUGUST, DayOfWeek.FRIDAY, 3);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedLaborDay(int year) {
+    public static LocalDate laborDay(int year, boolean observed) {
         LocalDate localDate = mondayOccurence(year, Month.SEPTEMBER, 1);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedDiscoverersDay(int year) {
+    public static LocalDate discoverersDay(int year, boolean observed) {
         LocalDate localDate = mondayOccurence(year, Month.OCTOBER, 2);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedElectionDay(int year) {
+    public static LocalDate electionDay(int year, boolean observed) {
         if (year % 2 != 0) {
             throw new IllegalArgumentException("Year must be even.");
         }
@@ -107,22 +107,22 @@ public final class Algorithms {
             localDate = localDate.plusDays(1);
         }
 
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedVeteransDay(int year) {
+    public static LocalDate veteransDay(int year, boolean observed) {
         LocalDate localDate = Dates.newLocalDate(year, Month.NOVEMBER, 11);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedThanksgivingDay(int year) {
+    public static LocalDate thanksgivingDay(int year, boolean observed) {
         LocalDate localDate = occurence(year, Month.NOVEMBER, DayOfWeek.THURSDAY, 4);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
-    public static LocalDate observedChristmasDay(int year) {
+    public static LocalDate christmasDay(int year, boolean observed) {
         LocalDate localDate = Dates.newLocalDate(year, Month.DECEMBER, 25);
-        return observedDay(localDate);
+        return observed ? observedDay(localDate) : localDate;
     }
 
     private static LocalDate observedDay(LocalDate localDate) {
@@ -148,50 +148,50 @@ public final class Algorithms {
         return localDate;
     }
 
-    public static LocalDate observedDayByDescription(String description, int year) {
+    public static LocalDate dateByDescription(String description, int year, boolean observed) {
         LocalDate localDate;
         switch (description) {
             case "New Year's Day":
-                localDate = observedNewYearsDay(year);
+                localDate = newYearsDay(year, observed);
                 break;
             case "Martin Luther King Jr. Day":
-                localDate = observedMartinLutherKingJrDay(year);
+                localDate = martinLutherKingJrDay(year, observed);
                 break;
             case "Presidents' Day":
-                localDate = observedPresidentsDay(year);
+                localDate = presidentsDay(year, observed);
                 break;
             case "Prince Kuhio Day":
-                localDate = observedPrinceKuhioDay(year);
+                localDate = princeKuhioDay(year, observed);
                 break;
             case "Good Friday":
-                localDate = observedGoodFriday(year);
+                localDate = goodFriday(year, observed);
                 break;
             case "Memorial Day":
-                localDate = observedMemorialDay(year);
+                localDate = memorialDay(year, observed);
                 break;
             case "King Kamehameha I Day":
-                localDate = observedKingKamehamehaDay(year);
+                localDate = kingKamehamehaDay(year, observed);
                 break;
             case "Independence Day":
-                localDate = observedIndependenceDay(year);
+                localDate = independenceDay(year, observed);
                 break;
             case "Statehood Day":
-                localDate = observedStatehoodDay(year);
+                localDate = statehoodDay(year, observed);
                 break;
             case "Labor Day":
-                localDate = observedLaborDay(year);
+                localDate = laborDay(year, observed);
                 break;
             case "Veterans' Day":
-                localDate = observedVeteransDay(year);
+                localDate = veteransDay(year, observed);
                 break;
             case "Thanksgiving":
-                localDate = observedThanksgivingDay(year);
+                localDate = thanksgivingDay(year, observed);
                 break;
             case "Christmas":
-                localDate = observedChristmasDay(year);
+                localDate = christmasDay(year, observed);
                 break;
             case "General Election Day":
-                localDate = observedElectionDay(year);
+                localDate = electionDay(year, observed);
                 break;
             default:
                 localDate = null;

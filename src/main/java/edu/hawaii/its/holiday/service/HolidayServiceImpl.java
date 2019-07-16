@@ -161,19 +161,13 @@ public class HolidayServiceImpl implements HolidayService {
 
         if (year % 2 == 0) {
             Holiday electionDay = findHolidays().parallelStream().filter(holiday -> holiday.getDescription().equalsIgnoreCase("General Election Day")).findFirst().get();
-            newHolidays.add(new HolidayBuilder(Algorithms.observedElectionDay(year), Algorithms.observedElectionDay(year))
+            newHolidays.add(new HolidayBuilder(Algorithms.electionDay(year, false), Algorithms.electionDay(year, true))
                     .description(electionDay.getDescription())
                     .types(new ArrayList<>(electionDay.getTypes()))
                     .make());
         }
 
-        Holiday goodFriday = currentHolidays.parallelStream().filter(holiday -> holiday.getDescription().equalsIgnoreCase("Good Friday")).findFirst().get();
-        newHolidays.add(new HolidayBuilder(Algorithms.observedGoodFriday(year), Algorithms.observedGoodFriday(year))
-                .description(goodFriday.getDescription())
-                .types(new ArrayList<>(goodFriday.getTypes()))
-                .make());
-
-        currentHolidays.stream().filter(holiday -> !holiday.getDescription().equalsIgnoreCase("Good Friday")).forEach(holiday -> newHolidays.add(new HolidayBuilder(holiday.getOfficialDate().plusYears(year - holiday.getOfficialYear()), Algorithms.observedDayByDescription(holiday.getDescription(), year))
+        currentHolidays.forEach(holiday -> newHolidays.add(new HolidayBuilder(Algorithms.dateByDescription(holiday.getDescription(), year, false), Algorithms.dateByDescription(holiday.getDescription(), year, true))
                 .description(holiday.getDescription()).types(new ArrayList<>(holiday.getTypes())).make()));
         holidayRepository.saveAll(newHolidays);
         holidayRepository.flush();

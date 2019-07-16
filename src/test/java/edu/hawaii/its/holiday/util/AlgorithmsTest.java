@@ -20,26 +20,26 @@ public class AlgorithmsTest {
     @Test
     public void testCalculateGoodFriday() {
         int year = 2019;
-        assertThat(officialEasterDay(year).getDayOfWeek(),
+        assertThat(easterDay(year).getDayOfWeek(),
                 equalTo(DayOfWeek.SUNDAY));
-        assertThat(officialEasterDay(year).getDayOfMonth(),
+        assertThat(easterDay(year).getDayOfMonth(),
                 equalTo(21));
-        assertThat(observedGoodFriday(year).getDayOfWeek(),
+        assertThat(goodFriday(year, true).getDayOfWeek(),
                 equalTo(DayOfWeek.FRIDAY));
-        assertThat(observedGoodFriday(year).getDayOfMonth(),
+        assertThat(goodFriday(year, true).getDayOfMonth(),
                 equalTo(19));
     }
 
     @Test
     public void testCalculateElectionDay() {
         int year = 2020;
-        assertThat(observedElectionDay(year),
+        assertThat(electionDay(year, true),
                 equalTo(Dates.newLocalDate(year, Month.NOVEMBER, 3)));
 
         try {
             // Not an election year.
             // Note the exception thrown.
-            observedElectionDay(2019);
+            electionDay(2019, true);
             fail("Should not reach here.");
         } catch (Exception ex) {
             assertThat(ex, instanceOf(IllegalArgumentException.class));
