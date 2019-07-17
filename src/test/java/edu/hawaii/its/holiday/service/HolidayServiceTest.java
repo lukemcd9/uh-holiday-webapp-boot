@@ -86,10 +86,10 @@ public class HolidayServiceTest {
 
     @Test
     public void findTypeById() {
-        Type t0 = holidayService.findType(1);
-        Type t1 = holidayService.findType(1);
-        assertThat(t0.getId(), equalTo(1));
-        assertThat(t1.getId(), equalTo(1));
+        Type t0 = holidayService.findType(2);
+        Type t1 = holidayService.findType(2);
+        assertThat(t0.getId(), equalTo(2));
+        assertThat(t1.getId(), equalTo(2));
         assertEquals(t0, t1);
         assertSame(t0, t1); // Check if caching is working.
     }
@@ -99,21 +99,16 @@ public class HolidayServiceTest {
         List<Type> types = holidayService.findTypes();
 
         Type ht = types.get(0);
-        assertThat(ht.getId(), equalTo(1));
-        assertThat(ht.getVersion(), equalTo(1));
-        assertThat(ht.getDescription(), equalTo("Bank"));
-
-        ht = types.get(1);
         assertThat(ht.getId(), equalTo(2));
         assertThat(ht.getVersion(), equalTo(1));
         assertThat(ht.getDescription(), equalTo("Federal"));
 
-        ht = types.get(2);
+        ht = types.get(1);
         assertThat(ht.getId(), equalTo(3));
         assertThat(ht.getVersion(), equalTo(1));
         assertThat(ht.getDescription(), equalTo("UH"));
 
-        ht = types.get(3);
+        ht = types.get(2);
         assertThat(ht.getId(), equalTo(4));
         assertThat(ht.getVersion(), equalTo(1));
         assertThat(ht.getDescription(), equalTo("State"));
@@ -164,19 +159,17 @@ public class HolidayServiceTest {
         Holiday h4 = holidayService.findHoliday(4);
         assertEquals("Prince Kuhio Day", h4.getDescription());
 
-        assertEquals(3, h1.getTypes().size());
-        assertEquals(3, h2.getTypes().size());
+        assertEquals(2, h1.getTypes().size());
+        assertEquals(2, h2.getTypes().size());
         assertEquals(2, h4.getTypes().size());
 
         List<Type> types = h1.getTypes();
-        assertThat(types.get(0).getId(), equalTo(1));
-        assertThat(types.get(1).getId(), equalTo(2));
-        assertThat(types.get(2).getId(), equalTo(3));
+        assertThat(types.get(0).getId(), equalTo(2));
+        assertThat(types.get(1).getId(), equalTo(3));
 
         types = h2.getTypes();
-        assertThat(types.get(0).getId(), equalTo(1));
-        assertThat(types.get(1).getId(), equalTo(2));
-        assertThat(types.get(2).getId(), equalTo(3));
+        assertThat(types.get(0).getId(), equalTo(2));
+        assertThat(types.get(1).getId(), equalTo(3));
 
         types = h4.getTypes();
         assertThat(types.get(0).getId(), equalTo(3));
