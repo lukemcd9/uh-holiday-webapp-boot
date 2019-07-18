@@ -105,16 +105,21 @@ public class HolidayServiceImpl implements HolidayService {
     public Holiday findClosestHolidayByDate(String date, boolean forward) {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
+
         int closestIndex;
         long daysBetween;
         int i = 0;
+
         do {
             daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
             i++;
         } while (daysBetween > -1);
+
         closestIndex = forward ? i - 2 : i - 1;
+
         holidays.get(closestIndex + 1).setClosest(false);
         holidays.get(closestIndex).setClosest(true);
+
         return holidays.get(closestIndex);
     }
 
@@ -122,27 +127,34 @@ public class HolidayServiceImpl implements HolidayService {
     public Holiday findClosestHolidayByDate(String date, boolean forward, String type) {
         List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
+
         int closestIndex;
         long daysBetween;
         int i = 0;
         boolean found = false;
+
         do {
             daysBetween = Dates.compareDates(curDate, holidays.get(i).getObservedDate());
             i++;
         } while (daysBetween > -1);
+
         closestIndex = forward ? i - 2 : i - 1;
+
         while (!found) {
             for (int j = 0; j < holidays.get(closestIndex).getHolidayTypes().size(); j++) {
                 if (holidays.get(closestIndex).getHolidayTypes().get(j).equalsIgnoreCase(type)) {
                     found = true;
                 }
             }
+
             if (!found) {
                 closestIndex = forward ? closestIndex - 1 : closestIndex + 1;
             }
         }
+
         holidays.get(closestIndex + 1).setClosest(false);
         holidays.get(closestIndex).setClosest(true);
+
         return holidays.get(closestIndex);
     }
 
