@@ -92,7 +92,6 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[7].description").value("Independence Day"))
                 .andExpect(jsonPath("data[8].description").value("Statehood Day"))
                 .andExpect(jsonPath("data[9].description").value("Labor Day"))
-//                .andExpect(jsonPath("data[10].description").value("Discoverers' Day"))
                 .andExpect(jsonPath("data[10].description").value("Veterans' Day"))
                 .andExpect(jsonPath("data[11].description").value("Thanksgiving"))
                 .andExpect(jsonPath("data[12].description").value("Christmas"))
@@ -189,6 +188,27 @@ public class HolidayRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/month/1?type=state"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(0)))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/month/1?year=2022"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(2)))
+                .andReturn();
+        assertNotNull(result);
+
+        result = mockMvc.perform(get("/api/holidays/month/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(2)))
                 .andReturn();
         assertNotNull(result);
     }
@@ -397,7 +417,6 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[7].description").value("Independence Day"))
                 .andExpect(jsonPath("data[8].description").value("Statehood Day"))
                 .andExpect(jsonPath("data[9].description").value("Labor Day"))
-//                .andExpect(jsonPath("data[10].description").value("Discoverers' Day"))
                 .andExpect(jsonPath("data[10].description").value("General Election Day"))
                 .andExpect(jsonPath("data[11].description").value("Veterans' Day"))
                 .andExpect(jsonPath("data[12].description").value("Thanksgiving"))
@@ -471,12 +490,6 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[9].officialDate").value("2013-09-02"))
                 .andExpect(jsonPath("data[9].holidayTypes[0]").value("Federal"))
                 .andExpect(jsonPath("data[9].holidayTypes[1]").value("UH"))
-//                .andExpect(jsonPath("data[10].description").value("Discoverers' Day"))
-//                .andExpect(jsonPath("data[10].year").value("2013"))
-//                .andExpect(jsonPath("data[10].observedDate").value("2013-10-14"))
-//                .andExpect(jsonPath("data[10].officialDate").value("2013-10-14"))
-//                .andExpect(jsonPath("data[10].holidayTypes[0]").value("Bank"))
-//                .andExpect(jsonPath("data[10].holidayTypes[1]").value("Federal"))
                 .andExpect(jsonPath("data[10].description").value("Veterans' Day"))
                 .andExpect(jsonPath("data[10].year").value("2013"))
                 .andExpect(jsonPath("data[10].observedDate").value("2013-11-11"))

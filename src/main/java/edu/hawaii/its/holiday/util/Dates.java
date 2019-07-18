@@ -1,17 +1,10 @@
 package edu.hawaii.its.holiday.util;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
-import java.time.temporal.ChronoUnit;
 
 public final class Dates {
 
@@ -23,14 +16,16 @@ public final class Dates {
         // Empty.
     }
 
-    public static long compareDates(LocalDate date1, LocalDate date2){
+    public static long compareDates(LocalDate date1, LocalDate date2) {
         return ChronoUnit.DAYS.between(date1, date2);
     }
 
-    public static LocalDate newLocalDate() { return LocalDate.now();
+    public static LocalDate newLocalDate() {
+        return LocalDate.now();
     }
 
-    public static LocalDate newLocalDate(int year, Month month, int day) { return LocalDate.of(year, month, day);
+    public static LocalDate newLocalDate(int year, Month month, int day) {
+        return LocalDate.of(year, month, day);
     }
 
     public static Month month(LocalDate date) {

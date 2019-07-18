@@ -1,15 +1,5 @@
 package edu.hawaii.its.holiday.service;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.hawaii.its.holiday.repository.DesignationRepository;
 import edu.hawaii.its.holiday.repository.HolidayRepository;
 import edu.hawaii.its.holiday.repository.TypeRepository;
@@ -19,6 +9,15 @@ import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -38,12 +37,16 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidaysById", key = "#id")
-    public Holiday findHoliday(Integer id) { return holidayRepository.findById(id).get(); }
+    public Holiday findHoliday(Integer id) {
+        return holidayRepository.findById(id).get();
+    }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidays")
-    public List<Holiday> findHolidays() { return holidayRepository.findAllByOrderByObservedDateDesc(); }
+    public List<Holiday> findHolidays() {
+        return holidayRepository.findAllByOrderByObservedDateDesc();
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -78,7 +81,7 @@ public class HolidayServiceImpl implements HolidayService {
                 holiday.getTypes().stream().anyMatch(types ->
                         types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
     }
-    
+
     @Override
     public List<Holiday> findHolidaysByMonth(Integer month, Integer year) {
         Month realMonth = Month.of(month);
@@ -90,7 +93,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public List<Holiday> findHolidaysByRange(String beginDate, String endDate, boolean include) {
         LocalDate start = Dates.toLocalDate(beginDate, "yyyy-MM-dd");
-        LocalDate end =  Dates.toLocalDate(endDate, "yyyy-MM-dd");
+        LocalDate end = Dates.toLocalDate(endDate, "yyyy-MM-dd");
         if (!include) {
             start = Dates.fromOffset(start, 1);
             end = Dates.fromOffset(end, -1);
@@ -128,14 +131,14 @@ public class HolidayServiceImpl implements HolidayService {
             i++;
         } while (daysBetween > -1);
         closestIndex = forward ? i - 2 : i - 1;
-        while(!found) {
+        while (!found) {
             for (int j = 0; j < holidays.get(closestIndex).getHolidayTypes().size(); j++) {
-                if (holidays.get(closestIndex).getHolidayTypes().get(j).toLowerCase().equals(type)) {
+                if (holidays.get(closestIndex).getHolidayTypes().get(j).equalsIgnoreCase(type)) {
                     found = true;
                 }
             }
-            if(!found) {
-                closestIndex = forward ? closestIndex-1 : closestIndex+1;
+            if (!found) {
+                closestIndex = forward ? closestIndex - 1 : closestIndex + 1;
             }
         }
         holidays.get(closestIndex + 1).setClosest(false);
