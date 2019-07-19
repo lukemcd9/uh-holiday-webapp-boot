@@ -15,12 +15,14 @@ function HolidayJsController($scope, dataProvider) {
         $scope.years = [];
         $scope.years.push(year);
         $scope.loadData();
+        $scope.showArrow();
     }
 
     $scope.loadData = function() {
         dataProvider.loadData(function(d) {
             $scope.holidays = d.data;
             $scope.holidays.forEach(function(h) {
+                $scope.holiday = h;
                 var y = parseInt(h.year, 10);
                 if ($scope.years.indexOf(y) < 0) {
                     $scope.years.push(y);
@@ -31,7 +33,7 @@ function HolidayJsController($scope, dataProvider) {
             });
         }, url);
     }
-    
+
     $scope.searchFilter = function() {
         return function(e) {
             var text = $scope.searchFor;
@@ -51,12 +53,21 @@ function HolidayJsController($scope, dataProvider) {
             return false;
         };
     }
-    
+
     $scope.sortBy = function(column) {
         $scope.orderByField = column;
         $scope.reverseSort = !$scope.reverseSort;
     }
-    
+
+    $scope.showHoliday = function(holiday) {
+        $scope.holiday = holiday;
+        $("#holiday").modal();
+    }
+
+    $scope.showArrow = function() {
+        $scope.direction = $scope.reverseSort ? "up" : "down";
+    }
 }
 
 holidayApp.controller("HolidayJsController", HolidayJsController);
+

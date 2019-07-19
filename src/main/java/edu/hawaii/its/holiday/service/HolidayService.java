@@ -19,7 +19,17 @@ public interface HolidayService {
 
     List<Holiday> findHolidaysByYear(Integer year);
 
+    List<Holiday> findHolidaysByMonth(Integer month, Integer year);
+
+    List<Holiday> findHolidaysByRange(String beginDate, String endDate, boolean include);
+
+    Holiday findClosestHolidayByDate(String date, boolean forward);
+
+    Holiday findClosestHolidayByDate(String date, boolean forward, String type);
+
     List<UserRole> findUserRoles();
+
+    List<Holiday> findHolidaysByType(List<Holiday> holidays, String type);
 
     Type findType(Integer id);
 

@@ -147,3 +147,26 @@ div .panel > .panel-heading {
 
 }
 
+.type-list {
+    display: inline;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+.type-list li {
+    display: inline;
+}
+
+.type-list li + li:before {
+    content: ", ";
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.highlight {
+    background-color: #F5F8FF;
+}
+
+
