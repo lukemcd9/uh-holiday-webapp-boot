@@ -169,4 +169,6 @@ div .panel > .panel-heading {
     background-color: #F5F8FF;
 }
 
-
+.modal-open[style] {
+    padding-right: 0px !important;
+}
