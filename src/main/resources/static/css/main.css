@@ -169,10 +169,10 @@ div .panel > .panel-heading {
     background-color: #F5F8FF;
 }
 
-.modal-open[style] {
-    padding-right: 0px !important;
+.modal-open .navbar-default {
+	padding-right: 0px !important;
 }
 
-.navbar-default[style] {
-	padding-right: 0px !important;
+.modal-open[style] {
+    padding-right: 0px !important;
 }
