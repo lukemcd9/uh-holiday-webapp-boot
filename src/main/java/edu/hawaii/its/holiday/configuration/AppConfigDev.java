@@ -21,15 +21,15 @@ public class AppConfigDev {
 
     private static final Log logger = LogFactory.getLog(AppConfigDev.class);
 
-    @Value("${spring.datasource.initialize}")
-    private boolean springDatasourceInitialize;
+    @Value("${spring.datasource.initialization-mode}")
+    private String springDatasourceInitializationMode;
 
     @PostConstruct
     public void init() {
         logger.info("init starting");
-        logger.info("init; springDatasourceInitialize: " + springDatasourceInitialize);
-        Assert.isTrue(springDatasourceInitialize,
-                "Property 'spring.datasource.initialize' should be true.");
+        logger.info("init; springDatasourceInitializationMode: " + springDatasourceInitializationMode);
+        Assert.isTrue(springDatasourceInitializationMode.equals("always"),
+                "Property 'spring.datasource.initialization-mode' should be 'always'.");
         logger.info("init finished");
     }
 
