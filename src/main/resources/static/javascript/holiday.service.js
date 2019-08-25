@@ -1,5 +1,4 @@
 "use strict";
-/*global holidayApp*/
 
 holidayApp.factory("dataProvider", function($http, $log) {
     return {

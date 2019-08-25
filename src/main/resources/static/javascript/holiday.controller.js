@@ -1,7 +1,5 @@
 "use strict";
 
-/*global holidayApp*/
-
 function HolidayJsController($scope, dataProvider) {
     var url = "api/holidays";
     $scope.years = [];
