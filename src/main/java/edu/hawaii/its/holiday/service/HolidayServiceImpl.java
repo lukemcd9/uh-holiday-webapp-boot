@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -80,7 +82,8 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public List<Holiday> findHolidaysByType(List<Holiday> holidays, String type) {
-        return holidays.stream().filter(holiday -> holiday.getTypes().stream().anyMatch(types -> types.getDescription().equalsIgnoreCase(type)))
+        return holidays.stream().filter(holiday -> holiday.getTypes().stream()
+                .anyMatch(types -> types.getDescription().equalsIgnoreCase(type)))
                 .collect(Collectors.toList());
     }
 
@@ -158,6 +161,13 @@ public class HolidayServiceImpl implements HolidayService {
         holidays.get(closestIndex).setClosest(true);
 
         return holidays.get(closestIndex);
+    }
+
+    @Caching(evict = {
+            @CacheEvict(value = "holidays", allEntries = true),
+            @CacheEvict(value = "holidaysById", allEntries = true) })
+    public void evictHolidaysCache() {
+        // Empty.
     }
 
     @Override

@@ -1,12 +1,13 @@
 package edu.hawaii.its.holiday.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface HolidayService {
 
@@ -27,6 +28,8 @@ public interface HolidayService {
     Holiday findClosestHolidayByDate(String date, boolean forward);
 
     Holiday findClosestHolidayByDate(String date, boolean forward, String type);
+
+    void evictHolidaysCache();
 
     List<UserRole> findUserRoles();
 
