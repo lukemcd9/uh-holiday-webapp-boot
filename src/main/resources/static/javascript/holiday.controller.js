@@ -83,6 +83,7 @@ function HolidayGridJsController($scope, holidayJsService) {
     });
 
     $scope.gridOptions = {
+
         paginationPageSizes: [10, 15, 20, 250],
         paginationPageSize: options.pageSize,
         enableColumnMenus: false,
@@ -94,7 +95,7 @@ function HolidayGridJsController($scope, holidayJsService) {
         }, {
             name: "officialDate"
         }],
-        onRegisterApi(gridApi) {
+        onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
             gridApi.pagination.on.paginationChanged($scope, function(newPage, pageSize) {
                 options.pageNumber = newPage;
@@ -106,8 +107,6 @@ function HolidayGridJsController($scope, holidayJsService) {
             });
         }
     };
-
 }
 
 holidayApp.controller("HolidayGridJsController", HolidayGridJsController);
-
