@@ -34,7 +34,6 @@ public class AppConfig {
     @PostConstruct
     public void init() {
         logger.info("AppConfigRun init");
-
         Assert.isTrue(springDatasourceInitializationMode.equals("never"),
                 "Property 'spring.datasource.initialization-mode' should be 'never'.");
     }

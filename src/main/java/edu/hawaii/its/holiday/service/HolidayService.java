@@ -2,6 +2,8 @@ package edu.hawaii.its.holiday.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
@@ -27,6 +29,8 @@ public interface HolidayService {
 
     Holiday findClosestHolidayByDate(String date, boolean forward, String type);
 
+    void evictHolidaysCache();
+
     List<UserRole> findUserRoles();
 
     List<Holiday> findHolidaysByType(List<Holiday> holidays, String type);
@@ -37,4 +41,5 @@ public interface HolidayService {
 
     List<String> findAllDescriptions();
 
+    Page<Holiday> findPaginatedHdays(final int page, final int size);
 }

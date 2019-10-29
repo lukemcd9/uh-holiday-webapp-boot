@@ -1,6 +1,16 @@
 package edu.hawaii.its.holiday.controller;
 
-import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.nio.charset.Charset;
-
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
@@ -39,7 +43,6 @@ public class HolidayRestControllerTest {
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
-
 
     @Before
     public void setUp() {
@@ -213,7 +216,8 @@ public class HolidayRestControllerTest {
 
     @Test
     public void httpGetHolidaysByRange() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-01-01&end-date=2019-01-31&inclusive=true&type=uh"))
+        MvcResult result = mockMvc.perform(
+                get("/api/holidays/range?begin-date=2019-01-01&end-date=2019-01-31&inclusive=true&type=uh"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(2)))
@@ -230,14 +234,16 @@ public class HolidayRestControllerTest {
                 .andReturn();
         assertNotNull(result);
 
-        result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-12-25&end-date=2019-12-31&inclusive=false&type=uh"))
+        result = mockMvc.perform(
+                get("/api/holidays/range?begin-date=2019-12-25&end-date=2019-12-31&inclusive=false&type=uh"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(0)))
                 .andReturn();
         assertNotNull(result);
 
-        result = mockMvc.perform(get("/api/holidays/range?begin-date=2019-08-16&end-date=2019-08-31&inclusive=true&type=federal"))
+        result = mockMvc.perform(
+                get("/api/holidays/range?begin-date=2019-08-16&end-date=2019-08-31&inclusive=true&type=federal"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("data", hasSize(0)))
@@ -705,6 +711,23 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[0].description").value("Federal"))
                 .andExpect(jsonPath("data[1].description").value("UH"))
                 .andExpect(jsonPath("data[2].description").value("State"))
+                .andReturn();
+        assertNotNull(result);
+    }
+
+    @Test
+    public void httpGetHolidaysGrid() throws Exception {
+        MvcResult result = mockMvc.perform(get("/api/holidaygrid/get?page=1&size=10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content", hasSize(10)))
+                .andExpect(jsonPath("last").value("false"))
+                .andExpect(jsonPath("totalPages").value("24"))
+                .andExpect(jsonPath("totalElements").value("235"))
+                .andExpect(jsonPath("size").value("10"))
+                .andExpect(jsonPath("number").value("1"))
+                .andExpect(jsonPath("first").value("false"))
+                .andExpect(jsonPath("numberOfElements").value("10"))
+                .andExpect(jsonPath("content[9].description").value("Memorial Day"))
                 .andReturn();
         assertNotNull(result);
     }

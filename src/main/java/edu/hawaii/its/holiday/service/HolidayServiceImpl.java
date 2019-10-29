@@ -1,5 +1,19 @@
 package edu.hawaii.its.holiday.service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import edu.hawaii.its.holiday.repository.DesignationRepository;
 import edu.hawaii.its.holiday.repository.HolidayRepository;
 import edu.hawaii.its.holiday.repository.TypeRepository;
@@ -9,15 +23,6 @@ import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -77,9 +82,9 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public List<Holiday> findHolidaysByType(List<Holiday> holidays, String type) {
-        return holidays.stream().filter(holiday ->
-                holiday.getTypes().stream().anyMatch(types ->
-                        types.getDescription().equalsIgnoreCase(type))).collect(Collectors.toList());
+        return holidays.stream().filter(holiday -> holiday.getTypes().stream()
+                .anyMatch(types -> types.getDescription().equalsIgnoreCase(type)))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -158,6 +163,13 @@ public class HolidayServiceImpl implements HolidayService {
         return holidays.get(closestIndex);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "holidays", allEntries = true),
+            @CacheEvict(value = "holidaysById", allEntries = true) })
+    public void evictHolidaysCache() {
+        // Empty.
+    }
+
     @Override
     public List<String> findAllDescriptions() {
         return holidayRepository.findAllDistinctDescription();
@@ -171,5 +183,12 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public Designation findDesignation(Integer id) {
         return designationRepository.findById(id).get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Holiday> findPaginatedHdays(final int page, final int size) {
+        return holidayRepository.findAllByOrderByObservedDateAsc(PageRequest.of(page, size));
+
     }
 }
