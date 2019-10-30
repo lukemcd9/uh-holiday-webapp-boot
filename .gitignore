@@ -9,3 +9,4 @@ src/main/resources/static/javascript/tsconfig.json
 /.idea
 *.iml
 ruleset.xml
+.DS_Store
