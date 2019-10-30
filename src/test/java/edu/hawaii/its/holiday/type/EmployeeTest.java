@@ -35,6 +35,6 @@ public class EmployeeTest {
 
         employee.setId(12345678L);
         assertThat(employee.getId(), equalTo(12345678L));
-        assertThat(employee.toString(), containsString("uhNumber=12345678"));
+        assertThat(employee.toString(), containsString("id=12345678"));
     }
 }

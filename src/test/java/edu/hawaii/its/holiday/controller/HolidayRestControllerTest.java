@@ -1,14 +1,5 @@
 package edu.hawaii.its.holiday.controller;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
 import java.nio.charset.Charset;
 
 import org.junit.Before;
@@ -25,6 +16,15 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import edu.hawaii.its.holiday.configuration.SpringBootWebApplication;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SpringBootWebApplication.class })
@@ -358,19 +358,6 @@ public class HolidayRestControllerTest {
     }
 
     @Test
-    public void holidaysByYearParam2() throws Exception {
-        // rest/inYear?year=2019&type=federal
-        MvcResult result = mockMvc.perform(get("/rest/inYear")
-                .param("year", "2019")
-                .param("type", "federal"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("data", hasSize(9)))
-                .andReturn();
-        assertNotNull(result);
-    }
-
-    @Test
     public void holidaysByYearAndType() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/inYear")
                 .param("year", "2012")
@@ -428,7 +415,7 @@ public class HolidayRestControllerTest {
                 .andReturn();
         assertNotNull(result);
 
-        mockMvc.perform(get("/rest/inYear")
+        result = mockMvc.perform(get("/rest/inYear")
                 .param("year", "2013")
                 .param("type", "uh")
                 .param("isObserved", "false"))
@@ -513,8 +500,9 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[12].holidayTypes[0]").value("Federal"))
                 .andExpect(jsonPath("data[12].holidayTypes[1]").value("UH"))
                 .andReturn();
+        assertNotNull(result);
 
-        mockMvc.perform(get("/rest/inYear")
+        result = mockMvc.perform(get("/rest/inYear")
                 .param("year", "2019")
                 .param("type", "uh")
                 .param("isObserved", "false"))
@@ -599,8 +587,9 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[12].holidayTypes[0]").value("Federal"))
                 .andExpect(jsonPath("data[12].holidayTypes[1]").value("UH"))
                 .andReturn();
+        assertNotNull(result);
 
-        mockMvc.perform(get("/rest/inYear")
+        result = mockMvc.perform(get("/rest/inYear")
                 .param("year", "2020")
                 .param("type", "uh")
                 .param("isObserved", "false"))
@@ -691,6 +680,17 @@ public class HolidayRestControllerTest {
                 .andExpect(jsonPath("data[13].holidayTypes[0]").value("Federal"))
                 .andExpect(jsonPath("data[13].holidayTypes[1]").value("UH"))
                 .andReturn();
+        assertNotNull(result);
+
+        // rest/inYear?year=2019&type=federal
+        result = mockMvc.perform(get("/rest/inYear")
+                .param("year", "2019")
+                .param("type", "federal"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("data", hasSize(9)))
+                .andReturn();
+        assertNotNull(result);
     }
 
     @Test
@@ -714,22 +714,4 @@ public class HolidayRestControllerTest {
                 .andReturn();
         assertNotNull(result);
     }
-
-    @Test
-    public void httpGetHolidaysGrid() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/holidaygrid/get?page=1&size=10"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("content", hasSize(10)))
-                .andExpect(jsonPath("last").value("false"))
-                .andExpect(jsonPath("totalPages").value("24"))
-                .andExpect(jsonPath("totalElements").value("235"))
-                .andExpect(jsonPath("size").value("10"))
-                .andExpect(jsonPath("number").value("1"))
-                .andExpect(jsonPath("first").value("false"))
-                .andExpect(jsonPath("numberOfElements").value("10"))
-                .andExpect(jsonPath("content[9].description").value("Memorial Day"))
-                .andReturn();
-        assertNotNull(result);
-    }
-
 }

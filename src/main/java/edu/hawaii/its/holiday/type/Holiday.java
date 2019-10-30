@@ -32,11 +32,6 @@ public class Holiday implements Serializable {
     @JsonSerialize(using = HolidayDateSerializer.class)
     private LocalDate officialDate;
 
-    //    @ManyToMany(fetch = FetchType.EAGER)
-    //    @JoinTable(name = "holiday_type",
-    //            joinColumns = @JoinColumn(name = "holiday_id", unique = false),
-    //            inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
-    //    @OrderBy(value = "id")
     private List<Type> types = new ArrayList<>(0);
 
     private boolean closest;

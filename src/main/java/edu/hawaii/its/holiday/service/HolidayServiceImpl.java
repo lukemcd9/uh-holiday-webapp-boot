@@ -187,11 +187,4 @@ public class HolidayServiceImpl implements HolidayService {
     public List<Type> findHolidayTypes(Holiday holiday) {
         return holidayMapper.findHolidayTypes(holiday.getId());
     }
-
-    //    @Override
-    //    @Transactional(readOnly = true)
-    //    public Page<Holiday> findPaginatedHdays(final int page, final int size) {
-    //        return holidayRepository.findAllByOrderByObservedDateAsc(PageRequest.of(page, size));
-    //
-    //    }
 }

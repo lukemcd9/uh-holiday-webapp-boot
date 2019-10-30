@@ -131,15 +131,4 @@ public class HolidayRestController {
                 .ok()
                 .body(data);
     }
-
-    //    @RequestMapping(value = "/api/holidaygrid/get",
-    //            params = { "page", "size" },
-    //            method = RequestMethod.GET,
-    //            produces = "application/json")
-    //    public Page<Holiday> findPaginated(
-    //            @RequestParam(value = "page") int page,
-    //            @RequestParam(value = "size") int size) {
-    //        logger.debug("Entered REST holidays grid...");
-    //        return holidayService.findPaginatedHdays(page, size);
-    //    }
 }

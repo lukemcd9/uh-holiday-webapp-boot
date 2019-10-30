@@ -30,7 +30,10 @@ public interface HolidayMapper {
     })
     List<Holiday> findAllByOrderByObservedDateDesc();
 
-    @Select("SELECT * FROM holiday h WHERE h.official_date BETWEEN #{start} AND #{end}")
+    @Select("SELECT * FROM holiday h WHERE h.official_date BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}")
+    @Results({
+            @Result(property = "types", javaType = List.class, column = "id", many = @Many(select = "findHolidayTypes"))
+    })
     List<Holiday> findAllByOfficialDateBetween(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
     @Select("SELECT DISTINCT h.description FROM holiday h ORDER BY h.description")
