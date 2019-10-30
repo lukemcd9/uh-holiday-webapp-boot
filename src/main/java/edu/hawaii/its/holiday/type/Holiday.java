@@ -6,19 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -26,42 +13,32 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import edu.hawaii.its.holiday.util.Dates;
 
-@Entity
-@Table(name = "holiday")
 @JsonRootName(value = "data")
 public class Holiday implements Serializable {
 
     private static final long serialVersionUID = 53L;
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Integer id;
 
-    @Column(name = "version")
     @JsonIgnore
     private Integer version;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "observed_date")
     @JsonSerialize(using = HolidayDateSerializer.class)
     private LocalDate observedDate;
 
-    @Column(name = "official_date")
     @JsonSerialize(using = HolidayDateSerializer.class)
     private LocalDate officialDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "holiday_type",
-            joinColumns = @JoinColumn(name = "holiday_id", unique = false),
-            inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
-    @OrderBy(value = "id")
+    //    @ManyToMany(fetch = FetchType.EAGER)
+    //    @JoinTable(name = "holiday_type",
+    //            joinColumns = @JoinColumn(name = "holiday_id", unique = false),
+    //            inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
+    //    @OrderBy(value = "id")
     private List<Type> types = new ArrayList<>(0);
 
-    @Transient
     private boolean closest;
 
     // Constructor.
@@ -126,13 +103,11 @@ public class Holiday implements Serializable {
     }
 
     @JsonGetter("observedDate")
-    @Transient
     public String getObservedDateStr() {
         return Dates.formatDate(observedDate, "yyyy-MM-dd");
     }
 
     @JsonGetter("officialDate")
-    @Transient
     public String getOfficialDateStr() {
         return Dates.formatDate(officialDate, "yyyy-MM-dd");
     }
@@ -145,12 +120,10 @@ public class Holiday implements Serializable {
         this.types = types != null ? types : new ArrayList<>();
     }
 
-    @Transient
     public List<String> getHolidayTypes() {
         return types.stream().map(Type::getDescription).collect(Collectors.toList());
     }
 
-    @Transient
     public Integer getYear() {
         if (observedDate != null) {
             return Dates.yearOfDate(observedDate);
@@ -158,7 +131,6 @@ public class Holiday implements Serializable {
         return null;
     }
 
-    @Transient
     public Integer getOfficialYear() {
         if (officialDate != null) {
             return Dates.yearOfDate(officialDate);

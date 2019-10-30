@@ -10,13 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Profile(value = { "localhost" })
 @Configuration
 @ComponentScan(basePackages = "edu.hawaii.its.holiday")
 @EntityScan(basePackages = { "edu.hawaii.its.holiday.type" })
-@EnableJpaRepositories(basePackages = { "edu.hawaii.its.holiday.repository" })
+//@EnableJpaRepositories(basePackages = { "edu.hawaii.its.holiday.repository" })
 @PropertySources({
         @PropertySource("classpath:custom.properties"),
         @PropertySource(value = "file:${user.home}/.${user.name}-conf/holiday-overrides.properties",

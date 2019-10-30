@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Profile(value = { "dev", "default", "localhost" })
@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = { "edu.hawaii.its.holiday" },
         excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = Configuration.class) })
 @EntityScan(basePackages = { "edu.hawaii.its.holiday.type" })
-@EnableJpaRepositories(basePackages = { "edu.hawaii.its.holiday.repository" })
+//@EnableJpaRepositories(basePackages = { "edu.hawaii.its.holiday.repository" })
+@MapperScan(basePackages = "edu.hawaii.its.holiday.mapper")
 @EnableTransactionManagement
 @PropertySource("classpath:custom.properties")
 public class WebConfig {

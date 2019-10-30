@@ -9,15 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.hawaii.its.holiday.repository.DesignationRepository;
-import edu.hawaii.its.holiday.repository.HolidayRepository;
-import edu.hawaii.its.holiday.repository.TypeRepository;
-import edu.hawaii.its.holiday.repository.UserRoleRepository;
+import edu.hawaii.its.holiday.mapper.DesignationMapper;
+import edu.hawaii.its.holiday.mapper.HolidayMapper;
+import edu.hawaii.its.holiday.mapper.TypeMapper;
+import edu.hawaii.its.holiday.mapper.UserRoleMapper;
 import edu.hawaii.its.holiday.type.Designation;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Type;
@@ -28,29 +26,29 @@ import edu.hawaii.its.holiday.util.Dates;
 public class HolidayServiceImpl implements HolidayService {
 
     @Autowired
-    private HolidayRepository holidayRepository;
+    private HolidayMapper holidayMapper;
 
     @Autowired
-    private DesignationRepository designationRepository;
+    private DesignationMapper designationMapper;
 
     @Autowired
-    private TypeRepository typeRepository;
+    private TypeMapper typeMapper;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private UserRoleMapper userRoleRepository;
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidaysById", key = "#id")
     public Holiday findHoliday(Integer id) {
-        return holidayRepository.findById(id).get();
+        return holidayMapper.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidays")
     public List<Holiday> findHolidays() {
-        return holidayRepository.findAllByOrderByObservedDateDesc();
+        return holidayMapper.findAllByOrderByObservedDateDesc();
     }
 
     @Override
@@ -63,21 +61,21 @@ public class HolidayServiceImpl implements HolidayService {
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypesById", key = "#id")
     public Type findType(Integer id) {
-        return typeRepository.findById(id).get();
+        return typeMapper.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypes")
     public List<Type> findTypes() {
-        return typeRepository.findAll();
+        return typeMapper.findAll();
     }
 
     @Override
     public List<Holiday> findHolidaysByYear(Integer year) {
         LocalDate start = Dates.firstDateOfYear(year);
         LocalDate end = Dates.lastDateOfMonth(Month.DECEMBER, year);
-        return holidayRepository.findAllByOfficialDateBetween(start, end);
+        return holidayMapper.findAllByOfficialDateBetween(start, end);
     }
 
     @Override
@@ -92,7 +90,7 @@ public class HolidayServiceImpl implements HolidayService {
         Month realMonth = Month.of(month);
         LocalDate start = Dates.firstDateOfMonth(realMonth, year);
         LocalDate end = Dates.lastDateOfMonth(realMonth, year);
-        return holidayRepository.findAllByOfficialDateBetween(start, end);
+        return holidayMapper.findAllByOfficialDateBetween(start, end);
     }
 
     @Override
@@ -103,12 +101,12 @@ public class HolidayServiceImpl implements HolidayService {
             start = Dates.fromOffset(start, 1);
             end = Dates.fromOffset(end, -1);
         }
-        return holidayRepository.findAllByOfficialDateBetween(start, end);
+        return holidayMapper.findAllByOfficialDateBetween(start, end);
     }
 
     @Override
     public Holiday findClosestHolidayByDate(String date, boolean forward) {
-        List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
+        List<Holiday> holidays = holidayMapper.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
 
         int closestIndex;
@@ -130,7 +128,7 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public Holiday findClosestHolidayByDate(String date, boolean forward, String type) {
-        List<Holiday> holidays = holidayRepository.findAllByOrderByObservedDateDesc();
+        List<Holiday> holidays = holidayMapper.findAllByOrderByObservedDateDesc();
         LocalDate curDate = Dates.toLocalDate(date, "yyyy-MM-dd");
 
         int closestIndex;
@@ -172,23 +170,28 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public List<String> findAllDescriptions() {
-        return holidayRepository.findAllDistinctDescription();
+        return holidayMapper.findAllDistinctDescription();
     }
 
     @Override
     public List<Designation> findDesignations() {
-        return designationRepository.findAll();
+        return designationMapper.findAll();
     }
 
     @Override
     public Designation findDesignation(Integer id) {
-        return designationRepository.findById(id).get();
+        return designationMapper.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Page<Holiday> findPaginatedHdays(final int page, final int size) {
-        return holidayRepository.findAllByOrderByObservedDateAsc(PageRequest.of(page, size));
-
+    public List<Type> findHolidayTypes(Holiday holiday) {
+        return holidayMapper.findHolidayTypes(holiday.getId());
     }
+
+    //    @Override
+    //    @Transactional(readOnly = true)
+    //    public Page<Holiday> findPaginatedHdays(final int page, final int size) {
+    //        return holidayRepository.findAllByOrderByObservedDateAsc(PageRequest.of(page, size));
+    //
+    //    }
 }

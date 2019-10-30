@@ -1,9 +1,3 @@
-insert into UNIQUE_UH_NUMBER_V (UH_NUMBER) values (89999999);
-insert into UNIQUE_UH_NUMBER_V (UH_NUMBER) values (10000001);
-insert into UNIQUE_UH_NUMBER_V (UH_NUMBER) values (10000002);
-insert into UNIQUE_UH_NUMBER_V (UH_NUMBER) values (10000003);
-insert into UNIQUE_UH_NUMBER_V (UH_NUMBER) values (10000004);
-
 insert into role(id, version, authority) values(1, 1, 'ROLE_ADMIN');
 insert into role(id, version, authority) values(2, 1, 'ROLE_USER');
 
