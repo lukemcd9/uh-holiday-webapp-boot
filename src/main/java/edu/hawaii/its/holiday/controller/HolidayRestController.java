@@ -23,6 +23,7 @@ import edu.hawaii.its.holiday.util.Dates;
 public class HolidayRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(HolidayRestController.class);
+
     @Autowired
     private HolidayService holidayService;
 
