@@ -1,0 +1,31 @@
+<div class="card my-2">
+  <div class="card-body">
+    <div class="row mb-1">
+      <div class="col-sm-2">
+        <select class="custom-select" name="year" [(ngModel)]="year">
+          <option *ngFor="let year of getAllYears()" [ngValue]="year">{{ year }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Holiday</th>
+            <th scope="col">Observed</th>
+            <th scope="col">Official</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let holiday of getHolidaysByYear()" [ngStyle]="{ 'background-color': holiday.closest ? '#F5F8FF' : '#FFFFFF'}">
+            <td>{{ holiday.description }}</td>
+            <td>{{ holiday.observedDateFull }}</td>
+            <td>{{ holiday.officialDateFull }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

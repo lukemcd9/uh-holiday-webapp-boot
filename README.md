@@ -1,49 +1,27 @@
-A web application to display holidays used by UH.
+# Client
 
-[![Build Status](https://travis-ci.org/fduckart/uh-holiday-webapp-boot.png?branch=master)](https://travis-ci.org/fduckart/uh-holiday-webapp-boot)
-[![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp-boot/badge.svg)](https://coveralls.io/github/fduckart/uh-holiday-webapp-boot)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d68ffad24e34410a9186edd61494a749)](https://www.codacy.com/app/fduckart/uh-holiday-webapp-boot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fduckart/uh-holiday-webapp-boot&amp;utm_campaign=Badge_Grade)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
 
-##### Java
-You'll need a Java JDK to build and run the project (version 1.8).
-If necessary, be sure to set your JAVA_HOME environment variable.
+## Development server
 
-##### Building
-Install the necessary project dependencies:
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-    $ ./mvnw install
+## Code scaffolding
 
-To run the Application from the Command Line:
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-    $ ./mvnw clean spring-boot:run
+## Build
 
-To build a deployable war file for local development, if preferred:
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-    $ ./mvnw clean package
+## Running unit tests
 
-You should have a deployable war file in the target directory.
-Deploy as usual in a servlet container, e.g. tomcat.
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-To run the Application, point your browser at:
+## Running end-to-end tests
 
-http://localhost:8080/holiday/
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Further help
 
-##### Running Unit Tests
-The project includes Unit Tests for various parts of the system.
-For this project, Unit Tests are defined as those tests that will
-rely on only the local development computer.
-A development build of the application will run the Unit Tests.
-
-To run the Unit Tests:
-
-    $ ./mvnw clean test
-
-To run a specific test class:
-
-    $ ./mvnw clean test -Dtest=StringsTest
-
-To run a single method in a test class:
-
-    $ ./mvnw clean test -Dtest=StringsTest#trunctate
-
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

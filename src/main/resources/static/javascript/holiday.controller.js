@@ -18,8 +18,8 @@ function HolidayJsController($scope, dataProvider) {
     };
 
     $scope.loadData = function() {
-        dataProvider.loadData(function(d) {
-            $scope.holidays = d.data;
+        dataProvider.loadData(function(data) {
+            $scope.holidays = data;
             $scope.holidays.forEach(function(h) {
                 $scope.holiday = h;
                 var y = parseInt(h.year, 10);

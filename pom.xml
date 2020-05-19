@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <version>2.1.12.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -82,7 +82,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
-        
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -113,7 +113,7 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>${bootstrap.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
@@ -149,7 +149,7 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>angular-mocks</artifactId>
             <version>${angular-mocks-version}</version>
-        </dependency>                
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -183,12 +183,43 @@
                                 <echo>here are some common goals for this project:</echo>
                                 <echo>$ ./mvnw clean test</echo>
                                 <echo>$ ./mvnw clean test -Dtest=*Test </echo>
-                                <echo>$ ./mvnw jasmine:test</echo>                                
+                                <echo>$ ./mvnw jasmine:test</echo>
                                 <echo>$ ./mvnw clean package</echo>
                                 <echo>$ ./mvnw -Dmaven.test.skip=true clean package</echo>
                                 <echo>$ ./mvnw clean test jacoco:report</echo>
                                 <echo>$ ./mvnw clean spring-boot:run</echo>
                             </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.10.0</version>
+                <configuration>
+                    <nodeVersion>v12.16.3</nodeVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm-build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run-script build</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -205,7 +236,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/configuration/SpringBootWebApplication.class</exclude>
-                        <exclude>**/configuration/AppConfig.class</exclude>                        
+                        <exclude>**/configuration/AppConfig.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -237,15 +268,15 @@
                         <source>${basedir}/src/main/resources/static/javascript/holiday.service.js</source>
                         <source>${basedir}/src/main/resources/static/javascript/holiday.controller.js</source>
                     </preloadSources>
-                    <!--  
+                    <!--
                     <jsTestSrcDir>${basedir}/src/test/resources/javascript</jsTestSrcDir>
                     -->
                     <specIncludes>
-                        <include>**/holiday.controller.holiday.test.js</include>                       
+                        <include>**/holiday.controller.holiday.test.js</include>
                     </specIncludes>
                 </configuration>
             </plugin>
-            
+
         </plugins>
     </build>
 </project>
